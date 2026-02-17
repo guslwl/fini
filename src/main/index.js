@@ -11,8 +11,12 @@ import { createApplicationMenu, updateDatabaseMenuLabel } from './menu.js'
 
 import databaseHandler from './handlers/database.js'
 
+import * as errorHandler from './infra/error-handler.js'
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
+
+errorHandler.registerGlobalErrorHandlers()
 
 const createIpcMain = (baseIpcMain) => ({
   handle: (channel, handler) => {
@@ -20,8 +24,9 @@ const createIpcMain = (baseIpcMain) => ({
       try {
         return await handler(event, ...args)
       } catch (error) {
-        console.error(error)
-        throw new error()
+        const normalizedError = errorHandler.normalizeError(error)
+        errorHandler.logError(`ipc:${channel}`, normalizedError)
+        throw new errorHandler.toIpcError(normalizedError)
       }
     })
   }
