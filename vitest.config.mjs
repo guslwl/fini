@@ -8,7 +8,7 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
-      include: ['src/main/infra/**/*.js'],
+      include: ['src/main/infra/**/*.js', 'src/main/models/**/*.js'],
       exclude: ['src/main/infra/migrations/**']
     }
   }

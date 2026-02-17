@@ -7,6 +7,14 @@ const api = {
     getCurrentPath: () => ipcRenderer.invoke('database:getCurrentPath'),
     selectExisting: () => ipcRenderer.invoke('database:selectExisting'),
     createNew: () => ipcRenderer.invoke('database:createNew')
+  },
+  holidays: {
+    getAll: () => ipcRenderer.invoke('holidays:getAll'),
+    getByYear: (year) => ipcRenderer.invoke('holidays:getByYear', year),
+    getByDate: (date) => ipcRenderer.invoke('holidays:getByDate', date),
+    create: (data) => ipcRenderer.invoke('holidays:create', data),
+    update: (id, data) => ipcRenderer.invoke('holidays:update', id, data),
+    delete: (id) => ipcRenderer.invoke('holidays:delete', id)
   }
 }
 

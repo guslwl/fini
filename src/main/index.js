@@ -10,6 +10,7 @@ import { promptDatabaseSelection } from './handlers/database-select.js'
 import { createApplicationMenu, updateDatabaseMenuLabel } from './menu.js'
 
 import databaseHandler from './handlers/database.js'
+import holidaysHandler from './handlers/holidays.js'
 
 import * as errorHandler from './infra/error-handler.js'
 
@@ -108,6 +109,7 @@ app.whenReady().then(async () => {
   // Set up IPC handlers
   const ipc = createIpcMain(ipcMain)
   databaseHandler(ipc)
+  holidaysHandler(ipc, db)
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
