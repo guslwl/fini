@@ -1,6 +1,7 @@
 import { beforeEach, afterEach, describe, expect, it } from 'vitest'
 import database from '../../../../src/main/infra/database.js'
 import Holidays from '../../../../src/main/models/holidays.js'
+import { NotFoundError, ValidationError } from '../../../../src/main/infra/errors.js'
 
 function createHoliday(overrides = {}) {
   return {
@@ -32,10 +33,10 @@ describe('Holidays model', () => {
   it('creates a holiday and returns id', () => {
     const data = createHoliday({ description: 'New Year', is_business_day: true })
     const result = holidays.create(data)
-
     expect(result.id).toBeGreaterThan(0)
 
     const stored = holidays.getById(result.id)
+
     expect(stored.description).toBe('New Year')
     expect(stored.type).toBe('National')
     expect(stored.date).toBe('2024-01-01')
@@ -84,13 +85,48 @@ describe('Holidays model', () => {
     expect(updated.should_count_as_business_day).toBe(1)
   })
 
-  it('deletes a holiday and returns changes count', () => {
+  it('deletes a holiday and returns true', () => {
     const created = holidays.create(createHoliday({ description: 'To Delete' }))
 
     const result = holidays.delete(created.id)
-    expect(result.changes).toBe(1)
+    expect(result).toBe(true)
+  })
 
-    const missing = holidays.getById(created.id)
-    expect(missing).toBeUndefined()
+  it('throws not found when updating a missing holiday', () => {
+    expect(() => {
+      holidays.update(999999, { description: 'Missing' })
+    }).toThrow(NotFoundError)
+  })
+
+  it('throws not found when deleting a missing holiday', () => {
+    expect(() => {
+      holidays.delete(999999)
+    }).toThrow(NotFoundError)
+  })
+
+  it('throws validation error with format code for invalid date format', () => {
+    let error
+
+    try {
+      holidays.create(createHoliday({ date: '2024/01/01' }))
+    } catch (caughtError) {
+      error = caughtError
+    }
+
+    expect(error).toBeInstanceOf(ValidationError)
+    expect(error.code).toBe('INVALID_DATE_FORMAT')
+  })
+
+  it('throws validation error with value code for invalid calendar date', () => {
+    let error
+
+    try {
+      holidays.create(createHoliday({ date: '2024-02-30' }))
+    } catch (caughtError) {
+      error = caughtError
+    }
+
+    expect(error).toBeInstanceOf(ValidationError)
+    expect(error.code).toBe('INVALID_DATE_VALUE')
   })
 })

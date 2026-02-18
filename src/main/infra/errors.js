@@ -21,14 +21,28 @@ export class AppError extends Error {
 }
 
 export class ValidationError extends AppError {
-  constructor({ cause, message, action } = {}) {
+  constructor({ cause, message, action, code } = {}) {
     super({
       name: 'ValidationError',
       message: message || 'A Validation Error has occurred',
-      code: 'VALIDATION_ERROR',
+      code: code || 'VALIDATION_ERROR',
       details: cause,
       action: action || 'Check the submitted data and try again',
       statusCode: 400,
+      cause
+    })
+  }
+}
+
+export class NotFoundError extends AppError {
+  constructor({ message, details, action, cause } = {}) {
+    super({
+      name: 'NotFoundError',
+      message: message || 'The requested resource was not found',
+      code: 'NOT_FOUND',
+      details,
+      action: action || 'Check the provided identifier and try again',
+      statusCode: 404,
       cause
     })
   }

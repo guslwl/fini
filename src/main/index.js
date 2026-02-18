@@ -11,6 +11,8 @@ import { createApplicationMenu, updateDatabaseMenuLabel } from './menu.js'
 
 import databaseHandler from './handlers/database.js'
 import holidaysHandler from './handlers/holidays.js'
+import payablesRecurringHandler from './handlers/payables_recurring.js'
+import payablesHandler from './handlers/payables.js'
 
 import * as errorHandler from './infra/error-handler.js'
 
@@ -110,6 +112,8 @@ app.whenReady().then(async () => {
   const ipc = createIpcMain(ipcMain)
   databaseHandler(ipc)
   holidaysHandler(ipc, db)
+  payablesHandler(ipc, db)
+  payablesRecurringHandler(ipc, db)
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {

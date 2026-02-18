@@ -10,8 +10,7 @@ function initialize(options = {}) {
   const config = { ...defaultInitializeOptions, ...options }
   const dbClient = new Database(config.dbPath, { verbose: config.verbose })
 
-  const migratedMigrations = migrator.applyPendingMigrations(dbClient)
-  console.log(`-- Migrated Migrations: ${migratedMigrations}`)
+  migrator.applyPendingMigrations(dbClient)
 
   return dbClient
 }

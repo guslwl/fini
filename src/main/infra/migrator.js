@@ -48,7 +48,7 @@ function applyPendingMigrations(dbClient) {
       dbClient.exec(migration.sql)
       migrationSchemaStmt.run(migration.fileName)
       appliedMigrations.push(migration.fileName)
-      console.log(`✔️  Applied Migration: ${migration.fileName}`)
+      //console.log(`✔️  Applied Migration: ${migration.fileName}`)
     }
   })
 

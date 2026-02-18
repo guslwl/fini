@@ -1,0 +1,272 @@
+diff --git a/src/main/index.js b/src/main/index.js
+index cfdef24..3c78e05 100644
+--- a/src/main/index.js
++++ b/src/main/index.js
+@@ -11,6 +11,8 @@ import { createApplicationMenu, updateDatabaseMenuLabel } from './menu.js'
+ 
+ import databaseHandler from './handlers/database.js'
+ import holidaysHandler from './handlers/holidays.js'
++import payablesRecurringHandler from './handlers/payables_recurring.js'
++import payablesHandler from './handlers/payables.js'
+ 
+ import * as errorHandler from './infra/error-handler.js'
+ 
+@@ -110,6 +112,8 @@ app.whenReady().then(async () => {
+   const ipc = createIpcMain(ipcMain)
+   databaseHandler(ipc)
+   holidaysHandler(ipc, db)
++  payablesHandler(ipc, db)
++  payablesRecurringHandler(ipc, db)
+ 
+   app.on('activate', () => {
+     if (BrowserWindow.getAllWindows().length === 0) {
+diff --git a/src/main/infra/database.js b/src/main/infra/database.js
+index 2a35d9a..b802a9a 100644
+--- a/src/main/infra/database.js
++++ b/src/main/infra/database.js
+@@ -10,8 +10,7 @@ function initialize(options = {}) {
+   const config = { ...defaultInitializeOptions, ...options }
+   const dbClient = new Database(config.dbPath, { verbose: config.verbose })
+ 
+-  const migratedMigrations = migrator.applyPendingMigrations(dbClient)
+-  console.log(`-- Migrated Migrations: ${migratedMigrations}`)
++  migrator.applyPendingMigrations(dbClient)
+ 
+   return dbClient
+ }
+diff --git a/src/main/infra/errors.js b/src/main/infra/errors.js
+index fd6f8e4..41a5829 100644
+--- a/src/main/infra/errors.js
++++ b/src/main/infra/errors.js
+@@ -21,11 +21,11 @@ export class AppError extends Error {
+ }
+ 
+ export class ValidationError extends AppError {
+-  constructor({ cause, message, action } = {}) {
++  constructor({ cause, message, action, code } = {}) {
+     super({
+       name: 'ValidationError',
+       message: message || 'A Validation Error has occurred',
+-      code: 'VALIDATION_ERROR',
++      code: code || 'VALIDATION_ERROR',
+       details: cause,
+       action: action || 'Check the submitted data and try again',
+       statusCode: 400,
+@@ -34,6 +34,20 @@ export class ValidationError extends AppError {
+   }
+ }
+ 
++export class NotFoundError extends AppError {
++  constructor({ message, details, action, cause } = {}) {
++    super({
++      name: 'NotFoundError',
++      message: message || 'The requested resource was not found',
++      code: 'NOT_FOUND',
++      details,
++      action: action || 'Check the provided identifier and try again',
++      statusCode: 404,
++      cause
++    })
++  }
++}
++
+ export class FatalError extends AppError {
+   constructor({ message, details, cause } = {}) {
+     super({
+diff --git a/src/main/infra/migrator.js b/src/main/infra/migrator.js
+index d056f25..b08ee24 100644
+--- a/src/main/infra/migrator.js
++++ b/src/main/infra/migrator.js
+@@ -48,7 +48,7 @@ function applyPendingMigrations(dbClient) {
+       dbClient.exec(migration.sql)
+       migrationSchemaStmt.run(migration.fileName)
+       appliedMigrations.push(migration.fileName)
+-      console.log(`✔️  Applied Migration: ${migration.fileName}`)
++      //console.log(`✔️  Applied Migration: ${migration.fileName}`)
+     }
+   })
+ 
+diff --git a/src/main/models/holidays.js b/src/main/models/holidays.js
+index 1f28de2..6373ba5 100644
+--- a/src/main/models/holidays.js
++++ b/src/main/models/holidays.js
+@@ -1,3 +1,6 @@
++import { assertValidCalendarDate } from '../validators/date-validator.js'
++import { NotFoundError } from '../infra/errors.js'
++
+ export default class Holidays {
+   constructor(dbClient) {
+     this.dbClient = dbClient
+@@ -6,6 +9,8 @@ export default class Holidays {
+   create(holiday) {
+     let { description, type, date, is_business_day, should_count_as_business_day } = holiday
+ 
++    assertValidCalendarDate(date, 'date')
++
+     is_business_day = is_business_day ? 1 : 0
+     should_count_as_business_day = should_count_as_business_day ? 1 : 0
+ 
+@@ -23,7 +28,16 @@ export default class Holidays {
+   }
+ 
+   getById(id) {
+-    return this.dbClient.prepare('SELECT * FROM holidays WHERE id = ?').get(id)
++    const result = this.dbClient.prepare('SELECT * FROM holidays WHERE id = ?').get(id)
++
++    if (!result) {
++      throw new NotFoundError({
++        message: `Holiday with id (${id}) was not found`,
++        details: { id, entity: 'holiday' }
++      })
++    }
++
++    return result
+   }
+ 
+   getByDate(date) {
+@@ -40,9 +54,13 @@ export default class Holidays {
+ 
+   update(id, data) {
+     const currentHoliday = this.getById(id)
++
+     const dbClient = this.dbClient
+ 
+     const holidayWithNewValues = { ...currentHoliday, ...data }
++
++    assertValidCalendarDate(holidayWithNewValues.date, 'date')
++
+     holidayWithNewValues.is_business_day = holidayWithNewValues.is_business_day ? 1 : 0
+     holidayWithNewValues.should_count_as_business_day =
+       holidayWithNewValues.should_count_as_business_day ? 1 : 0
+@@ -72,6 +90,14 @@ export default class Holidays {
+ 
+   delete(id) {
+     const result = this.dbClient.prepare('DELETE FROM holidays WHERE id = ?').run(id)
+-    return { changes: result.changes }
++
++    if (result.changes === 0) {
++      throw new NotFoundError({
++        message: `Holiday with id ${id} was not found`,
++        details: { id, entity: 'holiday' }
++      })
++    }
++
++    return true
+   }
+ }
+diff --git a/src/preload/index.js b/src/preload/index.js
+index e05d0b8..fd20cee 100644
+--- a/src/preload/index.js
++++ b/src/preload/index.js
+@@ -15,6 +15,22 @@ const api = {
+     create: (data) => ipcRenderer.invoke('holidays:create', data),
+     update: (id, data) => ipcRenderer.invoke('holidays:update', id, data),
+     delete: (id) => ipcRenderer.invoke('holidays:delete', id)
++  },
++  payables: {
++    getAll: () => ipcRenderer.invoke('payables:getAll'),
++    getByMonth: (year, month) => ipcRenderer.invoke('payables:getByMonth', year, month),
++    create: (data) => ipcRenderer.invoke('payables:create', data),
++    createBulk: (dataArray) => ipcRenderer.invoke('payables:createBulk', dataArray),
++    update: (id, data) => ipcRenderer.invoke('payables:update', id, data),
++    delete: (id) => ipcRenderer.invoke('payables:delete', id),
++    markAsPaid: (id) => ipcRenderer.invoke('payables:markAsPaid', id)
++  },
++  recurring: {
++    getAll: () => ipcRenderer.invoke('recurring:getAll'),
++    create: (data) => ipcRenderer.invoke('recurring:create', data),
++    update: (id, data) => ipcRenderer.invoke('recurring:update', id, data),
++    delete: (id) => ipcRenderer.invoke('recurring:delete', id),
++    generateForMonth: (year, month) => ipcRenderer.invoke('recurring:generateForMonth', year, month)
+   }
+ }
+ 
+diff --git a/tests/integration/main/models/holidays.test.js b/tests/integration/main/models/holidays.test.js
+index f058839..2de63de 100644
+--- a/tests/integration/main/models/holidays.test.js
++++ b/tests/integration/main/models/holidays.test.js
+@@ -1,6 +1,7 @@
+ import { beforeEach, afterEach, describe, expect, it } from 'vitest'
+ import database from '../../../../src/main/infra/database.js'
+ import Holidays from '../../../../src/main/models/holidays.js'
++import { NotFoundError, ValidationError } from '../../../../src/main/infra/errors.js'
+ 
+ function createHoliday(overrides = {}) {
+   return {
+@@ -32,10 +33,10 @@ describe('Holidays model', () => {
+   it('creates a holiday and returns id', () => {
+     const data = createHoliday({ description: 'New Year', is_business_day: true })
+     const result = holidays.create(data)
+-
+     expect(result.id).toBeGreaterThan(0)
+ 
+     const stored = holidays.getById(result.id)
++
+     expect(stored.description).toBe('New Year')
+     expect(stored.type).toBe('National')
+     expect(stored.date).toBe('2024-01-01')
+@@ -84,13 +85,48 @@ describe('Holidays model', () => {
+     expect(updated.should_count_as_business_day).toBe(1)
+   })
+ 
+-  it('deletes a holiday and returns changes count', () => {
++  it('deletes a holiday and returns true', () => {
+     const created = holidays.create(createHoliday({ description: 'To Delete' }))
+ 
+     const result = holidays.delete(created.id)
+-    expect(result.changes).toBe(1)
++    expect(result).toBe(true)
++  })
++
++  it('throws not found when updating a missing holiday', () => {
++    expect(() => {
++      holidays.update(999999, { description: 'Missing' })
++    }).toThrow(NotFoundError)
++  })
++
++  it('throws not found when deleting a missing holiday', () => {
++    expect(() => {
++      holidays.delete(999999)
++    }).toThrow(NotFoundError)
++  })
++
++  it('throws validation error with format code for invalid date format', () => {
++    let error
++
++    try {
++      holidays.create(createHoliday({ date: '2024/01/01' }))
++    } catch (caughtError) {
++      error = caughtError
++    }
++
++    expect(error).toBeInstanceOf(ValidationError)
++    expect(error.code).toBe('INVALID_DATE_FORMAT')
++  })
++
++  it('throws validation error with value code for invalid calendar date', () => {
++    let error
++
++    try {
++      holidays.create(createHoliday({ date: '2024-02-30' }))
++    } catch (caughtError) {
++      error = caughtError
++    }
+ 
+-    const missing = holidays.getById(created.id)
+-    expect(missing).toBeUndefined()
++    expect(error).toBeInstanceOf(ValidationError)
++    expect(error.code).toBe('INVALID_DATE_VALUE')
+   })
+ })
+diff --git a/vitest.config.mjs b/vitest.config.mjs
+index 1c0be9f..35c7217 100644
+--- a/vitest.config.mjs
++++ b/vitest.config.mjs
+@@ -5,6 +5,7 @@ export default defineConfig({
+     environment: 'node',
+     globals: true,
+     include: ['tests/**/*.test.js'],
++    reporters: [['tree', { summary: true }]],
+     coverage: {
+       provider: 'v8',
+       reporter: ['text', 'json', 'html'],
