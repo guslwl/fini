@@ -1,7 +1,7 @@
 import { Menu, dialog, app } from 'electron'
-import * as settings from './infra/settings.js'
-import { selectExistingDatabase, createNewDatabase } from './handlers/database-select.js'
-import { testDatabaseConnection } from './infra/db-validator.js'
+import * as settings from 'infra/settings.js'
+import { selectExistingDatabase, createNewDatabase } from 'handlers/database-select.js'
+import { testDatabaseConnection } from 'infra/db-validator.js'
 
 /**
  * Create and set the application menu

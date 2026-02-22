@@ -1,5 +1,5 @@
-import { assertValidCalendarDate } from '../validators/date-validator.js'
-import { NotFoundError } from '../infra/errors.js'
+import { assertValidCalendarDate } from 'validators/date-validator.js'
+import { NotFoundError } from 'infra/errors.js'
 
 export default class Payables {
   constructor(dbClient) {
@@ -11,6 +11,7 @@ export default class Payables {
       payable
 
     assertValidCalendarDate(due_date, 'due_date')
+
     if (preferred_date !== null && preferred_date !== undefined) {
       assertValidCalendarDate(preferred_date, 'preferred_date')
     }
@@ -21,7 +22,7 @@ export default class Payables {
          VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
       )
       .run(history, invoice_id, account_id, due_date, preferred_date, value, parent_id, paid_at)
-    return { id: result.lastInsertRowid }
+    return result.lastInsertRowid
   }
 
   createBulk(payables) {
@@ -64,7 +65,7 @@ export default class Payables {
       return ids
     })
 
-    return { ids: insertMany(payables) }
+    return insertMany(payables)
   }
 
   getAll() {
@@ -141,18 +142,18 @@ export default class Payables {
   markAsPaid(id) {
     const result = this.dbClient
       .prepare(
-        'UPDATE payables SET paid_at = CURRENT_TIMESTAMP, updated_at = CURRENT_TIMESTAMP WHERE id = ?'
+        'UPDATE payables SET paid_at = CURRENT_TIMESTAMP, updated_at = CURRENT_TIMESTAMP WHERE id = ? RETURNING *'
       )
-      .run(id)
+      .get(id)
 
-    if (result.changes === 0) {
+    if (!result) {
       throw new NotFoundError({
         message: `Payable with id ${id} was not found`,
         details: { id, entity: 'payable' }
       })
     }
 
-    return { changes: result.changes }
+    return result
   }
 
   delete(id) {

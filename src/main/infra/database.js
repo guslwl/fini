@@ -1,5 +1,5 @@
 import Database from 'better-sqlite3'
-import migrator from './migrator.js'
+import migrator from 'infra/migrator.js'
 
 const defaultInitializeOptions = {
   dbPath: ':memory:',

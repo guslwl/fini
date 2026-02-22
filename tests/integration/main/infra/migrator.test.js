@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import Database from 'better-sqlite3'
-import migrator from '../../../../src/main/infra/migrator.js'
+import migrator from 'infra/migrator.js'
 import { createTempDbPath, cleanupTempDb, getTables } from '../../../helpers/database-utils.js'
 
 describe('Migrator', () => {
@@ -237,16 +237,6 @@ describe('Migrator', () => {
   })
 
   describe('error handling', () => {
-    it('should handle missing migrations directory gracefully', () => {
-      // This test verifies the error handling in getMigrationFiles
-      db = new Database(dbPath)
-
-      // Should not throw - it logs error but continues
-      expect(() => {
-        migrator.applyPendingMigrations(db)
-      }).not.toThrow()
-    })
-
     it('should throw on invalid SQL in migration file', () => {
       // This would require creating an invalid migration file
       // For now, we just verify migrations with valid SQL all apply

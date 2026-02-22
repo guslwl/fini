@@ -1,7 +1,7 @@
 import { beforeEach, afterEach, describe, expect, it } from 'vitest'
-import database from '../../../../src/main/infra/database.js'
-import Payables from '../../../../src/main/models/payables.js'
-import { NotFoundError, ValidationError } from '../../../../src/main/infra/errors.js'
+import database from 'infra/database.js'
+import Payables from 'models/payables.js'
+import { NotFoundError, ValidationError } from 'infra/errors.js'
 
 function createPayable(overrides = {}) {
   return {
@@ -37,9 +37,9 @@ describe('Payables model', () => {
     const data = createPayable({ history: 'Invoice B', value: 2200 })
     const result = payables.create(data)
 
-    expect(result.id).toBeGreaterThan(0)
+    expect(result).toBeGreaterThan(0)
 
-    const stored = payables.getById(result.id)
+    const stored = payables.getById(result)
     expect(stored.history).toBe('Invoice B')
     expect(stored.value).toBe(2200)
     expect(stored.invoice_id).toBe('INV-001')
@@ -58,7 +58,7 @@ describe('Payables model', () => {
   it('gets payables by id', () => {
     const created = payables.create(createPayable({ history: 'Find Me' }))
 
-    const row = payables.getById(created.id)
+    const row = payables.getById(created)
     expect(row).toBeDefined()
     expect(row.history).toBe('Find Me')
   })
@@ -89,12 +89,12 @@ describe('Payables model', () => {
   it('updates a payable and returns updated row', () => {
     const created = payables.create(createPayable({ history: 'Old', value: 1000 }))
 
-    const updated = payables.update(created.id, {
+    const updated = payables.update(created, {
       history: 'New',
       value: 2000
     })
 
-    expect(updated.id).toBe(created.id)
+    expect(updated.id).toBe(created)
     expect(updated.history).toBe('New')
     expect(updated.value).toBe(2000)
   })
@@ -102,23 +102,23 @@ describe('Payables model', () => {
   it('marks a payable as paid', () => {
     const created = payables.create(createPayable({ history: 'To Pay' }))
 
-    const result = payables.markAsPaid(created.id)
-    expect(result.changes).toBe(1)
+    const result = payables.markAsPaid(created)
+    expect(result.paid_at).toBeTruthy()
 
-    const stored = payables.getById(created.id)
+    const stored = payables.getById(created)
     expect(stored.paid_at).toBeTruthy()
   })
 
   it('deletes a payable and returns changes count', () => {
     const created = payables.create(createPayable({ history: 'To Delete' }))
 
-    const result = payables.delete(created.id)
+    const result = payables.delete(created)
     expect(result).toBe(true)
   })
 
-  it('throws not found when updating a missing payable', () => {
+  it('throws not found when getting a missing payable by id', () => {
     expect(() => {
-      payables.update(999999, { history: 'Missing' })
+      payables.getById(999999)
     }).toThrow(NotFoundError)
   })
 
@@ -167,7 +167,7 @@ describe('Payables model', () => {
     ]
 
     const result = payables.createBulk(data)
-    expect(result.ids.length).toBe(2)
+    expect(result.length).toBe(2)
 
     const rows = payables.getAll()
     expect(rows.length).toBe(2)

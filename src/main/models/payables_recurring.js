@@ -1,4 +1,5 @@
-import { NotFoundError, ValidationError } from '../infra/errors.js'
+import { NotFoundError, ValidationError } from 'infra/errors.js'
+import booleanValueService from 'services/booleanValueService.js'
 
 export default class Payables {
   constructor(dbClient) {
@@ -11,7 +12,7 @@ export default class Payables {
     validateDueDay(due_day)
     validateShouldPostpone(should_postpone)
 
-    should_postpone = should_postpone ? 1 : 0
+    should_postpone = booleanValueService.parseToDBValue(should_postpone)
 
     const result = this.dbClient
       .prepare(
@@ -19,7 +20,7 @@ export default class Payables {
          VALUES (?, ?, ?, ?, ?)`
       )
       .run(history, due_day, should_postpone, value, notes)
-    return { id: result.lastInsertRowid }
+    return result.lastInsertRowid
   }
 
   getAll() {
@@ -47,7 +48,10 @@ export default class Payables {
     validateDueDay(recurringWithNewValues.due_day)
     validateShouldPostpone(recurringWithNewValues.should_postpone)
 
-    recurringWithNewValues.should_postpone = recurringWithNewValues.should_postpone ? 1 : 0
+    recurringWithNewValues.should_postpone = booleanValueService.parseToDBValue(
+      recurringWithNewValues.should_postpone,
+      'should_postpone'
+    )
 
     const updatedRecurring = updateRecurring(recurringWithNewValues)
 

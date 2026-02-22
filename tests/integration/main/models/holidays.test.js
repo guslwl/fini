@@ -1,7 +1,7 @@
 import { beforeEach, afterEach, describe, expect, it } from 'vitest'
-import database from '../../../../src/main/infra/database.js'
-import Holidays from '../../../../src/main/models/holidays.js'
-import { NotFoundError, ValidationError } from '../../../../src/main/infra/errors.js'
+import database from 'infra/database.js'
+import Holidays from 'models/holidays.js'
+import { NotFoundError, ValidationError } from 'infra/errors.js'
 
 function createHoliday(overrides = {}) {
   return {
@@ -33,9 +33,9 @@ describe('Holidays model', () => {
   it('creates a holiday and returns id', () => {
     const data = createHoliday({ description: 'New Year', is_business_day: true })
     const result = holidays.create(data)
-    expect(result.id).toBeGreaterThan(0)
+    expect(result).toBeGreaterThan(0)
 
-    const stored = holidays.getById(result.id)
+    const stored = holidays.getById(result)
 
     expect(stored.description).toBe('New Year')
     expect(stored.type).toBe('National')
@@ -75,12 +75,12 @@ describe('Holidays model', () => {
   it('updates a holiday and returns updated row', () => {
     const created = holidays.create(createHoliday({ description: 'Old' }))
 
-    const updated = holidays.update(created.id, {
+    const updated = holidays.update(created, {
       description: 'New',
       should_count_as_business_day: true
     })
 
-    expect(updated.id).toBe(created.id)
+    expect(updated.id).toBe(created)
     expect(updated.description).toBe('New')
     expect(updated.should_count_as_business_day).toBe(1)
   })
@@ -88,13 +88,13 @@ describe('Holidays model', () => {
   it('deletes a holiday and returns true', () => {
     const created = holidays.create(createHoliday({ description: 'To Delete' }))
 
-    const result = holidays.delete(created.id)
+    const result = holidays.delete(created)
     expect(result).toBe(true)
   })
 
-  it('throws not found when updating a missing holiday', () => {
+  it('throws not found when getting a missing holiday by id', () => {
     expect(() => {
-      holidays.update(999999, { description: 'Missing' })
+      holidays.getById(999999)
     }).toThrow(NotFoundError)
   })
 

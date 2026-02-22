@@ -3,14 +3,29 @@
  * Checks holidays and weekends to ensure dates fall on business days
  */
 
+import { addDays, format, isWeekend as dateFnsIsWeekend, parseISO, subDays } from 'date-fns'
+
+function toDateString(date) {
+  return format(date, 'yyyy-MM-dd')
+}
+
+function isTruthyFlag(value) {
+  return value === true || value === 1 || value === '1'
+}
+
+function countsAsBusinessDay(holiday) {
+  return (
+    isTruthyFlag(holiday?.is_business_day) || isTruthyFlag(holiday?.should_count_as_business_day)
+  )
+}
+
 /**
  * Check if a date is a weekend (Saturday or Sunday)
  * @param {Date} date
  * @returns {boolean}
  */
 function isWeekend(date) {
-  const day = date.getDay()
-  return day === 0 || day === 6
+  return dateFnsIsWeekend(date)
 }
 
 /**
@@ -20,8 +35,10 @@ function isWeekend(date) {
  * @returns {boolean}
  */
 function isHoliday(date, holidays) {
-  const dateString = date.toISOString().split('T')[0]
-  return holidays.some((h) => h.date === dateString)
+  const dateString = toDateString(date)
+  return holidays.some((holiday) => {
+    return holiday.date === dateString && !countsAsBusinessDay(holiday)
+  })
 }
 
 /**
@@ -42,11 +59,10 @@ function isBusinessDay(date, holidays) {
  * @returns {Date}
  */
 function findNextBusinessDay(date, holidays) {
-  const nextDate = new Date(date)
-  nextDate.setDate(nextDate.getDate() + 1)
+  let nextDate = addDays(date, 1)
 
   while (!isBusinessDay(nextDate, holidays)) {
-    nextDate.setDate(nextDate.getDate() + 1)
+    nextDate = addDays(nextDate, 1)
   }
 
   return nextDate
@@ -59,11 +75,10 @@ function findNextBusinessDay(date, holidays) {
  * @returns {Date}
  */
 function findPreviousBusinessDay(date, holidays) {
-  const prevDate = new Date(date)
-  prevDate.setDate(prevDate.getDate() - 1)
+  let prevDate = subDays(date, 1)
 
   while (!isBusinessDay(prevDate, holidays)) {
-    prevDate.setDate(prevDate.getDate() - 1)
+    prevDate = subDays(prevDate, 1)
   }
 
   return prevDate
@@ -83,11 +98,11 @@ function findPreviousBusinessDay(date, holidays) {
  */
 export function adjustForBusinessDay(dateString, shouldPostpone, holidays = []) {
   // Parse the input date
-  const date = new Date(dateString + 'T00:00:00Z')
+  const date = parseISO(dateString)
 
   // If already a business day, return unchanged
   if (isBusinessDay(date, holidays)) {
-    return dateString
+    return toDateString(date)
   }
 
   // Adjust based on shouldPostpone flag
@@ -99,7 +114,7 @@ export function adjustForBusinessDay(dateString, shouldPostpone, holidays = []) 
   }
 
   // Return as ISO string (YYYY-MM-DD)
-  return adjustedDate.toISOString().split('T')[0]
+  return toDateString(adjustedDate)
 }
 
 export default {
