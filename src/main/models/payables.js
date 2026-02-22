@@ -1,5 +1,5 @@
-import { assertValidCalendarDate } from '../validators/date-validator.js'
-import { NotFoundError } from '../infra/errors.js'
+import { assertValidCalendarDate } from 'validators/date-validator.js'
+import { NotFoundError } from 'infra/errors.js'
 
 export default class Payables {
   constructor(dbClient) {

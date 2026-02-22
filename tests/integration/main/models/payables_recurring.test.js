@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import database from '../../../../src/main/infra/database.js'
-import RecurringPayables from '../../../../src/main/models/payables_recurring.js'
-import { NotFoundError, ValidationError } from '../../../../src/main/infra/errors.js'
+import database from 'infra/database.js'
+import RecurringPayables from 'models/payables_recurring.js'
+import { NotFoundError, ValidationError } from 'infra/errors.js'
 
 function createRecurring(overrides = {}) {
   return {

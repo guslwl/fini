@@ -4,8 +4,13 @@ import path from 'path'
 
 import react from '@vitejs/plugin-react'
 
+import { mainAliases, rendererAliases } from './config/aliases.mjs'
+
 export default defineConfig({
   main: {
+    resolve: {
+      alias: mainAliases
+    },
     build: {
       rollupOptions: {
         plugins: [
@@ -25,6 +30,9 @@ export default defineConfig({
     }
   },
   preload: {
+    resolve: {
+      alias: mainAliases
+    },
     plugins: [
       externalizeDepsPlugin({
         exclude: ['@electron-toolkit/preload']
@@ -40,9 +48,7 @@ export default defineConfig({
   },
   renderer: {
     resolve: {
-      alias: {
-        '@renderer': path.resolve('src/renderer/src')
-      }
+      alias: rendererAliases
     },
     plugins: [react()]
   }

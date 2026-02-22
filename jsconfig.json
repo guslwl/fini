@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "main/*": ["src/main/*"],
+      "infra/*": ["src/main/infra/*"],
+      "models/*": ["src/main/models/*"],
+      "validators/*": ["src/main/validators/*"],
+      "services/*": ["src/main/services/*"],
+      "handlers/*": ["src/main/handlers/*"],
+      "renderer/*": ["src/renderer/src/*"]
+    }
+  },
+  "include": ["src", "tests"]
+}

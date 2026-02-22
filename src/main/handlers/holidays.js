@@ -1,6 +1,6 @@
-import { validateHoliday, validateHolidayUpdate } from '../validators/holidays.js'
-import { AppError, ValidationError } from '../infra/errors.js'
-import Holidays from '../models/holidays.js'
+import { validateHoliday, validateHolidayUpdate } from 'validators/holidays.js'
+import { AppError, ValidationError } from 'infra/errors.js'
+import Holidays from 'models/holidays.js'
 export default function holidaysHandler(ipcMain, dbClient) {
   if (!dbClient) {
     throw new AppError({

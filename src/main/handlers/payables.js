@@ -2,9 +2,9 @@ import {
   validatePayableCreate,
   validatePayableBulk,
   validatePayableUpdate
-} from '../validators/payables.js'
-import { ValidationError } from '../infra/errors.js'
-import Payables from '../models/payables.js'
+} from 'validators/payables.js'
+import { ValidationError } from 'infra/errors.js'
+import Payables from 'models/payables.js'
 
 export default function payablesHandler(ipcMain, dbClient) {
   ipcMain.handle('v1:payables:getAll', () => {

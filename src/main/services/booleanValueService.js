@@ -1,4 +1,4 @@
-import { ValidationError } from '../infra/errors.js'
+import { ValidationError } from 'infra/errors.js'
 
 /**
  * Parses and validates a boolean-like value

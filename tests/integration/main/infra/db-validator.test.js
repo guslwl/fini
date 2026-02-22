@@ -1,11 +1,8 @@
 import { describe, it, expect, afterEach } from 'vitest'
 import path from 'node:path'
 import fs from 'node:fs'
-import {
-  validateDatabasePath,
-  testDatabaseConnection
-} from '../../../../src/main/infra/db-validator.js'
-import database from '../../../../src/main/infra/database.js'
+import { validateDatabasePath, testDatabaseConnection } from 'infra/db-validator.js'
+import database from 'infra/database.js'
 import {
   createTempDbPath,
   cleanupTempDb,

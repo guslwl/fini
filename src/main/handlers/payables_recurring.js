@@ -1,9 +1,9 @@
-import { validatePayableCreate, validatePayableUpdate } from '../validators/payables_recurring.js'
-import { ValidationError } from '../infra/errors.js'
-import Payables from '../models/payables_recurring.js'
-import PayablesModel from '../models/payables.js'
-import Holidays from '../models/holidays.js'
-import { adjustForBusinessDay } from '../services/businessDayService.js'
+import { validatePayableCreate, validatePayableUpdate } from 'validators/payables_recurring.js'
+import { ValidationError } from 'infra/errors.js'
+import Payables from 'models/payables_recurring.js'
+import PayablesModel from 'models/payables.js'
+import Holidays from 'models/holidays.js'
+import { adjustForBusinessDay } from 'services/businessDayService.js'
 
 export default function payablesRecurringHandler(ipcMain, dbClient) {
   ipcMain.handle('v1:recurring:getAll', () => {

@@ -1,7 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import businessDayService, {
-  adjustForBusinessDay
-} from '../../../../src/main/services/businessDayService.js'
+import businessDayService, { adjustForBusinessDay } from 'services/businessDayService.js'
 
 const { isBusinessDay, isHoliday, isWeekend } = businessDayService
 

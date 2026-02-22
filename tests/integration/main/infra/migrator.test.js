@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import Database from 'better-sqlite3'
-import migrator from '../../../../src/main/infra/migrator.js'
+import migrator from 'infra/migrator.js'
 import { createTempDbPath, cleanupTempDb, getTables } from '../../../helpers/database-utils.js'
 
 describe('Migrator', () => {

@@ -1,6 +1,6 @@
-import { assertValidCalendarDate } from '../validators/date-validator.js'
-import { NotFoundError } from '../infra/errors.js'
-import booleanValueService from '../services/booleanValueService.js'
+import { assertValidCalendarDate } from 'validators/date-validator.js'
+import { NotFoundError } from 'infra/errors.js'
+import booleanValueService from 'services/booleanValueService.js'
 
 export default class Holidays {
   constructor(dbClient) {

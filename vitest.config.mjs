@@ -1,6 +1,10 @@
 import { defineConfig } from 'vitest/config'
+import { allAliases } from './config/aliases.mjs'
 
 export default defineConfig({
+  resolve: {
+    alias: allAliases
+  },
   test: {
     environment: 'node',
     globals: true,

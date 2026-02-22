@@ -1,7 +1,7 @@
 import { BrowserWindow } from 'electron'
-import * as settings from '../infra/settings.js'
-import { testDatabaseConnection } from '../infra/db-validator.js'
-import { selectExistingDatabase, createNewDatabase } from './database-select.js'
+import * as settings from 'infra/settings.js'
+import { testDatabaseConnection } from 'infra/db-validator.js'
+import { selectExistingDatabase, createNewDatabase } from 'handlers/database-select.js'
 
 /**
  * Register IPC handlers for database operations

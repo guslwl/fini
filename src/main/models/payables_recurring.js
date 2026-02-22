@@ -1,5 +1,5 @@
-import { NotFoundError, ValidationError } from '../infra/errors.js'
-import booleanValueService from '../services/booleanValueService.js'
+import { NotFoundError, ValidationError } from 'infra/errors.js'
+import booleanValueService from 'services/booleanValueService.js'
 
 export default class Payables {
   constructor(dbClient) {

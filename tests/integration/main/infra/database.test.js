@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach } from 'vitest'
-import database from '../../../../src/main/infra/database.js'
+import database from 'infra/database.js'
 import {
   createTempDbPath,
   cleanupTempDb,

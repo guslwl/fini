@@ -2,19 +2,19 @@ import { app, BrowserWindow, ipcMain } from 'electron'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import * as settings from './infra/settings.js'
+import * as settings from 'infra/settings.js'
 
-import database from './infra/database.js'
-import { testDatabaseConnection } from './infra/db-validator.js'
-import { promptDatabaseSelection } from './handlers/database-select.js'
-import { createApplicationMenu, updateDatabaseMenuLabel } from './menu.js'
+import database from 'infra/database.js'
+import { testDatabaseConnection } from 'infra/db-validator.js'
+import { promptDatabaseSelection } from 'handlers/database-select.js'
+import { createApplicationMenu, updateDatabaseMenuLabel } from 'main/menu.js'
 
-import databaseHandler from './handlers/database.js'
-import holidaysHandler from './handlers/holidays.js'
-import payablesRecurringHandler from './handlers/payables_recurring.js'
-import payablesHandler from './handlers/payables.js'
+import databaseHandler from 'handlers/database.js'
+import holidaysHandler from 'handlers/holidays.js'
+import payablesRecurringHandler from 'handlers/payables_recurring.js'
+import payablesHandler from 'handlers/payables.js'
 
-import * as errorHandler from './infra/error-handler.js'
+import * as errorHandler from 'infra/error-handler.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
