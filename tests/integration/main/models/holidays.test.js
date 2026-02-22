@@ -33,9 +33,9 @@ describe('Holidays model', () => {
   it('creates a holiday and returns id', () => {
     const data = createHoliday({ description: 'New Year', is_business_day: true })
     const result = holidays.create(data)
-    expect(result.id).toBeGreaterThan(0)
+    expect(result).toBeGreaterThan(0)
 
-    const stored = holidays.getById(result.id)
+    const stored = holidays.getById(result)
 
     expect(stored.description).toBe('New Year')
     expect(stored.type).toBe('National')
@@ -75,12 +75,12 @@ describe('Holidays model', () => {
   it('updates a holiday and returns updated row', () => {
     const created = holidays.create(createHoliday({ description: 'Old' }))
 
-    const updated = holidays.update(created.id, {
+    const updated = holidays.update(created, {
       description: 'New',
       should_count_as_business_day: true
     })
 
-    expect(updated.id).toBe(created.id)
+    expect(updated.id).toBe(created)
     expect(updated.description).toBe('New')
     expect(updated.should_count_as_business_day).toBe(1)
   })
@@ -88,7 +88,7 @@ describe('Holidays model', () => {
   it('deletes a holiday and returns true', () => {
     const created = holidays.create(createHoliday({ description: 'To Delete' }))
 
-    const result = holidays.delete(created.id)
+    const result = holidays.delete(created)
     expect(result).toBe(true)
   })
 

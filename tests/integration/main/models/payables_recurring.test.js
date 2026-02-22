@@ -34,9 +34,9 @@ describe('Recurring payables model', () => {
     it('creates a recurring payable and returns id', () => {
       const result = recurringPayables.create(createRecurring({ history: 'Internet', value: 9000 }))
 
-      expect(result.id).toBeGreaterThan(0)
+      expect(result).toBeGreaterThan(0)
 
-      const stored = recurringPayables.getById(result.id)
+      const stored = recurringPayables.getById(result)
       expect(stored.history).toBe('Internet')
       expect(stored.value).toBe(9000)
       expect(stored.due_day).toBe(10)
@@ -54,7 +54,7 @@ describe('Recurring payables model', () => {
         })
       )
 
-      const stored = recurringPayables.getById(result.id)
+      const stored = recurringPayables.getById(result)
       expect(stored.due_day).toBeNull()
       expect(stored.notes).toBeNull()
       expect(stored.should_postpone).toBe(0)
@@ -74,7 +74,7 @@ describe('Recurring payables model', () => {
     it('gets recurring payable by id', () => {
       const created = recurringPayables.create(createRecurring({ history: 'Find me' }))
 
-      const existing = recurringPayables.getById(created.id)
+      const existing = recurringPayables.getById(created)
 
       expect(existing).toBeDefined()
       expect(existing.history).toBe('Find me')
@@ -93,16 +93,16 @@ describe('Recurring payables model', () => {
 
       db.prepare('UPDATE payables_recurring SET updated_at = ? WHERE id = ?').run(
         '2000-01-01 00:00:00',
-        created.id
+        created
       )
 
-      const updated = recurringPayables.update(created.id, {
+      const updated = recurringPayables.update(created, {
         history: 'New name',
         value: 25000,
         should_postpone: false
       })
 
-      expect(updated.id).toBe(created.id)
+      expect(updated.id).toBe(created)
       expect(updated.history).toBe('New name')
       expect(updated.value).toBe(25000)
       expect(updated.should_postpone).toBe(0)
@@ -120,7 +120,7 @@ describe('Recurring payables model', () => {
     it('deletes an existing recurring payable and returns changes count', () => {
       const created = recurringPayables.create(createRecurring({ history: 'To delete' }))
 
-      const result = recurringPayables.delete(created.id)
+      const result = recurringPayables.delete(created)
 
       expect(result).toBe(true)
     })

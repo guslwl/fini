@@ -21,7 +21,7 @@ export default class Holidays {
          VALUES (?, ?, ?, ?, ?)`
       )
       .run(description, type, date, is_business_day, should_count_as_business_day)
-    return { id: result.lastInsertRowid }
+    return result.lastInsertRowid
   }
 
   getAll() {

@@ -20,7 +20,7 @@ export default class Payables {
          VALUES (?, ?, ?, ?, ?)`
       )
       .run(history, due_day, should_postpone, value, notes)
-    return { id: result.lastInsertRowid }
+    return result.lastInsertRowid
   }
 
   getAll() {
