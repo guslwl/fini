@@ -19,18 +19,15 @@ export function validateHoliday(data) {
     errors.push('date must be in YYYY-MM-DD format')
   }
 
-  if (data.type && typeof data.type !== 'string') {
+  if (typeof data.type !== 'string') {
     errors.push('type must be a string')
   }
 
-  if (data.is_business_day !== undefined && typeof data.is_business_day !== 'boolean') {
+  if (typeof data.is_business_day !== 'boolean') {
     errors.push('is_business_day must be a boolean')
   }
 
-  if (
-    data.should_count_as_business_day !== undefined &&
-    typeof data.should_count_as_business_day !== 'boolean'
-  ) {
+  if (typeof data.should_count_as_business_day !== 'boolean') {
     errors.push('should_count_as_business_day must be a boolean')
   }
 
@@ -78,14 +75,11 @@ export function validateHolidayUpdate(data) {
     errors.push('type must be a string')
   }
 
-  if (data.is_business_day !== undefined && typeof data.is_business_day !== 'boolean') {
+  if (typeof data.is_business_day !== 'boolean') {
     errors.push('is_business_day must be a boolean')
   }
 
-  if (
-    data.should_count_as_business_day !== undefined &&
-    typeof data.should_count_as_business_day !== 'boolean'
-  ) {
+  if (typeof data.should_count_as_business_day !== 'boolean') {
     errors.push('should_count_as_business_day must be a boolean')
   }
 
