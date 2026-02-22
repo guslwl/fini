@@ -11,14 +11,14 @@ export default function databaseHandler(ipc) {
   /**
    * Get the current database path
    */
-  ipc.handle('database:getCurrentPath', async () => {
+  ipc.handle('v1:database:getCurrentPath', async () => {
     return settings.getLastDatabasePath()
   })
 
   /**
    * Select an existing database file
    */
-  ipc.handle('database:selectExisting', async (event) => {
+  ipc.handle('v1:database:selectExisting', async (event) => {
     const mainWindow = BrowserWindow.fromWebContents(event.sender)
     const path = await selectExistingDatabase(mainWindow)
 
@@ -38,7 +38,7 @@ export default function databaseHandler(ipc) {
   /**
    * Create a new database file
    */
-  ipc.handle('database:createNew', async (event) => {
+  ipc.handle('v1:database:createNew', async (event) => {
     const mainWindow = BrowserWindow.fromWebContents(event.sender)
     const path = await createNewDatabase(mainWindow)
 
@@ -55,7 +55,7 @@ export default function databaseHandler(ipc) {
    * Switch to a different database
    * Note: Renderer should reload after this call
    */
-  ipc.handle('database:switch', async (event, dbPath) => {
+  ipc.handle('v1:database:switch', async (event, dbPath) => {
     if (!dbPath) {
       return { success: false, error: 'Database path is required' }
     }

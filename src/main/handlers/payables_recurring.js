@@ -6,12 +6,12 @@ import Holidays from '../models/holidays.js'
 import { adjustForBusinessDay } from '../services/businessDayService.js'
 
 export default function payablesRecurringHandler(ipcMain, dbClient) {
-  ipcMain.handle('recurring:getAll', () => {
+  ipcMain.handle('v1:recurring:getAll', () => {
     const payables = new Payables(dbClient)
     return payables.getAll()
   })
 
-  ipcMain.handle('recurring:create', (event, data) => {
+  ipcMain.handle('v1:recurring:create', (event, data) => {
     const { isValid, errors } = validatePayableCreate(data)
     if (!isValid) {
       throw new ValidationError({
@@ -23,7 +23,7 @@ export default function payablesRecurringHandler(ipcMain, dbClient) {
     return payables.create(data)
   })
 
-  ipcMain.handle('recurring:update', (event, id, data) => {
+  ipcMain.handle('v1:recurring:update', (event, id, data) => {
     const { isValid, errors } = validatePayableUpdate(data)
     if (!isValid) {
       throw new ValidationError({
@@ -35,12 +35,12 @@ export default function payablesRecurringHandler(ipcMain, dbClient) {
     return payables.update(id, data)
   })
 
-  ipcMain.handle('recurring:delete', (event, id) => {
+  ipcMain.handle('v1:recurring:delete', (event, id) => {
     const payables = new Payables(dbClient)
     return payables.delete(id)
   })
 
-  ipcMain.handle('recurring:generateForMonth', (event, year, month) => {
+  ipcMain.handle('v1:recurring:generateForMonth', (event, year, month) => {
     // Validate input
     if (!Number.isInteger(year) || !Number.isInteger(month)) {
       throw new ValidationError({

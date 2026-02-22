@@ -8,22 +8,22 @@ export default function holidaysHandler(ipcMain, dbClient) {
     })
   }
 
-  ipcMain.handle('holidays:getAll', () => {
+  ipcMain.handle('v1:holidays:getAll', () => {
     const holidays = new Holidays(dbClient)
     return holidays.getAll()
   })
 
-  ipcMain.handle('holidays:getByYear', (event, year) => {
+  ipcMain.handle('v1:holidays:getByYear', (event, year) => {
     const holidays = new Holidays(dbClient)
     return holidays.getByYear(year)
   })
 
-  ipcMain.handle('holidays:getByDate', (event, date) => {
+  ipcMain.handle('v1:holidays:getByDate', (event, date) => {
     const holidays = new Holidays(dbClient)
     return holidays.getByDate(date)
   })
 
-  ipcMain.handle('holidays:create', (event, data) => {
+  ipcMain.handle('v1:holidays:create', (event, data) => {
     const { isValid, errors } = validateHoliday(data)
     if (!isValid) {
       throw new ValidationError({
@@ -35,7 +35,7 @@ export default function holidaysHandler(ipcMain, dbClient) {
     return holidays.create(data)
   })
 
-  ipcMain.handle('holidays:update', (event, id, data) => {
+  ipcMain.handle('v1:holidays:update', (event, id, data) => {
     const { isValid, errors } = validateHolidayUpdate(data)
     if (!isValid) {
       throw new ValidationError({
@@ -47,7 +47,7 @@ export default function holidaysHandler(ipcMain, dbClient) {
     return holidays.update(id, data)
   })
 
-  ipcMain.handle('holidays:delete', (event, id) => {
+  ipcMain.handle('v1:holidays:delete', (event, id) => {
     const holidays = new Holidays(dbClient)
     return holidays.delete(id)
   })
