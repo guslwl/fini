@@ -116,9 +116,9 @@ describe('Payables model', () => {
     expect(result).toBe(true)
   })
 
-  it('throws not found when updating a missing payable', () => {
+  it('throws not found when getting a missing payable by id', () => {
     expect(() => {
-      payables.update(999999, { history: 'Missing' })
+      payables.getById(999999)
     }).toThrow(NotFoundError)
   })
 

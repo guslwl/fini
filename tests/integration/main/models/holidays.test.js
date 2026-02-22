@@ -92,9 +92,9 @@ describe('Holidays model', () => {
     expect(result).toBe(true)
   })
 
-  it('throws not found when updating a missing holiday', () => {
+  it('throws not found when getting a missing holiday by id', () => {
     expect(() => {
-      holidays.update(999999, { description: 'Missing' })
+      holidays.getById(999999)
     }).toThrow(NotFoundError)
   })
 

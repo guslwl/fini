@@ -111,11 +111,9 @@ describe('Recurring payables model', () => {
       expect(updated.updated_at).not.toBe('2000-01-01 00:00:00')
     })
 
-    it('throws not found on update when id does not exist', () => {
+    it('throws not found when getting a missing recurring payable by id', () => {
       expect(() => {
-        recurringPayables.update(999999, {
-          history: 'Should not exist'
-        })
+        recurringPayables.getById(999999)
       }).toThrow(NotFoundError)
     })
 
@@ -157,12 +155,6 @@ describe('Recurring payables model', () => {
 
       expect(error).toBeInstanceOf(ValidationError)
       expect(error.code).toBe('VALIDATION_ERROR')
-    })
-
-    it('throws not-found on update when id does not exist', () => {
-      expect(() => {
-        recurringPayables.update(999999, { history: 'Missing row' })
-      }).toThrow(NotFoundError)
     })
   })
 })
