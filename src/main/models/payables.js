@@ -11,6 +11,7 @@ export default class Payables {
       payable
 
     assertValidCalendarDate(due_date, 'due_date')
+
     if (preferred_date !== null && preferred_date !== undefined) {
       assertValidCalendarDate(preferred_date, 'preferred_date')
     }
