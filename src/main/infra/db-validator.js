@@ -1,5 +1,6 @@
 import Database from 'better-sqlite3'
 import { promises as fs } from 'fs'
+import path from 'path'
 
 /**
  * Validates if a database file exists and is accessible
@@ -57,8 +58,7 @@ export async function testDatabaseConnection(dbPath) {
  */
 export async function validateNewDatabasePath(dbPath) {
   try {
-    const path = new URL(`file://${dbPath}`).pathname
-    const dirname = path.substring(0, path.lastIndexOf('/'))
+    const dirname = path.dirname(dbPath)
 
     // Check if parent directory exists and is writable
     await fs.access(dirname, fs.constants.W_OK)
