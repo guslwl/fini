@@ -29,7 +29,7 @@ const createIpcMain = (baseIpcMain) => ({
       } catch (error) {
         const normalizedError = errorHandler.normalizeError(error)
         errorHandler.logError(`ipc:${channel}`, normalizedError)
-        throw new errorHandler.toIpcError(normalizedError)
+        throw errorHandler.toIpcError(normalizedError)
       }
     })
   }
