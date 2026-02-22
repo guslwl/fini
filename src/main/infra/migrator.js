@@ -18,7 +18,7 @@ function getMigrationFiles(directory) {
   try {
     const files = fs
       .readdirSync(directory)
-      .filter((file) => file.endsWith('.sql') && !file.endsWith('-down.sql'))
+      .filter((file) => file.endsWith('.sql'))
       .sort()
     return files
   } catch (error) {
