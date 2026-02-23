@@ -34,5 +34,11 @@ export default [
       ...eslintPluginReactRefresh.configs.vite.rules
     }
   },
+  {
+    files: ['src/renderer/src/**/*.{js,jsx}'],
+    rules: {
+      'react/prop-types': 'off'
+    }
+  },
   eslintConfigPrettier
 ]
