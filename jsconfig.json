@@ -8,7 +8,8 @@
       "validators/*": ["src/main/validators/*"],
       "services/*": ["src/main/services/*"],
       "handlers/*": ["src/main/handlers/*"],
-      "renderer/*": ["src/renderer/src/*"]
+      "renderer/*": ["src/renderer/src/*"],
+      "@/*": ["src/renderer/src/*"]
     }
   },
   "include": ["src", "tests"]
