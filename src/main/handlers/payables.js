@@ -62,4 +62,9 @@ export default function payablesHandler(ipcMain, dbClient) {
     const payables = new Payables(dbClient)
     return payables.markAsPaid(id)
   })
+
+  ipcMain.handle('v1:payables:markAsUnpaid', (event, id) => {
+    const payables = new Payables(dbClient)
+    return payables.markAsUnpaid(id)
+  })
 }

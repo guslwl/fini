@@ -156,6 +156,23 @@ export default class Payables {
     return result
   }
 
+  markAsUnpaid(id) {
+    const result = this.dbClient
+      .prepare(
+        'UPDATE payables SET paid_at = NULL, updated_at = CURRENT_TIMESTAMP WHERE id = ? RETURNING *'
+      )
+      .get(id)
+
+    if (!result) {
+      throw new NotFoundError({
+        message: `Payable with id ${id} was not found`,
+        details: { id, entity: 'payable' }
+      })
+    }
+
+    return result
+  }
+
   delete(id) {
     const result = this.dbClient.prepare('DELETE FROM payables WHERE id = ?').run(id)
 

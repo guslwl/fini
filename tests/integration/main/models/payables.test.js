@@ -109,6 +109,17 @@ describe('Payables model', () => {
     expect(stored.paid_at).toBeTruthy()
   })
 
+  it('marks a payable as unpaid', () => {
+    const created = payables.create(createPayable({ history: 'To Unpay' }))
+    payables.markAsPaid(created)
+
+    const result = payables.markAsUnpaid(created)
+    expect(result.paid_at).toBeNull()
+
+    const stored = payables.getById(created)
+    expect(stored.paid_at).toBeNull()
+  })
+
   it('deletes a payable and returns changes count', () => {
     const created = payables.create(createPayable({ history: 'To Delete' }))
 
@@ -125,6 +136,12 @@ describe('Payables model', () => {
   it('throws not found when marking a missing payable as paid', () => {
     expect(() => {
       payables.markAsPaid(999999)
+    }).toThrow(NotFoundError)
+  })
+
+  it('throws not found when marking a missing payable as unpaid', () => {
+    expect(() => {
+      payables.markAsUnpaid(999999)
     }).toThrow(NotFoundError)
   })
 
