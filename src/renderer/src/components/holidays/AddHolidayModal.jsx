@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 
 const initialForm = {
   description: '',
@@ -10,13 +11,11 @@ const initialForm = {
 
 function AddHolidayModal({ open, onClose, onCreate, onUpdate, mode = 'create', initialData }) {
   const [form, setForm] = useState(initialForm)
-  const [error, setError] = useState('')
   const [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
     if (!open) {
       setForm(initialForm)
-      setError('')
       setIsSaving(false)
     } else if (mode === 'edit' && initialData) {
       setForm({
@@ -26,10 +25,8 @@ function AddHolidayModal({ open, onClose, onCreate, onUpdate, mode = 'create', i
         is_business_day: initialData.is_business_day || false,
         should_count_as_business_day: initialData.should_count_as_business_day || false
       })
-      setError('')
     } else if (mode === 'create') {
       setForm(initialForm)
-      setError('')
     }
   }, [open, mode, initialData])
 
@@ -39,15 +36,14 @@ function AddHolidayModal({ open, onClose, onCreate, onUpdate, mode = 'create', i
 
   async function handleSubmit(event) {
     event.preventDefault()
-    setError('')
 
     if (!form.description.trim()) {
-      setError('Description is required.')
+      toast.error('Description is required.')
       return
     }
 
     if (!form.date) {
-      setError('Date is required.')
+      toast.error('Date is required.')
       return
     }
 
@@ -62,14 +58,17 @@ function AddHolidayModal({ open, onClose, onCreate, onUpdate, mode = 'create', i
         should_count_as_business_day: form.should_count_as_business_day
       }
 
+      let hasSaved = false
+
       if (mode === 'edit') {
-        await onUpdate(payload)
+        hasSaved = await onUpdate(payload)
       } else {
-        await onCreate(payload)
+        hasSaved = await onCreate(payload)
       }
-      onClose()
-    } catch (saveError) {
-      setError(saveError?.message || 'Failed to save holiday.')
+
+      if (hasSaved) {
+        onClose()
+      }
     } finally {
       setIsSaving(false)
     }
@@ -148,8 +147,6 @@ function AddHolidayModal({ open, onClose, onCreate, onUpdate, mode = 'create', i
               <span>Count as business day</span>
             </label>
           </div>
-
-          {error ? <p className="text-sm text-foreground">{error}</p> : null}
 
           <div className="flex justify-end gap-2 pt-2">
             <button

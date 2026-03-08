@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom'
+import { Toaster } from 'sonner'
 import SidebarNav from '@/components/navigation/SidebarNav'
 
 function AppShell() {
@@ -14,6 +15,8 @@ function AppShell() {
       <main className="flex-1 p-6">
         <Outlet />
       </main>
+
+      <Toaster />
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import { Plus } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
+import { toast } from 'sonner'
 
 import AddPayableModal from '@/components/payables/AddPayableModal'
 import EditPayableModal from '@/components/payables/EditPayableModal'
@@ -13,7 +14,6 @@ function effectiveDate(payable) {
 function PayablesPage() {
   const [payables, setPayables] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState('')
   const [statusFilter, setStatusFilter] = useState('unpaid')
   const [searchFilter, setSearchFilter] = useState('')
   const [monthFilter, setMonthFilter] = useState('')
@@ -23,21 +23,21 @@ function PayablesPage() {
 
   async function loadPayables() {
     setIsLoading(true)
-    setError('')
 
     try {
       const rows = await window.api.v1.payables.getAll()
       setPayables(Array.isArray(rows) ? rows : [])
     } catch (loadError) {
-      setError(loadError?.message || 'Failed to load payables.')
+      toast.error(loadError?.message || 'Failed to load payables.')
       setPayables([])
+      throw loadError
     } finally {
       setIsLoading(false)
     }
   }
 
   useEffect(() => {
-    loadPayables()
+    loadPayables().catch(() => {})
   }, [])
   const filteredPayables = useMemo(() => {
     const normalizedSearch = searchFilter.trim().toLowerCase()
@@ -82,13 +82,37 @@ function PayablesPage() {
   }, [monthFilter, payables, searchFilter, sortOption, statusFilter])
 
   async function handleCreatePayable(payload) {
-    await window.api.v1.payables.create(payload)
-    await loadPayables()
+    let hasCreated = false
+
+    try {
+      await window.api.v1.payables.create(payload)
+      hasCreated = true
+      await loadPayables()
+      toast.success('Payable created successfully')
+      return true
+    } catch (createError) {
+      if (!hasCreated) {
+        toast.error(createError?.message || 'Failed to create payable.')
+      }
+      return false
+    }
   }
 
   async function handleUpdatePayable(id, payload) {
-    await window.api.v1.payables.update(id, payload)
-    await loadPayables()
+    let hasUpdated = false
+
+    try {
+      await window.api.v1.payables.update(id, payload)
+      hasUpdated = true
+      await loadPayables()
+      toast.success('Payable updated successfully')
+      return true
+    } catch (updateError) {
+      if (!hasUpdated) {
+        toast.error(updateError?.message || 'Failed to update payable.')
+      }
+      return false
+    }
   }
 
   async function handleDeletePayable(payable) {
@@ -97,8 +121,18 @@ function PayablesPage() {
       return
     }
 
-    await window.api.v1.payables.delete(payable.id)
-    await loadPayables()
+    let hasDeleted = false
+
+    try {
+      await window.api.v1.payables.delete(payable.id)
+      hasDeleted = true
+      await loadPayables()
+      toast.success('Payable deleted successfully')
+    } catch (deleteError) {
+      if (!hasDeleted) {
+        toast.error(deleteError?.message || 'Failed to delete payable.')
+      }
+    }
   }
 
   async function handleMarkPaid(payable) {
@@ -106,8 +140,18 @@ function PayablesPage() {
       return
     }
 
-    await window.api.v1.payables.markAsPaid(payable.id)
-    await loadPayables()
+    let hasMarkedPaid = false
+
+    try {
+      await window.api.v1.payables.markAsPaid(payable.id)
+      hasMarkedPaid = true
+      await loadPayables()
+      toast.success('Payable marked as paid')
+    } catch (markPaidError) {
+      if (!hasMarkedPaid) {
+        toast.error(markPaidError?.message || 'Failed to mark payable as paid.')
+      }
+    }
   }
 
   async function handleMarkUnpaid(payable) {
@@ -115,8 +159,18 @@ function PayablesPage() {
       return
     }
 
-    await window.api.v1.payables.markAsUnpaid(payable.id)
-    await loadPayables()
+    let hasMarkedUnpaid = false
+
+    try {
+      await window.api.v1.payables.markAsUnpaid(payable.id)
+      hasMarkedUnpaid = true
+      await loadPayables()
+      toast.success('Payable marked as unpaid')
+    } catch (markUnpaidError) {
+      if (!hasMarkedUnpaid) {
+        toast.error(markUnpaidError?.message || 'Failed to mark payable as unpaid.')
+      }
+    }
   }
 
   return (
@@ -149,12 +203,6 @@ function PayablesPage() {
         onMonthChange={setMonthFilter}
         onSortChange={setSortOption}
       />
-
-      {error ? (
-        <div className="rounded-md border border-border bg-muted/30 p-3 text-sm text-foreground">
-          {error}
-        </div>
-      ) : null}
 
       <PayablesTable
         rows={filteredPayables}

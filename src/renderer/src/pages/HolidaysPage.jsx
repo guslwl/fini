@@ -1,6 +1,6 @@
 import { Plus } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
-import { toast, Toaster } from 'sonner'
+import { toast } from 'sonner'
 
 import AddHolidayModal from '@/components/holidays/AddHolidayModal'
 import DeleteConfirmDialog from '@/components/holidays/DeleteConfirmDialog'
@@ -17,28 +17,27 @@ function HolidaysPage() {
   const [sortOption, setSortOption] = useState('date-asc')
   const [holidays, setHolidays] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState('')
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
   const [editingHoliday, setEditingHoliday] = useState(null)
   const [deletingHolidayId, setDeletingHolidayId] = useState(null)
 
   async function loadHolidays(year) {
     setIsLoading(true)
-    setError('')
 
     try {
       const rows = await window.api.v1.holidays.getByYear(year)
       setHolidays(Array.isArray(rows) ? rows : [])
     } catch (loadError) {
-      setError(loadError?.message || 'Failed to load holidays.')
+      toast.error(loadError?.message || 'Failed to load holidays.')
       setHolidays([])
+      throw loadError
     } finally {
       setIsLoading(false)
     }
   }
 
   useEffect(() => {
-    loadHolidays(selectedYear)
+    loadHolidays(selectedYear).catch(() => {})
   }, [selectedYear])
 
   const filteredHolidays = useMemo(() => {
@@ -76,35 +75,62 @@ function HolidaysPage() {
   }, [descriptionFilter, hidePast, holidays, sortOption])
 
   async function handleCreateHoliday(payload) {
-    await window.api.v1.holidays.create(payload)
-    await loadHolidays(selectedYear)
-    toast.success('Holiday created successfully')
+    let hasCreated = false
+
+    try {
+      await window.api.v1.holidays.create(payload)
+      hasCreated = true
+      await loadHolidays(selectedYear)
+      toast.success('Holiday created successfully')
+      return true
+    } catch (createError) {
+      if (!hasCreated) {
+        toast.error(createError?.message || 'Failed to create holiday.')
+      }
+      return false
+    }
   }
 
-  async function handleEditHoliday(holiday) {
+  function handleEditHoliday(holiday) {
     setEditingHoliday(holiday)
     setIsAddModalOpen(true)
   }
 
   async function handleUpdateHoliday(payload) {
-    await window.api.v1.holidays.update(editingHoliday.id, payload)
-    await loadHolidays(selectedYear)
-    setEditingHoliday(null)
-    toast.success('Holiday updated successfully')
+    let hasUpdated = false
+
+    try {
+      await window.api.v1.holidays.update(editingHoliday.id, payload)
+      hasUpdated = true
+      await loadHolidays(selectedYear)
+      setEditingHoliday(null)
+      toast.success('Holiday updated successfully')
+      return true
+    } catch (updateError) {
+      if (!hasUpdated) {
+        toast.error(updateError?.message || 'Failed to update holiday.')
+      }
+      return false
+    }
   }
 
-  async function handleDeleteHoliday(holiday) {
+  function handleDeleteHoliday(holiday) {
     setDeletingHolidayId(holiday.id)
   }
 
   async function handleConfirmDelete() {
+    let hasDeleted = false
+
     try {
       await window.api.v1.holidays.delete(deletingHolidayId)
-      await loadHolidays(selectedYear)
+      hasDeleted = true
       setDeletingHolidayId(null)
+      await loadHolidays(selectedYear)
       toast.success('Holiday deleted successfully')
     } catch (deleteError) {
-      toast.error(deleteError?.message || 'Failed to delete holiday')
+      if (!hasDeleted) {
+        toast.error(deleteError?.message || 'Failed to delete holiday.')
+      }
     }
   }
 
@@ -144,12 +170,6 @@ function HolidaysPage() {
         onSortChange={setSortOption}
       />
 
-      {error ? (
-        <div className="rounded-md border border-border bg-muted/30 p-3 text-sm text-foreground">
-          {error}
-        </div>
-      ) : null}
-
       <HolidaysTable
         rows={filteredHolidays}
         isLoading={isLoading}
@@ -175,8 +195,6 @@ function HolidaysPage() {
         onConfirm={handleConfirmDelete}
         holidayDescription={holidays.find((h) => h.id === deletingHolidayId)?.description || ''}
       />
-
-      <Toaster />
     </section>
   )
 }

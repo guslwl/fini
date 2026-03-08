@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 
 import { centsToDecimalString, decimalToCents } from '@/lib/utils'
 
@@ -13,7 +14,6 @@ const emptyForm = {
 
 function EditPayableModal({ open, payable, onClose, onSave }) {
   const [form, setForm] = useState(emptyForm)
-  const [error, setError] = useState('')
   const [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
@@ -26,13 +26,11 @@ function EditPayableModal({ open, payable, onClose, onSave }) {
         invoice_id: payable.invoice_id || '',
         account_id: payable.account_id || ''
       })
-      setError('')
       setIsSaving(false)
     }
 
     if (!open) {
       setForm(emptyForm)
-      setError('')
       setIsSaving(false)
     }
   }, [open, payable])
@@ -43,28 +41,27 @@ function EditPayableModal({ open, payable, onClose, onSave }) {
 
   async function handleSubmit(event) {
     event.preventDefault()
-    setError('')
 
     if (!form.history.trim()) {
-      setError('History is required.')
+      toast.error('History is required.')
       return
     }
 
     if (!form.due_date) {
-      setError('Due date is required.')
+      toast.error('Due date is required.')
       return
     }
 
     const centsValue = decimalToCents(form.value)
     if (centsValue === null) {
-      setError('Value must be a valid amount with up to 2 decimal places.')
+      toast.error('Value must be a valid amount with up to 2 decimal places.')
       return
     }
 
     setIsSaving(true)
 
     try {
-      await onSave(payable.id, {
+      const hasSaved = await onSave(payable.id, {
         history: form.history.trim(),
         value: centsValue,
         due_date: form.due_date,
@@ -72,9 +69,10 @@ function EditPayableModal({ open, payable, onClose, onSave }) {
         invoice_id: form.invoice_id.trim() || null,
         account_id: form.account_id.trim() || null
       })
-      onClose()
-    } catch (saveError) {
-      setError(saveError?.message || 'Failed to update payable.')
+
+      if (hasSaved) {
+        onClose()
+      }
     } finally {
       setIsSaving(false)
     }
@@ -156,8 +154,6 @@ function EditPayableModal({ open, payable, onClose, onSave }) {
               />
             </label>
           </div>
-
-          {error ? <p className="text-sm text-foreground">{error}</p> : null}
 
           <div className="flex justify-end gap-2 pt-2">
             <button

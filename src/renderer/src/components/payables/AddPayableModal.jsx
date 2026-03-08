@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 
 import { decimalToCents } from '@/lib/utils'
 
@@ -13,13 +14,11 @@ const initialForm = {
 
 function AddPayableModal({ open, onClose, onCreate }) {
   const [form, setForm] = useState(initialForm)
-  const [error, setError] = useState('')
   const [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
     if (!open) {
       setForm(initialForm)
-      setError('')
       setIsSaving(false)
     }
   }, [open])
@@ -30,28 +29,27 @@ function AddPayableModal({ open, onClose, onCreate }) {
 
   async function handleSubmit(event) {
     event.preventDefault()
-    setError('')
 
     if (!form.history.trim()) {
-      setError('History is required.')
+      toast.error('History is required.')
       return
     }
 
     if (!form.due_date) {
-      setError('Due date is required.')
+      toast.error('Due date is required.')
       return
     }
 
     const centsValue = decimalToCents(form.value)
     if (centsValue === null) {
-      setError('Value must be a valid amount with up to 2 decimal places.')
+      toast.error('Value must be a valid amount with up to 2 decimal places.')
       return
     }
 
     setIsSaving(true)
 
     try {
-      await onCreate({
+      const hasCreated = await onCreate({
         history: form.history.trim(),
         value: centsValue,
         due_date: form.due_date,
@@ -59,9 +57,10 @@ function AddPayableModal({ open, onClose, onCreate }) {
         invoice_id: form.invoice_id.trim() || null,
         account_id: form.account_id.trim() || null
       })
-      onClose()
-    } catch (saveError) {
-      setError(saveError?.message || 'Failed to create payable.')
+
+      if (hasCreated) {
+        onClose()
+      }
     } finally {
       setIsSaving(false)
     }
@@ -143,8 +142,6 @@ function AddPayableModal({ open, onClose, onCreate }) {
               />
             </label>
           </div>
-
-          {error ? <p className="text-sm text-foreground">{error}</p> : null}
 
           <div className="flex justify-end gap-2 pt-2">
             <button
