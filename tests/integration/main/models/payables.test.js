@@ -86,6 +86,16 @@ describe('Payables model', () => {
     expect(rows[0].history).toBe('Pref Date')
   })
 
+  it('checks if payable exists by history and due_date', () => {
+    payables.create(createPayable({ history: 'Rent', due_date: '2024-03-15' }))
+
+    const exists = payables.existsByHistoryAndDueDate('Rent', '2024-03-15')
+    const missing = payables.existsByHistoryAndDueDate('Rent', '2024-03-16')
+
+    expect(exists).toBe(true)
+    expect(missing).toBe(false)
+  })
+
   it('updates a payable and returns updated row', () => {
     const created = payables.create(createPayable({ history: 'Old', value: 1000 }))
 

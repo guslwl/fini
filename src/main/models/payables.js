@@ -173,6 +173,14 @@ export default class Payables {
     return result
   }
 
+  existsByHistoryAndDueDate(history, dueDate) {
+    const result = this.dbClient
+      .prepare('SELECT 1 FROM payables WHERE history = ? AND due_date = ? LIMIT 1')
+      .get(history, dueDate)
+
+    return Boolean(result)
+  }
+
   delete(id) {
     const result = this.dbClient.prepare('DELETE FROM payables WHERE id = ?').run(id)
 

@@ -31,10 +31,6 @@ export function validatePayableCreate(data) {
     errors.push('value is required and must be an integer')
   }
 
-  if (data.notes !== undefined && typeof data.notes !== 'string') {
-    errors.push('notes must be a string')
-  }
-
   return {
     isValid: errors.length === 0,
     errors

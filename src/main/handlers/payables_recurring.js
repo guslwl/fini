@@ -67,9 +67,15 @@ export default function payablesRecurringHandler(ipcMain, dbClient) {
 
     // Generate payables for each recurring item
     let generatedCount = 0
+    let skippedCount = 0
     for (const recurring of allRecurring) {
-      // Calculate the nominal due date for this month
       const dueDay = recurring.due_day
+      if (!Number.isInteger(dueDay) || dueDay < 1 || dueDay > 31) {
+        skippedCount++
+        continue
+      }
+
+      // Calculate the nominal due date for this month
       // Ensure due_day is valid for this month
       const lastDayOfMonth = new Date(year, month, 0).getDate()
       const actualDueDay = Math.min(dueDay, lastDayOfMonth)
@@ -83,6 +89,16 @@ export default function payablesRecurringHandler(ipcMain, dbClient) {
         recurring.should_postpone ? true : false,
         allHolidays
       )
+
+      const alreadyExists = payablesModel.existsByHistoryAndDueDate(
+        recurring.history,
+        adjustedDateString
+      )
+
+      if (alreadyExists) {
+        skippedCount++
+        continue
+      }
 
       // Create the payable
       const payableData = {
@@ -102,6 +118,7 @@ export default function payablesRecurringHandler(ipcMain, dbClient) {
 
     return {
       generated: generatedCount,
+      skipped: skippedCount,
       year,
       month
     }
