@@ -1,4 +1,4 @@
-import { Calendar, CalendarDays, HandCoins, House } from 'lucide-react'
+import { Calendar, CalendarDays, HandCoins, House, Repeat } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
 
 import { cn } from '@/lib/utils'
@@ -14,6 +14,11 @@ const navItems = [
     to: '/payables',
     label: 'Payables',
     icon: HandCoins
+  },
+  {
+    to: '/recurring',
+    label: 'Recurring',
+    icon: Repeat
   },
   {
     to: '/calendar',

@@ -5,6 +5,7 @@ import CalendarPage from '@/pages/CalendarPage'
 import HolidaysPage from '@/pages/HolidaysPage'
 import HomePage from '@/pages/HomePage'
 import PayablesPage from '@/pages/PayablesPage'
+import RecurringPayablesPage from '@/pages/RecurringPayablesPage'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="calendar" element={<CalendarPage />} />
         <Route path="holidays" element={<HolidaysPage />} />
         <Route path="payables" element={<PayablesPage />} />
+        <Route path="recurring" element={<RecurringPayablesPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
