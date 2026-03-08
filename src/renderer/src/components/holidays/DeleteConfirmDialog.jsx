@@ -1,11 +1,43 @@
 import { Trash2 } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function DeleteConfirmDialog({ open, onCancel, onConfirm, holidayDescription }) {
   const [isDeleting, setIsDeleting] = useState(false)
 
+  useEffect(() => {
+    if (!open) {
+      return
+    }
+
+    function handleEscapeKey(event) {
+      if (event.key !== 'Escape') {
+        return
+      }
+
+      event.preventDefault()
+
+      if (!isDeleting) {
+        onCancel()
+      }
+    }
+
+    window.addEventListener('keydown', handleEscapeKey)
+
+    return () => {
+      window.removeEventListener('keydown', handleEscapeKey)
+    }
+  }, [open, isDeleting, onCancel])
+
   if (!open) {
     return null
+  }
+
+  function handleCancel() {
+    if (isDeleting) {
+      return
+    }
+
+    onCancel()
   }
 
   async function handleConfirmDelete() {
@@ -18,7 +50,14 @@ function DeleteConfirmDialog({ open, onCancel, onConfirm, holidayDescription }) 
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) {
+          handleCancel()
+        }
+      }}
+    >
       <div className="w-full max-w-sm rounded-lg border border-border bg-background p-5 shadow-lg">
         <div className="mb-4 flex items-start gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-destructive/10">
@@ -35,7 +74,7 @@ function DeleteConfirmDialog({ open, onCancel, onConfirm, holidayDescription }) 
         <div className="flex justify-end gap-2 pt-4">
           <button
             type="button"
-            onClick={onCancel}
+            onClick={handleCancel}
             className="h-9 rounded-md border border-border px-3 text-sm"
             disabled={isDeleting}
           >

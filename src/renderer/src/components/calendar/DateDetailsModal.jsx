@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import { centsToDecimalString } from '@/lib/utils'
 
 function formatValue(value) {
@@ -17,18 +19,50 @@ function DateDetailsModal({
   onMarkPaid,
   markingPayableId
 }) {
+  useEffect(() => {
+    if (!open) {
+      return
+    }
+
+    function handleEscapeKey(event) {
+      if (event.key !== 'Escape') {
+        return
+      }
+
+      event.preventDefault()
+      onClose()
+    }
+
+    window.addEventListener('keydown', handleEscapeKey)
+
+    return () => {
+      window.removeEventListener('keydown', handleEscapeKey)
+    }
+  }, [open, onClose])
+
   if (!open) {
     return null
   }
 
+  function handleClose() {
+    onClose()
+  }
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) {
+          handleClose()
+        }
+      }}
+    >
       <div className="max-h-[90vh] w-full max-w-5xl overflow-y-auto rounded-lg border border-border bg-background p-5 shadow-lg">
         <div className="mb-4 flex items-start justify-between gap-3">
           <h3 className="text-lg font-semibold">{date}</h3>
           <button
             type="button"
-            onClick={onClose}
+            onClick={handleClose}
             className="h-9 rounded-md border border-border px-3 text-sm"
           >
             Close

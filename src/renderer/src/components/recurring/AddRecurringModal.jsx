@@ -21,8 +21,40 @@ function AddRecurringModal({ open, onClose, onCreate }) {
     }
   }, [open])
 
+  useEffect(() => {
+    if (!open) {
+      return
+    }
+
+    function handleEscapeKey(event) {
+      if (event.key !== 'Escape') {
+        return
+      }
+
+      event.preventDefault()
+
+      if (!isSaving) {
+        onClose()
+      }
+    }
+
+    window.addEventListener('keydown', handleEscapeKey)
+
+    return () => {
+      window.removeEventListener('keydown', handleEscapeKey)
+    }
+  }, [open, isSaving, onClose])
+
   if (!open) {
     return null
+  }
+
+  function handleCancel() {
+    if (isSaving) {
+      return
+    }
+
+    onClose()
   }
 
   async function handleSubmit(event) {
@@ -65,7 +97,14 @@ function AddRecurringModal({ open, onClose, onCreate }) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) {
+          handleCancel()
+        }
+      }}
+    >
       <div className="w-full max-w-lg rounded-lg border border-border bg-background p-5 shadow-lg">
         <div className="mb-4">
           <h3 className="text-lg font-semibold">Add recurring payable</h3>
@@ -124,7 +163,7 @@ function AddRecurringModal({ open, onClose, onCreate }) {
           <div className="flex justify-end gap-2 pt-2">
             <button
               type="button"
-              onClick={onClose}
+              onClick={handleCancel}
               className="h-9 rounded-md border border-border px-3 text-sm"
               disabled={isSaving}
             >
