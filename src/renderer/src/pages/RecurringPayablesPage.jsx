@@ -25,6 +25,54 @@ function parseMonthValue(value) {
   return { year, month }
 }
 
+function getSkippedReasonText(detail) {
+  const reason = typeof detail?.reason === 'string' ? detail.reason : 'unknown'
+
+  if (reason === 'already_exists') {
+    const dueDate =
+      typeof detail?.due_date === 'string' && detail.due_date.trim()
+        ? detail.due_date
+        : 'unknown date'
+    return `already exists (due date: ${dueDate})`
+  }
+
+  if (reason === 'invalid_due_day') {
+    const dueDay = detail?.due_day
+    const dueDayValue = dueDay === null || dueDay === undefined ? 'null' : String(dueDay)
+    return `invalid due day (${dueDayValue})`
+  }
+
+  return `skipped (reason: ${reason})`
+}
+
+function getSkippedItemLabel(detail, index) {
+  const history = typeof detail?.history === 'string' ? detail.history.trim() : ''
+
+  if (history) {
+    return history
+  }
+
+  if (Number.isInteger(detail?.recurring_id)) {
+    return `Recurring #${detail.recurring_id}`
+  }
+
+  return `Item ${index + 1}`
+}
+
+function formatSkippedDetailsForToast(skippedDetails) {
+  if (!Array.isArray(skippedDetails) || skippedDetails.length === 0) {
+    return ''
+  }
+
+  return skippedDetails
+    .map((detail, index) => {
+      const label = getSkippedItemLabel(detail, index)
+      const reasonText = getSkippedReasonText(detail)
+      return `${index + 1}. ${label}: ${reasonText}`
+    })
+    .join(' | ')
+}
+
 function RecurringPayablesPage() {
   const [rows, setRows] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -122,8 +170,18 @@ function RecurringPayablesPage() {
       const result = await window.api.v1.recurring.generateForMonth(parsed.year, parsed.month)
       const generated = Number(result?.generated) || 0
       const skipped = Number(result?.skipped) || 0
+      const skippedDetails = Array.isArray(result?.skippedDetails) ? result.skippedDetails : []
 
-      toast.success(`Generation complete: ${generated} generated, ${skipped} skipped.`)
+      let successMessage = `Generation complete: ${generated} generated, ${skipped} skipped.`
+
+      if (skipped > 0) {
+        const skippedDetailsMessage = formatSkippedDetailsForToast(skippedDetails)
+        successMessage += skippedDetailsMessage
+          ? ` Skipped details: ${skippedDetailsMessage}`
+          : ' Skipped details unavailable.'
+      }
+
+      toast.success(successMessage)
     } catch (generateError) {
       toast.error(generateError?.message || 'Failed to generate payables for month.')
     } finally {
