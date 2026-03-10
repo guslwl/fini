@@ -4,6 +4,29 @@ import { selectExistingDatabase, createNewDatabase } from 'handlers/database-sel
 import { testDatabaseConnection } from 'infra/db-validator.js'
 
 /**
+ * Wrap async menu handlers so rejected promises are handled explicitly.
+ * Electron menu click callbacks are not awaited, so async failures would
+ * otherwise surface as unhandled promise rejections.
+ * @param {() => Promise<void>} handler - Async handler
+ * @returns {() => void} Safe click handler
+ */
+export function createSafeMenuHandler(handler) {
+  return () => {
+    void handler().catch(async (error) => {
+      const message = error instanceof Error ? error.message : String(error)
+
+      await dialog.showMessageBox({
+        type: 'error',
+        title: 'Action Failed',
+        message: 'The requested action could not be completed.',
+        detail: message,
+        buttons: ['OK']
+      })
+    })
+  }
+}
+
+/**
  * Create and set the application menu
  * @param {BrowserWindow} mainWindow - Main application window
  */
@@ -15,16 +38,12 @@ export function createApplicationMenu(mainWindow) {
         {
           label: 'Open Database...',
           accelerator: 'CmdOrCtrl+O',
-          click: async () => {
-            await handleOpenDatabase(mainWindow)
-          }
+          click: createSafeMenuHandler(() => handleOpenDatabase(mainWindow))
         },
         {
           label: 'Create New Database...',
           accelerator: 'CmdOrCtrl+N',
-          click: async () => {
-            await handleCreateDatabase(mainWindow)
-          }
+          click: createSafeMenuHandler(() => handleCreateDatabase(mainWindow))
         },
         { type: 'separator' },
         {
