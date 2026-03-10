@@ -10,7 +10,8 @@ export const mainAliases = {
 }
 
 export const rendererAliases = {
-  renderer: path.resolve(process.cwd(), 'src/renderer/src')
+  renderer: path.resolve(process.cwd(), 'src/renderer/src'),
+  '@': path.resolve(process.cwd(), 'src/renderer/src')
 }
 
 export const allAliases = {

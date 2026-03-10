@@ -25,7 +25,8 @@ const api = {
       createBulk: (dataArray) => ipcRenderer.invoke('v1:payables:createBulk', dataArray),
       update: (id, data) => ipcRenderer.invoke('v1:payables:update', id, data),
       delete: (id) => ipcRenderer.invoke('v1:payables:delete', id),
-      markAsPaid: (id) => ipcRenderer.invoke('v1:payables:markAsPaid', id)
+      markAsPaid: (id) => ipcRenderer.invoke('v1:payables:markAsPaid', id),
+      markAsUnpaid: (id) => ipcRenderer.invoke('v1:payables:markAsUnpaid', id)
     },
     recurring: {
       getAll: () => ipcRenderer.invoke('v1:recurring:getAll'),

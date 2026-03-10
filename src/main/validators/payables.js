@@ -19,11 +19,11 @@ export function validatePayableCreate(data) {
     errors.push('value is required and must be an integer')
   }
 
-  if (data.invoice_id !== undefined && typeof data.invoice_id !== 'string') {
+  if (data.invoice_id && typeof data.invoice_id !== 'string') {
     errors.push('invoice_id must be a string')
   }
 
-  if (data.account_id !== undefined && typeof data.account_id !== 'string') {
+  if (data.account_id && typeof data.account_id !== 'string') {
     errors.push('account_id must be a string')
   }
 
@@ -35,7 +35,7 @@ export function validatePayableCreate(data) {
     errors.push('preferred_date must be in YYYY-MM-DD format')
   }
 
-  if (data.parent_id !== undefined && !Number.isInteger(data.parent_id)) {
+  if (data.parent_id && !Number.isInteger(data.parent_id)) {
     errors.push('parent_id must be an integer')
   }
 
@@ -86,11 +86,11 @@ export function validatePayableUpdate(data) {
     errors.push('value must be an integer')
   }
 
-  if (data.invoice_id !== undefined && typeof data.invoice_id !== 'string') {
+  if (data.invoice_id && typeof data.invoice_id !== 'string') {
     errors.push('invoice_id must be a string')
   }
 
-  if (data.account_id !== undefined && typeof data.account_id !== 'string') {
+  if (data.account_id && typeof data.account_id !== 'string') {
     errors.push('account_id must be a string')
   }
 
