@@ -6,7 +6,8 @@ export const mainAliases = {
   models: path.resolve(process.cwd(), 'src/main/models'),
   validators: path.resolve(process.cwd(), 'src/main/validators'),
   services: path.resolve(process.cwd(), 'src/main/services'),
-  handlers: path.resolve(process.cwd(), 'src/main/handlers')
+  handlers: path.resolve(process.cwd(), 'src/main/handlers'),
+  utils: path.resolve(process.cwd(), 'src/main/utils')
 }
 
 export const rendererAliases = {

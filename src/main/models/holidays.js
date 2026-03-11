@@ -1,6 +1,6 @@
 import { assertValidCalendarDate } from 'validators/date-validator.js'
 import { NotFoundError } from 'infra/errors.js'
-import booleanValueService from 'services/booleanValueService.js'
+import booleanHelper from 'utils/booleanHelper.js'
 
 export default class Holidays {
   constructor(dbClient) {
@@ -12,8 +12,8 @@ export default class Holidays {
 
     assertValidCalendarDate(date, 'date')
 
-    is_business_day = booleanValueService.parseToDBValue(is_business_day)
-    should_count_as_business_day = booleanValueService.parseToDBValue(should_count_as_business_day)
+    is_business_day = booleanHelper.parseToDBValue(is_business_day)
+    should_count_as_business_day = booleanHelper.parseToDBValue(should_count_as_business_day)
 
     const result = this.dbClient
       .prepare(
@@ -62,11 +62,11 @@ export default class Holidays {
 
     assertValidCalendarDate(holidayWithNewValues.date, 'date')
 
-    holidayWithNewValues.is_business_day = booleanValueService.parseToDBValue(
+    holidayWithNewValues.is_business_day = booleanHelper.parseToDBValue(
       holidayWithNewValues.is_business_day,
       'is_business_day'
     )
-    holidayWithNewValues.should_count_as_business_day = booleanValueService.parseToDBValue(
+    holidayWithNewValues.should_count_as_business_day = booleanHelper.parseToDBValue(
       holidayWithNewValues.should_count_as_business_day,
       'should_count_as_bussiness_day'
     )

@@ -8,6 +8,7 @@
       "validators/*": ["src/main/validators/*"],
       "services/*": ["src/main/services/*"],
       "handlers/*": ["src/main/handlers/*"],
+      "utils/*": ["src/main/utils/*"],
       "renderer/*": ["src/renderer/src/*"],
       "@/*": ["src/renderer/src/*"]
     }

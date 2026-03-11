@@ -8,15 +8,14 @@ import { ValidationError } from 'infra/errors.js'
  * @throws {ValidationError} - If value cannot be interpreted as boolean
  */
 function parse(value, fieldName = 'value') {
-  // Accept strict booleans
   if (typeof value === 'boolean') {
     return value
   }
 
-  // Accept database integers (0 or 1)
   if (value === 0 || value === '0') {
     return false
   }
+
   if (value === 1 || value === '1') {
     return true
   }
@@ -34,6 +33,6 @@ function parseToDBValue(value, fieldName = 'value') {
   return parsedBool ? 1 : 0
 }
 
-const booleanValueService = { parseToDBValue }
+const booleanHelper = { parseToDBValue }
 
-export default booleanValueService
+export default booleanHelper
