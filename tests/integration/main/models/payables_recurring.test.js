@@ -45,17 +45,17 @@ describe('Recurring payables model', () => {
       expect(stored.updated_at).toBeTruthy()
     })
 
-    it('creates rows with nullable fields', () => {
+    it('creates rows with nullable notes', () => {
       const result = recurringPayables.create(
         createRecurring({
-          due_day: null,
+          due_day: 12,
           notes: null,
           should_postpone: false
         })
       )
 
       const stored = recurringPayables.getById(result)
-      expect(stored.due_day).toBeNull()
+      expect(stored.due_day).toBe(12)
       expect(stored.notes).toBeNull()
       expect(stored.should_postpone).toBe(0)
     })
@@ -111,6 +111,26 @@ describe('Recurring payables model', () => {
       expect(updated.updated_at).not.toBe('2000-01-01 00:00:00')
     })
 
+    it('updates without should_postpone and keeps stored value', () => {
+      const created = recurringPayables.create(
+        createRecurring({
+          history: 'Phone',
+          due_day: 25,
+          should_postpone: true,
+          value: 10000,
+          notes: null
+        })
+      )
+
+      const updated = recurringPayables.update(created, {
+        history: 'Phone Updated'
+      })
+
+      expect(updated.id).toBe(created)
+      expect(updated.history).toBe('Phone Updated')
+      expect(updated.should_postpone).toBe(1)
+    })
+
     it('throws not found when getting a missing recurring payable by id', () => {
       expect(() => {
         recurringPayables.getById(999999)
@@ -142,6 +162,19 @@ describe('Recurring payables model', () => {
 
       expect(error).toBeInstanceOf(ValidationError)
       expect(error.code).toBe('INVALID_DATE_VALUE')
+    })
+
+    it('rejects create when due_day is missing', () => {
+      let error
+
+      try {
+        recurringPayables.create(createRecurring({ due_day: undefined }))
+      } catch (caughtError) {
+        error = caughtError
+      }
+
+      expect(error).toBeInstanceOf(ValidationError)
+      expect(error.code).toBe('VALIDATION_ERROR')
     })
 
     it('rejects create when should_postpone is not boolean', () => {

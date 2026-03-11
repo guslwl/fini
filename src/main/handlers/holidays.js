@@ -1,5 +1,4 @@
-import { validateHoliday, validateHolidayUpdate } from 'validators/holidays.js'
-import { AppError, ValidationError } from 'infra/errors.js'
+import { AppError } from 'infra/errors.js'
 import Holidays from 'models/holidays.js'
 export default function holidaysHandler(ipcMain, dbClient) {
   if (!dbClient) {
@@ -24,25 +23,11 @@ export default function holidaysHandler(ipcMain, dbClient) {
   })
 
   ipcMain.handle('v1:holidays:create', (event, data) => {
-    const { isValid, errors } = validateHoliday(data)
-    if (!isValid) {
-      throw new ValidationError({
-        message: 'invalid data was provided',
-        cause: errors
-      })
-    }
     const holidays = new Holidays(dbClient)
     return holidays.create(data)
   })
 
   ipcMain.handle('v1:holidays:update', (event, id, data) => {
-    const { isValid, errors } = validateHolidayUpdate(data)
-    if (!isValid) {
-      throw new ValidationError({
-        message: 'invalid data was provided',
-        cause: errors
-      })
-    }
     const holidays = new Holidays(dbClient)
     return holidays.update(id, data)
   })

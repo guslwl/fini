@@ -79,9 +79,9 @@ npm test
 src/
 ├── main/               # Electron main process
 │   ├── handlers/       # IPC request handlers
-│   ├── models/         # SQLite data access
-│   ├── validators/     # Input validation
+│   ├── models/         # SQLite data access + domain validation
 │   ├── services/       # Business logic
+│   ├── utils/          # Shared model/service utilities
 │   └── infra/          # Database, migrations, settings, errors
 ├── preload/            # Context bridge (IPC API exposed to renderer)
 └── renderer/           # React frontend

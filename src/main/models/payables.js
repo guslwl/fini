@@ -1,5 +1,5 @@
 import { assertValidCalendarDate } from 'utils/dateHelper.js'
-import { NotFoundError } from 'infra/errors.js'
+import { NotFoundError, ValidationError } from 'infra/errors.js'
 
 export default class Payables {
   constructor(dbClient) {
@@ -7,14 +7,10 @@ export default class Payables {
   }
 
   create(payable) {
+    validatePayableCreatePayload(payable)
+
     const { history, invoice_id, account_id, due_date, preferred_date, value, parent_id, paid_at } =
       payable
-
-    assertValidCalendarDate(due_date, 'due_date')
-
-    if (preferred_date !== null && preferred_date !== undefined) {
-      assertValidCalendarDate(preferred_date, 'preferred_date')
-    }
 
     const result = this.dbClient
       .prepare(
@@ -26,6 +22,8 @@ export default class Payables {
   }
 
   createBulk(payables) {
+    validatePayableBulkPayload(payables)
+
     const insert = this.dbClient.prepare(
       `INSERT INTO payables (history, invoice_id, account_id, due_date, preferred_date, value, parent_id, paid_at)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
@@ -34,6 +32,8 @@ export default class Payables {
     const insertMany = this.dbClient.transaction((items) => {
       const ids = []
       for (const item of items) {
+        validatePayableCreatePayload(item)
+
         const {
           history,
           invoice_id,
@@ -44,11 +44,6 @@ export default class Payables {
           parent_id,
           paid_at
         } = item
-
-        assertValidCalendarDate(due_date, 'due_date')
-        if (preferred_date !== null && preferred_date !== undefined) {
-          assertValidCalendarDate(preferred_date, 'preferred_date')
-        }
 
         const result = insert.run(
           history,
@@ -99,19 +94,15 @@ export default class Payables {
   }
 
   update(id, data) {
+    validatePayableUpdatePayload(data)
+
     const currentPayable = this.getById(id)
 
     const dbClient = this.dbClient
 
     const payableWithNewValues = { ...currentPayable, ...data }
 
-    assertValidCalendarDate(payableWithNewValues.due_date, 'due_date')
-    if (
-      payableWithNewValues.preferred_date !== null &&
-      payableWithNewValues.preferred_date !== undefined
-    ) {
-      assertValidCalendarDate(payableWithNewValues.preferred_date, 'preferred_date')
-    }
+    validatePayableCreatePayload(payableWithNewValues)
 
     const updatedPayable = updatePayable(payableWithNewValues)
 
@@ -192,5 +183,173 @@ export default class Payables {
     }
 
     return true
+  }
+}
+
+function validatePayableBulkPayload(dataArray) {
+  if (!Array.isArray(dataArray)) {
+    throw new ValidationError({
+      message: 'invalid data was provided',
+      cause: ['an array of payables must be provided']
+    })
+  }
+
+  const errors = []
+
+  dataArray.forEach((item, index) => {
+    try {
+      validatePayableCreatePayload(item)
+    } catch (error) {
+      if (error instanceof ValidationError && error.code === 'VALIDATION_ERROR') {
+        errors.push({ index, errors: error.details || [] })
+        return
+      }
+
+      throw error
+    }
+  })
+
+  if (errors.length > 0) {
+    throw new ValidationError({
+      message: 'invalid data was provided',
+      cause: errors
+    })
+  }
+}
+
+function validatePayableCreatePayload(data) {
+  assertIsObject(data, 'a payable must be provided')
+
+  assertValidCalendarDate(data.due_date, 'due_date')
+
+  if (data.preferred_date !== null && data.preferred_date !== undefined) {
+    assertValidCalendarDate(data.preferred_date, 'preferred_date')
+  }
+
+  const errors = []
+
+  if (!data.history || typeof data.history !== 'string') {
+    errors.push('history is required and must be a string')
+  }
+
+  if (!Number.isInteger(data.value)) {
+    errors.push('value is required and must be an integer')
+  }
+
+  if (
+    data.invoice_id !== undefined &&
+    data.invoice_id !== null &&
+    typeof data.invoice_id !== 'string'
+  ) {
+    errors.push('invoice_id must be a string')
+  }
+
+  if (
+    data.account_id !== undefined &&
+    data.account_id !== null &&
+    typeof data.account_id !== 'string'
+  ) {
+    errors.push('account_id must be a string')
+  }
+
+  if (
+    data.parent_id !== undefined &&
+    data.parent_id !== null &&
+    !Number.isInteger(data.parent_id)
+  ) {
+    errors.push('parent_id must be an integer')
+  }
+
+  if (data.paid_at !== undefined && data.paid_at !== null && typeof data.paid_at !== 'string') {
+    errors.push('paid_at must be a string')
+  }
+
+  if (errors.length > 0) {
+    throw new ValidationError({
+      message: 'invalid data was provided',
+      cause: errors
+    })
+  }
+}
+
+function validatePayableUpdatePayload(data) {
+  assertIsObject(data, 'a payable must be provided')
+
+  const errors = []
+  const allowedFields = [
+    'history',
+    'invoice_id',
+    'account_id',
+    'due_date',
+    'preferred_date',
+    'value',
+    'parent_id',
+    'paid_at'
+  ]
+
+  Object.keys(data).forEach((key) => {
+    if (!allowedFields.includes(key)) {
+      errors.push(`${key} is not a valid field`)
+    }
+  })
+
+  if (data.due_date !== undefined) {
+    assertValidCalendarDate(data.due_date, 'due_date')
+  }
+
+  if (data.preferred_date !== undefined && data.preferred_date !== null) {
+    assertValidCalendarDate(data.preferred_date, 'preferred_date')
+  }
+
+  if (data.history !== undefined && typeof data.history !== 'string') {
+    errors.push('history must be a string')
+  }
+
+  if (data.value !== undefined && !Number.isInteger(data.value)) {
+    errors.push('value must be an integer')
+  }
+
+  if (
+    data.invoice_id !== undefined &&
+    data.invoice_id !== null &&
+    typeof data.invoice_id !== 'string'
+  ) {
+    errors.push('invoice_id must be a string')
+  }
+
+  if (
+    data.account_id !== undefined &&
+    data.account_id !== null &&
+    typeof data.account_id !== 'string'
+  ) {
+    errors.push('account_id must be a string')
+  }
+
+  if (
+    data.parent_id !== undefined &&
+    data.parent_id !== null &&
+    !Number.isInteger(data.parent_id)
+  ) {
+    errors.push('parent_id must be an integer')
+  }
+
+  if (data.paid_at !== undefined && data.paid_at !== null && typeof data.paid_at !== 'string') {
+    errors.push('paid_at must be a string')
+  }
+
+  if (errors.length > 0) {
+    throw new ValidationError({
+      message: 'invalid data was provided',
+      cause: errors
+    })
+  }
+}
+
+function assertIsObject(data, message) {
+  if (!data || typeof data !== 'object' || Array.isArray(data)) {
+    throw new ValidationError({
+      message: 'invalid data was provided',
+      cause: [message]
+    })
   }
 }
