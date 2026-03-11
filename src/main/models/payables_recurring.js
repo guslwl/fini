@@ -1,5 +1,5 @@
 import { NotFoundError, ValidationError } from 'infra/errors.js'
-import booleanValueService from 'services/booleanValueService.js'
+import booleanHelper from 'utils/booleanHelper.js'
 
 export default class Payables {
   constructor(dbClient) {
@@ -7,12 +7,11 @@ export default class Payables {
   }
 
   create(payable_recurring) {
+    validateRecurringCreatePayload(payable_recurring)
+
     let { history, due_day, should_postpone, value, notes } = payable_recurring
 
-    validateDueDay(due_day)
-    validateShouldPostpone(should_postpone)
-
-    should_postpone = booleanValueService.parseToDBValue(should_postpone)
+    should_postpone = booleanHelper.parseToDBValue(should_postpone, 'should_postpone')
 
     const result = this.dbClient
       .prepare(
@@ -39,16 +38,15 @@ export default class Payables {
   }
 
   update(id, data) {
+    validateRecurringUpdatePayload(data)
+
     const currentRecurring = this.getById(id)
 
     const dbClient = this.dbClient
 
     const recurringWithNewValues = { ...currentRecurring, ...data }
 
-    validateDueDay(recurringWithNewValues.due_day)
-    validateShouldPostpone(recurringWithNewValues.should_postpone)
-
-    recurringWithNewValues.should_postpone = booleanValueService.parseToDBValue(
+    recurringWithNewValues.should_postpone = booleanHelper.parseToDBValue(
       recurringWithNewValues.should_postpone,
       'should_postpone'
     )
@@ -90,8 +88,85 @@ export default class Payables {
   }
 }
 
-function validateDueDay(dueDay) {
+function validateRecurringCreatePayload(data) {
+  assertIsObject(data, 'a recurring payable must be provided')
+
+  validateDueDay(data.due_day, { required: true })
+  validateShouldPostpone(data.should_postpone, { required: true })
+
+  const errors = []
+
+  if (!data.history || typeof data.history !== 'string') {
+    errors.push('history is required and must be a string')
+  }
+
+  if (!Number.isInteger(data.value)) {
+    errors.push('value is required and must be an integer')
+  }
+
+  if (data.notes !== undefined && data.notes !== null && typeof data.notes !== 'string') {
+    errors.push('notes must be a string')
+  }
+
+  if (errors.length > 0) {
+    throw new ValidationError({
+      message: 'invalid data was provided',
+      cause: errors
+    })
+  }
+}
+
+function validateRecurringUpdatePayload(data) {
+  assertIsObject(data, 'a recurring payable must be provided')
+
+  const errors = []
+  const allowedFields = ['history', 'due_day', 'should_postpone', 'value', 'notes']
+
+  Object.keys(data).forEach((key) => {
+    if (!allowedFields.includes(key)) {
+      errors.push(`${key} is not a valid field`)
+    }
+  })
+
+  if (data.history !== undefined && typeof data.history !== 'string') {
+    errors.push('history must be a string')
+  }
+
+  if (data.value !== undefined && !Number.isInteger(data.value)) {
+    errors.push('value must be an integer')
+  }
+
+  if (data.notes !== undefined && data.notes !== null && typeof data.notes !== 'string') {
+    errors.push('notes must be a string')
+  }
+
+  if (errors.length > 0) {
+    throw new ValidationError({
+      message: 'invalid data was provided',
+      cause: errors
+    })
+  }
+
+  if (data.due_day !== undefined) {
+    validateDueDay(data.due_day, { required: true })
+  }
+
+  if (data.should_postpone !== undefined) {
+    validateShouldPostpone(data.should_postpone, { required: true })
+  }
+}
+
+function validateDueDay(dueDay, { required = false } = {}) {
   if (dueDay === null || dueDay === undefined) {
+    if (required) {
+      throw new ValidationError({
+        message: 'due_day is required',
+        code: 'VALIDATION_ERROR',
+        cause: ['due_day is required'],
+        action: 'Provide a valid day between 1 and 31'
+      })
+    }
+
     return
   }
 
@@ -106,12 +181,30 @@ function validateDueDay(dueDay) {
 }
 
 function validateShouldPostpone(shouldPostpone) {
+  if (shouldPostpone === null || shouldPostpone === undefined) {
+    throw new ValidationError({
+      message: 'should_postpone is required',
+      code: 'VALIDATION_ERROR',
+      cause: ['should_postpone is required'],
+      action: 'Provide true or false for should_postpone'
+    })
+  }
+
   if (typeof shouldPostpone !== 'boolean') {
     throw new ValidationError({
       message: 'should_postpone has an invalid value',
       code: 'VALIDATION_ERROR',
       cause: ['should_postpone must be a boolean'],
       action: 'Provide true or false for should_postpone'
+    })
+  }
+}
+
+function assertIsObject(data, message) {
+  if (!data || typeof data !== 'object' || Array.isArray(data)) {
+    throw new ValidationError({
+      message: 'invalid data was provided',
+      cause: [message]
     })
   }
 }

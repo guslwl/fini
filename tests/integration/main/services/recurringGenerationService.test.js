@@ -85,9 +85,12 @@ describe('recurringGenerationService', () => {
   })
 
   it('skips rows with invalid due_day and returns row details', () => {
-    const recurringId = recurringPayables.create(
-      createRecurring({ history: 'No due day', due_day: null })
+    const insertLegacy = db.prepare(
+      `INSERT INTO payables_recurring (history, due_day, should_postpone, value, notes)
+       VALUES (?, ?, ?, ?, ?)`
     )
+    const legacy = insertLegacy.run('No due day', null, 1, 15000, 'legacy')
+    const recurringId = legacy.lastInsertRowid
 
     const result = generateRecurringForMonth({ dbClient: db, year: 2024, month: 5 })
 
