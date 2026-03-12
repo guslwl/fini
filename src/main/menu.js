@@ -112,38 +112,48 @@ export function updateDatabaseMenuLabel() {
  * @param {BrowserWindow} mainWindow - Main application window
  */
 async function handleOpenDatabase(mainWindow) {
-  const selectedPath = await selectExistingDatabase(mainWindow)
+  try {
+    const selectedPath = await selectExistingDatabase(mainWindow)
 
-  if (!selectedPath) {
-    return // User cancelled
-  }
+    if (!selectedPath) {
+      return // User cancelled
+    }
 
-  // Test connection
-  const testResult = await testDatabaseConnection(selectedPath)
-  if (!testResult.success) {
+    // Test connection
+    const testResult = await testDatabaseConnection(selectedPath)
+    if (!testResult.success) {
+      await dialog.showMessageBox(mainWindow, {
+        type: 'error',
+        title: 'Database Error',
+        message: 'Failed to open database',
+        detail: testResult.error
+      })
+      return
+    }
+
+    // Save and reload
+    settings.setDatabasePath(selectedPath)
+    updateDatabaseMenuLabel()
+
+    await dialog.showMessageBox(mainWindow, {
+      type: 'info',
+      title: 'Database Changed',
+      message: 'Database has been changed. The application will now reload.',
+      buttons: ['OK']
+    })
+
+    // Reload the app to reinitialize with new database
+    app.relaunch()
+    app.exit(0)
+  } catch (error) {
     await dialog.showMessageBox(mainWindow, {
       type: 'error',
       title: 'Database Error',
-      message: 'Failed to open database',
-      detail: testResult.error
+      message: 'An error occurred while opening the database.',
+      detail: error instanceof Error ? error.message : String(error),
+      buttons: ['OK']
     })
-    return
   }
-
-  // Save and reload
-  settings.setDatabasePath(selectedPath)
-  updateDatabaseMenuLabel()
-
-  await dialog.showMessageBox(mainWindow, {
-    type: 'info',
-    title: 'Database Changed',
-    message: 'Database has been changed. The application will now reload.',
-    buttons: ['OK']
-  })
-
-  // Reload the app to reinitialize with new database
-  app.relaunch()
-  app.exit(0)
 }
 
 /**
@@ -151,24 +161,34 @@ async function handleOpenDatabase(mainWindow) {
  * @param {BrowserWindow} mainWindow - Main application window
  */
 async function handleCreateDatabase(mainWindow) {
-  const newPath = await createNewDatabase(mainWindow)
+  try {
+    const newPath = await createNewDatabase(mainWindow)
 
-  if (!newPath) {
-    return // User cancelled
+    if (!newPath) {
+      return // User cancelled
+    }
+
+    // Save and reload
+    settings.setDatabasePath(newPath)
+    updateDatabaseMenuLabel()
+
+    await dialog.showMessageBox(mainWindow, {
+      type: 'info',
+      title: 'Database Created',
+      message: 'New database has been created. The application will now reload.',
+      buttons: ['OK']
+    })
+
+    // Reload the app to reinitialize with new database
+    app.relaunch()
+    app.exit(0)
+  } catch (error) {
+    await dialog.showMessageBox(mainWindow, {
+      type: 'error',
+      title: 'Database Error',
+      message: 'An error occurred while creating the database.',
+      detail: error instanceof Error ? error.message : String(error),
+      buttons: ['OK']
+    })
   }
-
-  // Save and reload
-  settings.setDatabasePath(newPath)
-  updateDatabaseMenuLabel()
-
-  await dialog.showMessageBox(mainWindow, {
-    type: 'info',
-    title: 'Database Created',
-    message: 'New database has been created. The application will now reload.',
-    buttons: ['OK']
-  })
-
-  // Reload the app to reinitialize with new database
-  app.relaunch()
-  app.exit(0)
 }
