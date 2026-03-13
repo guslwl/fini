@@ -40,8 +40,8 @@ describe('Holidays model', () => {
     expect(stored.description).toBe('New Year')
     expect(stored.type).toBe('National')
     expect(stored.date).toBe('2024-01-01')
-    expect(stored.is_business_day).toBe(1)
-    expect(stored.should_count_as_business_day).toBe(0)
+    expect(stored.is_business_day).toBe(true)
+    expect(stored.should_count_as_business_day).toBe(false)
   })
 
   it('returns all holidays sorted by description', () => {
@@ -82,7 +82,7 @@ describe('Holidays model', () => {
 
     expect(updated.id).toBe(created)
     expect(updated.description).toBe('New')
-    expect(updated.should_count_as_business_day).toBe(1)
+    expect(updated.should_count_as_business_day).toBe(true)
   })
 
   it('deletes a holiday and returns true', () => {

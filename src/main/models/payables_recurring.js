@@ -1,6 +1,11 @@
 import { NotFoundError, ValidationError } from 'infra/errors.js'
 import booleanHelper from 'utils/booleanHelper.js'
 
+function normalizeRecurring(row) {
+  if (!row) return row
+  return { ...row, should_postpone: Boolean(row.should_postpone) }
+}
+
 export default class Payables {
   constructor(dbClient) {
     this.dbClient = dbClient
@@ -23,7 +28,10 @@ export default class Payables {
   }
 
   getAll() {
-    return this.dbClient.prepare('SELECT * FROM payables_recurring ORDER BY history ASC').all()
+    return this.dbClient
+      .prepare('SELECT * FROM payables_recurring ORDER BY history ASC')
+      .all()
+      .map(normalizeRecurring)
   }
 
   getById(id) {
@@ -34,7 +42,7 @@ export default class Payables {
         cause: { id, entity: 'payables_recurring' }
       })
     }
-    return result
+    return normalizeRecurring(result)
   }
 
   update(id, data) {
@@ -53,7 +61,7 @@ export default class Payables {
 
     const updatedRecurring = updateRecurring(recurringWithNewValues)
 
-    return updatedRecurring
+    return normalizeRecurring(updatedRecurring)
 
     function updateRecurring(recurring) {
       return dbClient

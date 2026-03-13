@@ -40,7 +40,7 @@ describe('Recurring payables model', () => {
       expect(stored.history).toBe('Internet')
       expect(stored.value).toBe(9000)
       expect(stored.due_day).toBe(10)
-      expect(stored.should_postpone).toBe(1)
+      expect(stored.should_postpone).toBe(true)
       expect(stored.created_at).toBeTruthy()
       expect(stored.updated_at).toBeTruthy()
     })
@@ -57,7 +57,7 @@ describe('Recurring payables model', () => {
       const stored = recurringPayables.getById(result)
       expect(stored.due_day).toBe(12)
       expect(stored.notes).toBeNull()
-      expect(stored.should_postpone).toBe(0)
+      expect(stored.should_postpone).toBe(false)
     })
 
     it('returns all recurring payables sorted by history ascending', () => {
@@ -105,7 +105,7 @@ describe('Recurring payables model', () => {
       expect(updated.id).toBe(created)
       expect(updated.history).toBe('New name')
       expect(updated.value).toBe(25000)
-      expect(updated.should_postpone).toBe(0)
+      expect(updated.should_postpone).toBe(false)
       expect(updated.due_day).toBe(20)
       expect(updated.notes).toBe('old notes')
       expect(updated.updated_at).not.toBe('2000-01-01 00:00:00')
@@ -128,7 +128,7 @@ describe('Recurring payables model', () => {
 
       expect(updated.id).toBe(created)
       expect(updated.history).toBe('Phone Updated')
-      expect(updated.should_postpone).toBe(1)
+      expect(updated.should_postpone).toBe(true)
     })
 
     it('throws not found when getting a missing recurring payable by id', () => {
