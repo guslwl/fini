@@ -4,7 +4,7 @@ import { toast } from 'sonner'
 import { decimalToCents } from '@/lib/utils'
 
 const initialForm = {
-  description: '',
+  history: '',
   value: '',
   due_day: '',
   should_postpone: true
@@ -60,7 +60,7 @@ function AddRecurringModal({ open, onClose, onCreate }) {
   async function handleSubmit(event) {
     event.preventDefault()
 
-    if (!form.description.trim()) {
+    if (!form.history.trim()) {
       toast.error('Description is required.')
       return
     }
@@ -81,7 +81,7 @@ function AddRecurringModal({ open, onClose, onCreate }) {
 
     try {
       const hasCreated = await onCreate({
-        history: form.description.trim(),
+        history: form.history.trim(),
         value: centsValue,
         due_day: dueDay,
         should_postpone: Boolean(form.should_postpone),
@@ -115,9 +115,9 @@ function AddRecurringModal({ open, onClose, onCreate }) {
           <label className="flex flex-col gap-1 text-sm">
             <span>Description</span>
             <input
-              value={form.description}
+              value={form.history}
               onChange={(event) =>
-                setForm((prev) => ({ ...prev, description: event.target.value }))
+                setForm((prev) => ({ ...prev, history: event.target.value }))
               }
               className="h-9 rounded-md border border-input bg-background px-3"
             />

@@ -4,7 +4,7 @@ import { toast } from 'sonner'
 import { centsToDecimalString, decimalToCents } from '@/lib/utils'
 
 const emptyForm = {
-  description: '',
+  history: '',
   value: '',
   due_day: '',
   should_postpone: true
@@ -17,7 +17,7 @@ function EditRecurringModal({ open, recurring, onClose, onSave }) {
   useEffect(() => {
     if (open && recurring) {
       setForm({
-        description: recurring.history || '',
+        history: recurring.history || '',
         value: centsToDecimalString(recurring.value),
         due_day: recurring.due_day ?? '',
         should_postpone: Boolean(recurring.should_postpone)
@@ -70,7 +70,7 @@ function EditRecurringModal({ open, recurring, onClose, onSave }) {
   async function handleSubmit(event) {
     event.preventDefault()
 
-    if (!form.description.trim()) {
+    if (!form.history.trim()) {
       toast.error('Description is required.')
       return
     }
@@ -91,7 +91,7 @@ function EditRecurringModal({ open, recurring, onClose, onSave }) {
 
     try {
       const hasSaved = await onSave(recurring.id, {
-        history: form.description.trim(),
+        history: form.history.trim(),
         value: centsValue,
         due_day: dueDay,
         should_postpone: Boolean(form.should_postpone)
@@ -124,9 +124,9 @@ function EditRecurringModal({ open, recurring, onClose, onSave }) {
           <label className="flex flex-col gap-1 text-sm">
             <span>Description</span>
             <input
-              value={form.description}
+              value={form.history}
               onChange={(event) =>
-                setForm((prev) => ({ ...prev, description: event.target.value }))
+                setForm((prev) => ({ ...prev, history: event.target.value }))
               }
               className="h-9 rounded-md border border-input bg-background px-3"
             />
