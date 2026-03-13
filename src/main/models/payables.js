@@ -86,7 +86,7 @@ export default class Payables {
     if (!result) {
       throw new NotFoundError({
         message: `Payable with id ${id} was not found`,
-        details: { id, entity: 'payable' }
+        cause: { id, entity: 'payable' }
       })
     }
 
@@ -140,7 +140,7 @@ export default class Payables {
     if (!result) {
       throw new NotFoundError({
         message: `Payable with id ${id} was not found`,
-        details: { id, entity: 'payable' }
+        cause: { id, entity: 'payable' }
       })
     }
 
@@ -157,7 +157,7 @@ export default class Payables {
     if (!result) {
       throw new NotFoundError({
         message: `Payable with id ${id} was not found`,
-        details: { id, entity: 'payable' }
+        cause: { id, entity: 'payable' }
       })
     }
 
@@ -178,7 +178,7 @@ export default class Payables {
     if (result.changes === 0) {
       throw new NotFoundError({
         message: `Payable with id ${id} was not found`,
-        details: { id, entity: 'payable' }
+        cause: { id, entity: 'payable' }
       })
     }
 
