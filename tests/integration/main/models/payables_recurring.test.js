@@ -174,7 +174,7 @@ describe('Recurring payables model', () => {
       }
 
       expect(error).toBeInstanceOf(ValidationError)
-      expect(error.code).toBe('VALIDATION_ERROR')
+      expect(error.code).toBe('MISSING_DUE_DAY')
     })
 
     it('rejects create when should_postpone is not boolean', () => {
@@ -187,7 +187,7 @@ describe('Recurring payables model', () => {
       }
 
       expect(error).toBeInstanceOf(ValidationError)
-      expect(error.code).toBe('VALIDATION_ERROR')
+      expect(error.code).toBe('INVALID_BOOLEAN_VALUE')
     })
   })
 })

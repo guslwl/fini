@@ -1,62 +1,51 @@
 export class AppError extends Error {
-  constructor({ name, message, code, details, action, statusCode, cause } = {}) {
+  constructor({ name, message, code, action, cause } = {}) {
     super(message || 'An error has occurred', { cause })
     this.name = name || 'AppError'
     this.code = code || 'APP_ERROR'
-    this.details = details
     this.action = action
-    this.statusCode = statusCode || 500
   }
 
   toJSON() {
     return {
       name: this.name,
-      message: this.message,
       code: this.code,
-      details: this.details,
-      action: this.action,
-      status_code: this.statusCode
+      action: this.action
     }
   }
 }
 
 export class ValidationError extends AppError {
-  constructor({ cause, message, action, code } = {}) {
+  constructor({ name, message, code, action, cause } = {}) {
     super({
-      name: 'ValidationError',
+      name: name || 'ValidationError',
       message: message || 'A Validation Error has occurred',
       code: code || 'VALIDATION_ERROR',
-      details: cause,
       action: action || 'Check the submitted data and try again',
-      statusCode: 400,
       cause
     })
   }
 }
 
 export class NotFoundError extends AppError {
-  constructor({ message, details, action, cause } = {}) {
+  constructor({ name, message, code, action, cause } = {}) {
     super({
-      name: 'NotFoundError',
+      name: name || 'NotFoundError',
       message: message || 'The requested resource was not found',
-      code: 'NOT_FOUND',
-      details,
+      code: code || 'NOT_FOUND',
       action: action || 'Check the provided identifier and try again',
-      statusCode: 404,
       cause
     })
   }
 }
 
 export class FatalError extends AppError {
-  constructor({ message, details, cause } = {}) {
+  constructor({ name, message, code, action, cause } = {}) {
     super({
-      name: 'FatalError',
+      name: name || 'FatalError',
       message: message || 'A fatal error has occurred',
-      code: 'FATAL_ERROR',
-      details,
-      action: 'Restart the application',
-      statusCode: 500,
+      code: code || 'FATAL_ERROR',
+      action: action || 'Restart the application',
       cause
     })
   }

@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import database from 'infra/database.js'
 import RecurringPayables from 'models/payables_recurring.js'
 import Payables from 'models/payables.js'
@@ -126,6 +126,27 @@ describe('recurringGenerationService', () => {
     const rows = payables.getAll()
     expect(rows.length).toBe(1)
     expect(rows[0].due_date).toBe('2024-05-31')
+  })
+
+  it('rolls back all inserts when one fails mid-generation', () => {
+    recurringPayables.create(createRecurring({ history: 'Rent', due_day: 5 }))
+    recurringPayables.create(createRecurring({ history: 'Internet', due_day: 10 }))
+
+    const originalCreate = Payables.prototype.create
+    let callCount = 0
+    const spy = vi.spyOn(Payables.prototype, 'create').mockImplementation(function (...args) {
+      callCount++
+      if (callCount === 2) throw new Error('simulated insert failure')
+      return originalCreate.apply(this, args)
+    })
+
+    expect(() =>
+      generateRecurringForMonth({ dbClient: db, year: 2024, month: 5 })
+    ).toThrow('simulated insert failure')
+
+    expect(payables.getAll()).toHaveLength(0)
+
+    spy.mockRestore()
   })
 
   it('throws validation error when input values are invalid', () => {
