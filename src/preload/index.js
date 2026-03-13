@@ -4,12 +4,6 @@ import { electronAPI } from '@electron-toolkit/preload'
 // Custom APIs for renderer
 const api = {
   v1: {
-    database: {
-      getCurrentPath: () => ipcRenderer.invoke('v1:database:getCurrentPath'),
-      selectExisting: () => ipcRenderer.invoke('v1:database:selectExisting'),
-      createNew: () => ipcRenderer.invoke('v1:database:createNew'),
-      switch: (dbPath) => ipcRenderer.invoke('v1:database:switch', dbPath)
-    },
     holidays: {
       getAll: () => ipcRenderer.invoke('v1:holidays:getAll'),
       getByYear: (year) => ipcRenderer.invoke('v1:holidays:getByYear', year),
