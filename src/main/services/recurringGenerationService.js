@@ -59,65 +59,67 @@ export function generateRecurringForMonth({ dbClient, year, month }) {
   const allRecurring = recurringPayables.getAll()
   const allHolidays = holidaysModel.getByYear(year)
 
-  let generatedCount = 0
-  let skippedCount = 0
-  const skippedDetails = []
+  return dbClient.transaction(() => {
+    let generatedCount = 0
+    let skippedCount = 0
+    const skippedDetails = []
 
-  for (const recurring of allRecurring) {
-    const dueDay = recurring.due_day
+    for (const recurring of allRecurring) {
+      const dueDay = recurring.due_day
 
-    if (!Number.isInteger(dueDay) || dueDay < 1 || dueDay > 31) {
-      skippedCount++
-      skippedDetails.push({
-        ...buildBaseSkipDetail(recurring, 'invalid_due_day'),
-        due_day: dueDay
+      if (!Number.isInteger(dueDay) || dueDay < 1 || dueDay > 31) {
+        skippedCount++
+        skippedDetails.push({
+          ...buildBaseSkipDetail(recurring, 'invalid_due_day'),
+          due_day: dueDay
+        })
+        continue
+      }
+
+      const nominalDateString = getNominalDateString(year, month, dueDay)
+
+      const adjustedDateString = adjustForBusinessDay(
+        nominalDateString,
+        recurring.should_postpone ? true : false,
+        allHolidays
+      )
+
+      const alreadyExists = payablesModel.existsByHistoryAndDueDate(
+        recurring.history,
+        adjustedDateString
+      )
+
+      if (alreadyExists) {
+        skippedCount++
+        skippedDetails.push({
+          ...buildBaseSkipDetail(recurring, 'already_exists'),
+          due_date: adjustedDateString
+        })
+        continue
+      }
+
+      payablesModel.create({
+        history: recurring.history,
+        invoice_id: null,
+        account_id: null,
+        due_date: adjustedDateString,
+        preferred_date: null,
+        value: recurring.value,
+        parent_id: recurring.id,
+        paid_at: null
       })
-      continue
+
+      generatedCount++
     }
 
-    const nominalDateString = getNominalDateString(year, month, dueDay)
-
-    const adjustedDateString = adjustForBusinessDay(
-      nominalDateString,
-      recurring.should_postpone ? true : false,
-      allHolidays
-    )
-
-    const alreadyExists = payablesModel.existsByHistoryAndDueDate(
-      recurring.history,
-      adjustedDateString
-    )
-
-    if (alreadyExists) {
-      skippedCount++
-      skippedDetails.push({
-        ...buildBaseSkipDetail(recurring, 'already_exists'),
-        due_date: adjustedDateString
-      })
-      continue
+    return {
+      generated: generatedCount,
+      skipped: skippedCount,
+      skippedDetails,
+      year,
+      month
     }
-
-    payablesModel.create({
-      history: recurring.history,
-      invoice_id: null,
-      account_id: null,
-      due_date: adjustedDateString,
-      preferred_date: null,
-      value: recurring.value,
-      parent_id: recurring.id,
-      paid_at: null
-    })
-
-    generatedCount++
-  }
-
-  return {
-    generated: generatedCount,
-    skipped: skippedCount,
-    skippedDetails,
-    year,
-    month
-  }
+  })()
 }
 
 export default {
