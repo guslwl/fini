@@ -31,7 +31,7 @@ export default class Payables {
     if (!result) {
       throw new NotFoundError({
         message: `Recurring payable with id ${id} was not found`,
-        details: { id, entity: 'payables_recurring' }
+        cause: { id, entity: 'payables_recurring' }
       })
     }
     return result
@@ -80,7 +80,7 @@ export default class Payables {
     if (result.changes === 0) {
       throw new NotFoundError({
         message: `Recurring payable with id ${id} was not found`,
-        details: { id, entity: 'payables_recurring' }
+        cause: { id, entity: 'payables_recurring' }
       })
     }
 
@@ -161,7 +161,7 @@ function validateDueDay(dueDay, { required = false } = {}) {
     if (required) {
       throw new ValidationError({
         message: 'due_day is required',
-        code: 'VALIDATION_ERROR',
+        code: 'MISSING_DUE_DAY',
         cause: ['due_day is required'],
         action: 'Provide a valid day between 1 and 31'
       })
@@ -184,7 +184,7 @@ function validateShouldPostpone(shouldPostpone) {
   if (shouldPostpone === null || shouldPostpone === undefined) {
     throw new ValidationError({
       message: 'should_postpone is required',
-      code: 'VALIDATION_ERROR',
+      code: 'MISSING_SHOULD_POSTPONE',
       cause: ['should_postpone is required'],
       action: 'Provide true or false for should_postpone'
     })
@@ -193,7 +193,7 @@ function validateShouldPostpone(shouldPostpone) {
   if (typeof shouldPostpone !== 'boolean') {
     throw new ValidationError({
       message: 'should_postpone has an invalid value',
-      code: 'VALIDATION_ERROR',
+      code: 'INVALID_BOOLEAN_VALUE',
       cause: ['should_postpone must be a boolean'],
       action: 'Provide true or false for should_postpone'
     })

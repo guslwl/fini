@@ -90,7 +90,7 @@ export const registerGlobalErrorHandlers = () => {
   app.on('render-process-gone', (event, webContents, details) => {
     const error = new FatalError({
       message: `Renderer process gone: ${details.reason}`,
-      details
+      cause: details
     })
     handleProcessError(error, 'render-process-gone', { fatal: true })
   })
@@ -98,7 +98,7 @@ export const registerGlobalErrorHandlers = () => {
   app.on('child-process-gone', (event, details) => {
     const error = new FatalError({
       message: `Child process gone: ${details.type}`,
-      details
+      cause: details
     })
     handleProcessError(error, 'child-process-gone', { fatal: true })
   })
@@ -106,7 +106,7 @@ export const registerGlobalErrorHandlers = () => {
   app.on('gpu-process-crashed', (event, killed) => {
     const error = new FatalError({
       message: 'GPU process crashed',
-      details: { killed }
+      cause: { killed }
     })
     handleProcessError(error, 'gpu-process-crashed', { fatal: true })
   })

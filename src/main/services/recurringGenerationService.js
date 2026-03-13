@@ -5,17 +5,24 @@ import Holidays from 'models/holidays.js'
 import { adjustForBusinessDay } from 'services/businessDayService.js'
 
 export function validateGenerateInput(year, month) {
-  if (!Number.isInteger(year) || !Number.isInteger(month)) {
+  if (!Number.isInteger(year)) {
     throw new ValidationError({
-      message: 'Year and month must be integers',
-      cause: ['year is not an integer', 'month is not an integer']
+      code: 'INVALID_YEAR_VALUE',
+      action: 'Provide an integer for year'
+    })
+  }
+
+  if (!Number.isInteger(month)) {
+    throw new ValidationError({
+      code: 'INVALID_MONTH_VALUE',
+      action: 'Provide an integer for month'
     })
   }
 
   if (month < 1 || month > 12) {
     throw new ValidationError({
-      message: 'Month must be between 1 and 12',
-      cause: ['month is out of range']
+      code: 'INVALID_MONTH_RANGE',
+      action: 'Provide a month value between 1 and 12'
     })
   }
 }
