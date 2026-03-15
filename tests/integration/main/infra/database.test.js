@@ -51,7 +51,7 @@ describe('Database', () => {
 
       // Verify core tables exist from 001-initial.sql
       expect(tables).toContain('holidays')
-      expect(tables).toContain('payables_recurring')
+      expect(tables).toContain('scheduled_transactions')
     })
 
     it('should suppress verbose logging when not specified', () => {

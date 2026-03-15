@@ -26,13 +26,15 @@ const api = {
       getLanguage: () => ipcRenderer.invoke('v1:settings:getLanguage'),
       setLanguage: (locale) => ipcRenderer.invoke('v1:settings:setLanguage', locale)
     },
-    recurring: {
-      getAll: () => ipcRenderer.invoke('v1:recurring:getAll'),
-      create: (data) => ipcRenderer.invoke('v1:recurring:create', data),
-      update: (id, data) => ipcRenderer.invoke('v1:recurring:update', id, data),
-      delete: (id) => ipcRenderer.invoke('v1:recurring:delete', id),
-      generateForMonth: (year, month) =>
-        ipcRenderer.invoke('v1:recurring:generateForMonth', year, month)
+    scheduledTransactions: {
+      getAll: () => ipcRenderer.invoke('v1:scheduledTransactions:getAll'),
+      create: (data) => ipcRenderer.invoke('v1:scheduledTransactions:create', data),
+      update: (id, data) => ipcRenderer.invoke('v1:scheduledTransactions:update', id, data),
+      delete: (id) => ipcRenderer.invoke('v1:scheduledTransactions:delete', id),
+      generate: (asOfDate) => ipcRenderer.invoke('v1:scheduledTransactions:generate', asOfDate),
+      confirmGeneration: (items) =>
+        ipcRenderer.invoke('v1:scheduledTransactions:confirmGeneration', items),
+      getUpcoming: (days) => ipcRenderer.invoke('v1:scheduledTransactions:getUpcoming', days)
     }
   }
 }

@@ -1,6 +1,7 @@
 import { beforeEach, afterEach, describe, expect, it } from 'vitest'
 import database from 'infra/database.js'
 import Payables from 'models/payables.js'
+import ScheduledTransactions from 'models/scheduled_transactions.js'
 import { NotFoundError, ValidationError } from 'shared/errors.js'
 
 function createPayable(overrides = {}) {
@@ -94,6 +95,43 @@ describe('Payables model', () => {
 
     expect(exists).toBe(true)
     expect(missing).toBe(false)
+  })
+
+  it('checks if payable exists by parent_id and due_date', () => {
+    const scheduledTx = new ScheduledTransactions(db)
+    const txId = scheduledTx.create({
+      description: 'Rent',
+      type: 'payable',
+      frequency: 'monthly',
+      next_date: '2024-04-15',
+      currency: 'BRL'
+    })
+
+    payables.create(
+      createPayable({ history: 'Scheduled', due_date: '2024-03-15', parent_id: txId })
+    )
+
+    const exists = payables.existsByParentIdAndDueDate(txId, '2024-03-15')
+    const wrongId = payables.existsByParentIdAndDueDate(99999, '2024-03-15')
+    const wrongDate = payables.existsByParentIdAndDueDate(txId, '2024-03-16')
+
+    expect(exists).toBe(true)
+    expect(wrongId).toBe(false)
+    expect(wrongDate).toBe(false)
+  })
+
+  it('stores and returns currency field', () => {
+    const created = payables.create(createPayable({ history: 'USD Bill', currency: 'USD' }))
+    const stored = payables.getById(created)
+
+    expect(stored.currency).toBe('USD')
+  })
+
+  it('defaults currency to BRL when not provided', () => {
+    const created = payables.create(createPayable({ history: 'BRL Bill' }))
+    const stored = payables.getById(created)
+
+    expect(stored.currency).toBe('BRL')
   })
 
   it('updates a payable and returns updated row', () => {

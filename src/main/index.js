@@ -11,7 +11,7 @@ import { createApplicationMenu, updateDatabaseMenuLabel } from 'main/menu.js'
 
 import databaseHandler from 'handlers/database.js'
 import holidaysHandler from 'handlers/holidays.js'
-import payablesRecurringHandler from 'handlers/payables_recurring.js'
+import scheduledTransactionsHandler from 'handlers/scheduled_transactions.js'
 import payablesHandler from 'handlers/payables.js'
 import settingsHandler from 'handlers/settings.js'
 
@@ -120,7 +120,7 @@ app.whenReady().then(async () => {
   settingsHandler(ipc)
   holidaysHandler(ipc, db)
   payablesHandler(ipc, db)
-  payablesRecurringHandler(ipc, db)
+  scheduledTransactionsHandler(ipc, db)
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
