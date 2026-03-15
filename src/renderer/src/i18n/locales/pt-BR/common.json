@@ -21,7 +21,7 @@
   "nav": {
     "home": "Início",
     "payables": "Contas a pagar",
-    "recurring": "Recorrentes",
+    "scheduled": "Agendadas",
     "calendar": "Calendário",
     "holidays": "Feriados"
   },
@@ -51,6 +51,7 @@
     "preferredDate": "Data preferida",
     "effectiveDate": "Data efetiva",
     "accountId": "ID da conta",
-    "invoiceId": "ID da fatura"
+    "invoiceId": "ID da fatura",
+    "optional": "opcional"
   }
 }

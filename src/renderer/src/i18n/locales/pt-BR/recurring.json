@@ -1,60 +1,112 @@
 {
   "page": {
-    "title": "Contas recorrentes",
-    "description": "Gerencie modelos de contas a pagar recorrentes.",
-    "generate": {
-      "title": "Gerar para o mês",
-      "description": "Criar contas a pagar a partir dos modelos recorrentes para o mês selecionado.",
-      "invalidMonth": "Selecione um mês válido para gerar contas.",
-      "failed": "Falha ao gerar contas para o mês.",
-      "result": "Geração concluída: {{generated}} geradas, {{skipped}} ignoradas.",
-      "skippedDetails": "Detalhes ignorados: {{details}}",
-      "skippedUnavailable": "Detalhes de itens ignorados indisponíveis.",
-      "button": "Gerar"
-    }
+    "title": "Transações Agendadas",
+    "description": "Gerencie compromissos financeiros recorrentes e com data futura.",
+    "checkPending": "Verificar pendentes"
   },
   "table": {
-    "loading": "Carregando contas recorrentes...",
-    "empty": "Nenhuma conta recorrente encontrada.",
+    "loading": "Carregando transações agendadas...",
+    "empty": "Nenhuma transação agendada encontrada.",
     "headers": {
-      "dueDay": "Dia de vencimento",
-      "shouldPostpone": "Adiar se necessário"
+      "type": "Tipo",
+      "frequency": "Frequência",
+      "nextDate": "Próxima data",
+      "certainty": "Certeza",
+      "status": "Status"
     }
   },
   "modal": {
     "add": {
-      "title": "Adicionar conta recorrente",
-      "description": "Criar um modelo de conta a pagar recorrente."
+      "title": "Adicionar transação agendada",
+      "description": "Criar uma nova transação agendada."
     },
     "edit": {
-      "title": "Editar conta recorrente",
-      "description": "Atualizar os detalhes da conta recorrente."
+      "title": "Editar transação agendada",
+      "description": "Atualizar os detalhes da transação agendada."
     },
     "fields": {
-      "dueDay": "Dia de vencimento",
-      "shouldPostpone": "Adiar para o próximo dia útil"
+      "type": "Tipo",
+      "frequency": "Frequência",
+      "certainty": "Certeza",
+      "userTriggered": "Confirmar antes de gerar",
+      "shouldPostpone": "Adiar para o próximo dia útil",
+      "endType": "Condição de encerramento",
+      "endAfterN": "Após N ocorrências",
+      "endDate": "Até a data",
+      "status": "Status",
+      "notes": "Observações"
+    },
+    "postponeNote": "Se a data cair em fim de semana ou feriado, a transação será movida para o próximo dia útil.",
+    "type": {
+      "payable": "A Pagar",
+      "receivable": "A Receber"
+    },
+    "frequency": {
+      "once": "Uma vez",
+      "daily": "Diário",
+      "weekly": "Semanal",
+      "biweekly": "Quinzenal",
+      "monthly": "Mensal",
+      "quarterly": "Trimestral",
+      "semiannual": "Semestral",
+      "annual": "Anual",
+      "customDays": "Dias específicos da semana"
+    },
+    "weekday": {
+      "mon": "Seg",
+      "tue": "Ter",
+      "wed": "Qua",
+      "thu": "Qui",
+      "fri": "Sex",
+      "sat": "Sáb",
+      "sun": "Dom"
+    },
+    "certainty": {
+      "fixed": "Fixo",
+      "estimated": "Estimado",
+      "unknown": "Desconhecido"
+    },
+    "endType": {
+      "never": "Nunca",
+      "after_n": "Após N ocorrências",
+      "until_date": "Até a data"
+    },
+    "status": {
+      "active": "Ativo",
+      "paused": "Pausado",
+      "completed": "Concluído"
     },
     "validation": {
-      "invalidValue": "O valor deve ser um montante válido com até 2 casas decimais."
+      "invalidValue": "O valor deve ser um montante válido com até 2 casas decimais.",
+      "missingType": "O tipo é obrigatório.",
+      "missingFrequency": "A frequência é obrigatória.",
+      "missingAmount": "O valor é obrigatório quando a certeza é fixa.",
+      "missingDays": "Selecione pelo menos um dia da semana."
     }
   },
-  "skipped": {
-    "alreadyExists": "já existe (data de vencimento: {{dueDate}})",
-    "invalidDueDay": "dia de vencimento inválido ({{dueDay}})",
-    "withReason": "ignorado (motivo: {{reason}})",
-    "itemLabel": "Recorrente #{{id}}",
-    "itemFallback": "Item {{index}}"
+  "generation": {
+    "title": "Transações pendentes",
+    "description": "As seguintes transações agendadas estão vencidas. Revise e confirme para gerar contas.",
+    "noItems": "Nenhuma transação pendente para gerar.",
+    "confirm": "Gerar",
+    "fillAmount": "Informe o valor",
+    "autoLabel": "Auto",
+    "needsInputLabel": "Requer informação",
+    "skippedLabel": "Já gerado",
+    "result": "Concluído: {{created}} criadas, {{skipped}} ignoradas.",
+    "failed": "Falha ao gerar transações."
   },
   "toasts": {
-    "created": "Conta recorrente criada com sucesso",
-    "updated": "Conta recorrente atualizada com sucesso",
-    "deleted": "Conta recorrente excluída com sucesso"
+    "created": "Transação agendada criada com sucesso",
+    "updated": "Transação agendada atualizada com sucesso",
+    "deleted": "Transação agendada excluída com sucesso"
   },
   "errors": {
-    "loadFailed": "Falha ao carregar contas recorrentes.",
-    "createFailed": "Falha ao criar conta recorrente.",
-    "updateFailed": "Falha ao atualizar conta recorrente.",
-    "deleteFailed": "Falha ao excluir conta recorrente."
+    "loadFailed": "Falha ao carregar transações agendadas.",
+    "createFailed": "Falha ao criar transação agendada.",
+    "updateFailed": "Falha ao atualizar transação agendada.",
+    "deleteFailed": "Falha ao excluir transação agendada.",
+    "generateFailed": "Falha ao carregar transações pendentes."
   },
-  "deleteConfirm": "Excluir esta conta recorrente?"
+  "deleteConfirm": "Excluir esta transação agendada?"
 }

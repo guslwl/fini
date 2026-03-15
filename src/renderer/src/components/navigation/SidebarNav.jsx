@@ -17,16 +17,16 @@ const navItems = [
     icon: HandCoins,
     children: [
       {
-        to: '/payables/recurring',
-        labelKey: 'nav.recurring',
-        icon: Repeat
-      },
-      {
         to: '/payables/calendar',
         labelKey: 'nav.calendar',
         icon: Calendar
       }
     ]
+  },
+  {
+    to: '/scheduled-transactions',
+    labelKey: 'nav.scheduled',
+    icon: Repeat
   },
   {
     to: '/holidays',

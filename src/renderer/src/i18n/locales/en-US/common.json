@@ -21,7 +21,7 @@
   "nav": {
     "home": "Home",
     "payables": "Payables",
-    "recurring": "Recurring",
+    "scheduled": "Scheduled",
     "calendar": "Calendar",
     "holidays": "Holidays"
   },
@@ -51,6 +51,7 @@
     "preferredDate": "Preferred date",
     "effectiveDate": "Effective date",
     "accountId": "Account ID",
-    "invoiceId": "Invoice ID"
+    "invoiceId": "Invoice ID",
+    "optional": "optional"
   }
 }

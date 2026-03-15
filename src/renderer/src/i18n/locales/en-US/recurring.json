@@ -1,60 +1,112 @@
 {
   "page": {
-    "title": "Recurring Payables",
-    "description": "Manage recurring payable templates.",
-    "generate": {
-      "title": "Generate for Month",
-      "description": "Create payables from recurring templates for the selected month.",
-      "invalidMonth": "Select a valid month to generate payables.",
-      "failed": "Failed to generate payables for month.",
-      "result": "Generation complete: {{generated}} generated, {{skipped}} skipped.",
-      "skippedDetails": "Skipped details: {{details}}",
-      "skippedUnavailable": "Skipped details unavailable.",
-      "button": "Generate"
-    }
+    "title": "Scheduled Transactions",
+    "description": "Manage recurring and future-dated financial commitments.",
+    "checkPending": "Check pending"
   },
   "table": {
-    "loading": "Loading recurring payables...",
-    "empty": "No recurring payables found.",
+    "loading": "Loading scheduled transactions...",
+    "empty": "No scheduled transactions found.",
     "headers": {
-      "dueDay": "Due day",
-      "shouldPostpone": "Should postpone"
+      "type": "Type",
+      "frequency": "Frequency",
+      "nextDate": "Next date",
+      "certainty": "Certainty",
+      "status": "Status"
     }
   },
   "modal": {
     "add": {
-      "title": "Add recurring payable",
-      "description": "Create a recurring payable template."
+      "title": "Add scheduled transaction",
+      "description": "Create a new scheduled transaction."
     },
     "edit": {
-      "title": "Edit recurring payable",
-      "description": "Update recurring payable details."
+      "title": "Edit scheduled transaction",
+      "description": "Update scheduled transaction details."
     },
     "fields": {
-      "dueDay": "Due day",
-      "shouldPostpone": "Should postpone to next business day"
+      "type": "Type",
+      "frequency": "Frequency",
+      "certainty": "Certainty",
+      "userTriggered": "Prompt before generating",
+      "shouldPostpone": "Postpone to next business day",
+      "endType": "End condition",
+      "endAfterN": "After N occurrences",
+      "endDate": "Until date",
+      "status": "Status",
+      "notes": "Notes"
+    },
+    "postponeNote": "If the due date falls on a weekend or holiday, the transaction will be moved to the next business day.",
+    "type": {
+      "payable": "Payable",
+      "receivable": "Receivable"
+    },
+    "frequency": {
+      "once": "Once",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "biweekly": "Biweekly",
+      "monthly": "Monthly",
+      "quarterly": "Quarterly",
+      "semiannual": "Semiannual",
+      "annual": "Annual",
+      "customDays": "Specific days of week"
+    },
+    "weekday": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
+    },
+    "certainty": {
+      "fixed": "Fixed",
+      "estimated": "Estimated",
+      "unknown": "Unknown"
+    },
+    "endType": {
+      "never": "Never",
+      "after_n": "After N occurrences",
+      "until_date": "Until date"
+    },
+    "status": {
+      "active": "Active",
+      "paused": "Paused",
+      "completed": "Completed"
     },
     "validation": {
-      "invalidValue": "Value must be a valid amount with up to 2 decimal places."
+      "invalidValue": "Value must be a valid amount with up to 2 decimal places.",
+      "missingType": "Type is required.",
+      "missingFrequency": "Frequency is required.",
+      "missingAmount": "Value is required when certainty is fixed.",
+      "missingDays": "Select at least one day of the week."
     }
   },
-  "skipped": {
-    "alreadyExists": "already exists (due date: {{dueDate}})",
-    "invalidDueDay": "invalid due day ({{dueDay}})",
-    "withReason": "skipped (reason: {{reason}})",
-    "itemLabel": "Recurring #{{id}}",
-    "itemFallback": "Item {{index}}"
+  "generation": {
+    "title": "Pending transactions",
+    "description": "The following scheduled transactions are due. Review and confirm to generate payables.",
+    "noItems": "No pending transactions to generate.",
+    "confirm": "Generate",
+    "fillAmount": "Enter amount",
+    "autoLabel": "Auto",
+    "needsInputLabel": "Needs input",
+    "skippedLabel": "Already generated",
+    "result": "Done: {{created}} created, {{skipped}} skipped.",
+    "failed": "Failed to generate transactions."
   },
   "toasts": {
-    "created": "Recurring payable created successfully",
-    "updated": "Recurring payable updated successfully",
-    "deleted": "Recurring payable deleted successfully"
+    "created": "Scheduled transaction created successfully",
+    "updated": "Scheduled transaction updated successfully",
+    "deleted": "Scheduled transaction deleted successfully"
   },
   "errors": {
-    "loadFailed": "Failed to load recurring payables.",
-    "createFailed": "Failed to create recurring payable.",
-    "updateFailed": "Failed to update recurring payable.",
-    "deleteFailed": "Failed to delete recurring payable."
+    "loadFailed": "Failed to load scheduled transactions.",
+    "createFailed": "Failed to create scheduled transaction.",
+    "updateFailed": "Failed to update scheduled transaction.",
+    "deleteFailed": "Failed to delete scheduled transaction.",
+    "generateFailed": "Failed to load pending transactions."
   },
-  "deleteConfirm": "Delete this recurring payable?"
+  "deleteConfirm": "Delete this scheduled transaction?"
 }
