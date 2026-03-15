@@ -85,8 +85,7 @@ export default class Payables {
 
     if (!result) {
       throw new NotFoundError({
-        message: `Payable with id ${id} was not found`,
-        cause: { id, entity: 'payable' }
+        message: `Payable with id ${id} was not found`
       })
     }
 
@@ -139,8 +138,7 @@ export default class Payables {
 
     if (!result) {
       throw new NotFoundError({
-        message: `Payable with id ${id} was not found`,
-        cause: { id, entity: 'payable' }
+        message: `Payable with id ${id} was not found`
       })
     }
 
@@ -177,8 +175,7 @@ export default class Payables {
 
     if (result.changes === 0) {
       throw new NotFoundError({
-        message: `Payable with id ${id} was not found`,
-        cause: { id, entity: 'payable' }
+        message: `Payable with id ${id} was not found`
       })
     }
 
@@ -201,7 +198,7 @@ function validatePayableBulkPayload(dataArray) {
       validatePayableCreatePayload(item)
     } catch (error) {
       if (error instanceof ValidationError && error.code === 'VALIDATION_ERROR') {
-        errors.push({ index, errors: error.details || [] })
+        errors.push({ index, errors: error.cause || [] })
         return
       }
 
