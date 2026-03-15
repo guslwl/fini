@@ -1,7 +1,7 @@
 import { beforeEach, afterEach, describe, expect, it } from 'vitest'
 import database from 'infra/database.js'
 import Payables from 'models/payables.js'
-import { NotFoundError, ValidationError } from 'infra/errors.js'
+import { NotFoundError, ValidationError } from 'shared/errors.js'
 
 function createPayable(overrides = {}) {
   return {

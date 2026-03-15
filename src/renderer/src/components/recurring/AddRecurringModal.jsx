@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
 import { decimalToCents } from '@/lib/utils'
+import { validateRecurringCreatePayload } from 'shared/validators/recurring.js'
 
 const initialForm = {
   history: '',
@@ -60,33 +61,31 @@ function AddRecurringModal({ open, onClose, onCreate }) {
   async function handleSubmit(event) {
     event.preventDefault()
 
-    if (!form.history.trim()) {
-      toast.error('Description is required.')
-      return
-    }
-
-    const dueDay = Number(form.due_day)
-    if (!Number.isInteger(dueDay) || dueDay < 1 || dueDay > 31) {
-      toast.error('Due day must be an integer between 1 and 31.')
-      return
-    }
-
     const centsValue = decimalToCents(form.value)
     if (centsValue === null) {
       toast.error('Value must be a valid amount with up to 2 decimal places.')
       return
     }
 
+    const payload = {
+      history: form.history.trim(),
+      value: centsValue,
+      due_day: Number(form.due_day),
+      should_postpone: Boolean(form.should_postpone),
+      notes: null
+    }
+
+    try {
+      validateRecurringCreatePayload(payload)
+    } catch (error) {
+      toast.error(Array.isArray(error.cause) ? error.cause[0] : error.message)
+      return
+    }
+
     setIsSaving(true)
 
     try {
-      const hasCreated = await onCreate({
-        history: form.history.trim(),
-        value: centsValue,
-        due_day: dueDay,
-        should_postpone: Boolean(form.should_postpone),
-        notes: null
-      })
+      const hasCreated = await onCreate(payload)
 
       if (hasCreated) {
         onClose()

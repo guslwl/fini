@@ -1,4 +1,4 @@
-import { AppError } from 'infra/errors.js'
+import { AppError } from 'shared/errors.js'
 import Holidays from 'models/holidays.js'
 export default function holidaysHandler(ipcMain, dbClient) {
   if (!dbClient) {

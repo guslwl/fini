@@ -1,7 +1,7 @@
 import { beforeEach, afterEach, describe, expect, it } from 'vitest'
 import database from 'infra/database.js'
 import Holidays from 'models/holidays.js'
-import { NotFoundError, ValidationError } from 'infra/errors.js'
+import { NotFoundError, ValidationError } from 'shared/errors.js'
 
 function createHoliday(overrides = {}) {
   return {

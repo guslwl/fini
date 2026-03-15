@@ -1,5 +1,9 @@
 import path from 'node:path'
 
+export const sharedAliases = {
+  shared: path.resolve(process.cwd(), 'src/shared')
+}
+
 export const mainAliases = {
   main: path.resolve(process.cwd(), 'src/main'),
   infra: path.resolve(process.cwd(), 'src/main/infra'),
@@ -15,6 +19,7 @@ export const rendererAliases = {
 }
 
 export const allAliases = {
+  ...sharedAliases,
   ...mainAliases,
   ...rendererAliases
 }

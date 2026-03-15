@@ -4,12 +4,12 @@ import path from 'path'
 
 import react from '@vitejs/plugin-react'
 
-import { mainAliases, rendererAliases } from './config/aliases.mjs'
+import { mainAliases, rendererAliases, sharedAliases } from './config/aliases.mjs'
 
 export default defineConfig({
   main: {
     resolve: {
-      alias: mainAliases
+      alias: { ...sharedAliases, ...mainAliases }
     },
     build: {
       rollupOptions: {
@@ -31,7 +31,7 @@ export default defineConfig({
   },
   preload: {
     resolve: {
-      alias: mainAliases
+      alias: { ...sharedAliases, ...mainAliases }
     },
     plugins: [
       externalizeDepsPlugin({
@@ -48,7 +48,7 @@ export default defineConfig({
   },
   renderer: {
     resolve: {
-      alias: rendererAliases
+      alias: { ...sharedAliases, ...rendererAliases }
     },
     plugins: [react()]
   }

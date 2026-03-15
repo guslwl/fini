@@ -1,4 +1,4 @@
-import { ValidationError } from 'infra/errors.js'
+import { ValidationError } from 'shared/errors.js'
 import RecurringPayables from 'models/payables_recurring.js'
 import PayablesModel from 'models/payables.js'
 import Holidays from 'models/holidays.js'

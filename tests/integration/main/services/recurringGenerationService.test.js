@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import database from 'infra/database.js'
 import RecurringPayables from 'models/payables_recurring.js'
 import Payables from 'models/payables.js'
-import { ValidationError } from 'infra/errors.js'
+import { ValidationError } from 'shared/errors.js'
 import { generateRecurringForMonth } from 'services/recurringGenerationService.js'
 
 function createRecurring(overrides = {}) {
