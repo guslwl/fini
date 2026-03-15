@@ -1,0 +1,89 @@
+{
+  "page": {
+    "title": "Contas a pagar",
+    "description": "Gerencie as contas a pagar registradas no banco de dados."
+  },
+  "table": {
+    "loading": "Carregando contas a pagar...",
+    "empty": "Nenhuma conta a pagar encontrada para os filtros atuais.",
+    "headers": {
+      "paid": "Pago"
+    },
+    "actions": {
+      "markPaid": "Marcar pago",
+      "unpay": "Desmarcar pago"
+    }
+  },
+  "modal": {
+    "add": {
+      "title": "Adicionar conta a pagar",
+      "description": "Criar um registro de conta a pagar."
+    },
+    "edit": {
+      "title": "Editar conta a pagar",
+      "description": "Atualizar os detalhes da conta a pagar."
+    },
+    "validation": {
+      "invalidValue": "O valor deve ser um montante válido com até 2 casas decimais."
+    }
+  },
+  "filters": {
+    "status": {
+      "label": "Status",
+      "unpaidOnly": "Apenas não pagas",
+      "paidOnly": "Apenas pagas",
+      "all": "Todas"
+    },
+    "searchHistory": "Buscar histórico",
+    "sorting": {
+      "effectiveDateAsc": "Data efetiva (mais antigas primeiro)",
+      "effectiveDateDesc": "Data efetiva (mais recentes primeiro)",
+      "valueAsc": "Valor (menor primeiro)",
+      "valueDesc": "Valor (maior primeiro)",
+      "historyAsc": "Histórico (A-Z)",
+      "historyDesc": "Histórico (Z-A)"
+    }
+  },
+  "toasts": {
+    "created": "Conta a pagar criada com sucesso",
+    "updated": "Conta a pagar atualizada com sucesso",
+    "deleted": "Conta a pagar excluída com sucesso",
+    "markedPaid": "Conta a pagar marcada como paga",
+    "markedUnpaid": "Conta a pagar marcada como não paga"
+  },
+  "errors": {
+    "loadFailed": "Falha ao carregar contas a pagar.",
+    "createFailed": "Falha ao criar conta a pagar.",
+    "updateFailed": "Falha ao atualizar conta a pagar.",
+    "deleteFailed": "Falha ao excluir conta a pagar.",
+    "markPaidFailed": "Falha ao marcar conta como paga.",
+    "markUnpaidFailed": "Falha ao marcar conta como não paga."
+  },
+  "deleteConfirm": "Excluir esta conta a pagar?",
+  "calendar": {
+    "title": "Calendário",
+    "description": "Acompanhe contas a pagar por dia e veja detalhes de feriados.",
+    "loading": "Carregando calendário...",
+    "holiday": "Feriado",
+    "invalidMonth": "Mês inválido selecionado.",
+    "loadFailed": "Falha ao carregar dados do calendário.",
+    "markPaidFailed": "Falha ao marcar conta como paga.",
+    "markedPaid": "Conta a pagar marcada como paga"
+  },
+  "dateDetails": {
+    "unpaidSubtotal": "Subtotal não pago",
+    "paidSubtotal": "Subtotal pago",
+    "globalTotal": "Total geral",
+    "unpaidSection": "Contas não pagas ({{count}})",
+    "paidSection": "Contas pagas ({{count}})",
+    "noUnpaid": "Nenhuma conta não paga para esta data.",
+    "noPaid": "Nenhuma conta paga para esta data.",
+    "headers": {
+      "account": "Conta",
+      "paidAt": "Pago em",
+      "action": "Ação"
+    },
+    "markPaid": "Marcar pago",
+    "marking": "Marcando..."
+  }
+}

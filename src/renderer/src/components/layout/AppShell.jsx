@@ -1,15 +1,18 @@
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { Toaster } from 'sonner'
+import LanguageSwitcher from '@/components/layout/LanguageSwitcher'
 import SidebarNav from '@/components/navigation/SidebarNav'
 
 function AppShell() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
+  const { t } = useTranslation()
 
   return (
     <div className="flex min-h-screen bg-background text-foreground">
       <aside
-        className={`border-r border-border bg-muted/30 transition-[width] duration-200 ${
+        className={`flex flex-col border-r border-border bg-muted/30 transition-[width] duration-200 ${
           isSidebarCollapsed ? 'w-16' : 'w-64'
         }`}
       >
@@ -22,14 +25,17 @@ function AppShell() {
               type="button"
               onClick={() => setIsSidebarCollapsed((prev) => !prev)}
               className="h-8 w-8 rounded-md border border-border text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-              aria-label={isSidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-              title={isSidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+              aria-label={isSidebarCollapsed ? t('sidebar.expand') : t('sidebar.collapse')}
+              title={isSidebarCollapsed ? t('sidebar.expand') : t('sidebar.collapse')}
             >
               {isSidebarCollapsed ? '>' : '<'}
             </button>
           </div>
         </div>
         <SidebarNav collapsed={isSidebarCollapsed} />
+        <div className="mt-auto">
+          <LanguageSwitcher collapsed={isSidebarCollapsed} />
+        </div>
       </aside>
 
       <main className="flex-1 p-6">

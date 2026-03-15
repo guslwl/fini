@@ -1,0 +1,60 @@
+{
+  "page": {
+    "title": "Contas recorrentes",
+    "description": "Gerencie modelos de contas a pagar recorrentes.",
+    "generate": {
+      "title": "Gerar para o mês",
+      "description": "Criar contas a pagar a partir dos modelos recorrentes para o mês selecionado.",
+      "invalidMonth": "Selecione um mês válido para gerar contas.",
+      "failed": "Falha ao gerar contas para o mês.",
+      "result": "Geração concluída: {{generated}} geradas, {{skipped}} ignoradas.",
+      "skippedDetails": "Detalhes ignorados: {{details}}",
+      "skippedUnavailable": "Detalhes de itens ignorados indisponíveis.",
+      "button": "Gerar"
+    }
+  },
+  "table": {
+    "loading": "Carregando contas recorrentes...",
+    "empty": "Nenhuma conta recorrente encontrada.",
+    "headers": {
+      "dueDay": "Dia de vencimento",
+      "shouldPostpone": "Adiar se necessário"
+    }
+  },
+  "modal": {
+    "add": {
+      "title": "Adicionar conta recorrente",
+      "description": "Criar um modelo de conta a pagar recorrente."
+    },
+    "edit": {
+      "title": "Editar conta recorrente",
+      "description": "Atualizar os detalhes da conta recorrente."
+    },
+    "fields": {
+      "dueDay": "Dia de vencimento",
+      "shouldPostpone": "Adiar para o próximo dia útil"
+    },
+    "validation": {
+      "invalidValue": "O valor deve ser um montante válido com até 2 casas decimais."
+    }
+  },
+  "skipped": {
+    "alreadyExists": "já existe (data de vencimento: {{dueDate}})",
+    "invalidDueDay": "dia de vencimento inválido ({{dueDay}})",
+    "withReason": "ignorado (motivo: {{reason}})",
+    "itemLabel": "Recorrente #{{id}}",
+    "itemFallback": "Item {{index}}"
+  },
+  "toasts": {
+    "created": "Conta recorrente criada com sucesso",
+    "updated": "Conta recorrente atualizada com sucesso",
+    "deleted": "Conta recorrente excluída com sucesso"
+  },
+  "errors": {
+    "loadFailed": "Falha ao carregar contas recorrentes.",
+    "createFailed": "Falha ao criar conta recorrente.",
+    "updateFailed": "Falha ao atualizar conta recorrente.",
+    "deleteFailed": "Falha ao excluir conta recorrente."
+  },
+  "deleteConfirm": "Excluir esta conta recorrente?"
+}

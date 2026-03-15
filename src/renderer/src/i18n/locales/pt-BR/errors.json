@@ -1,0 +1,11 @@
+{
+  "APP_ERROR": "Ocorreu um erro inesperado.",
+  "FATAL_ERROR": "Ocorreu um erro fatal.",
+  "VALIDATION_ERROR": "Dados inválidos fornecidos.",
+  "NOT_FOUND": "Registro não encontrado.",
+  "INVALID_DATE_FORMAT": "Formato de data inválido. Use YYYY-MM-DD.",
+  "INVALID_DATE_VALUE": "Valor de data inválido.",
+  "MISSING_DUE_DAY": "O dia de vencimento é obrigatório.",
+  "MISSING_SHOULD_POSTPONE": "O campo de adiamento é obrigatório.",
+  "INVALID_BOOLEAN_VALUE": "Era esperado um valor booleano."
+}

@@ -22,6 +22,10 @@ const api = {
       markAsPaid: (id) => ipcRenderer.invoke('v1:payables:markAsPaid', id),
       markAsUnpaid: (id) => ipcRenderer.invoke('v1:payables:markAsUnpaid', id)
     },
+    settings: {
+      getLanguage: () => ipcRenderer.invoke('v1:settings:getLanguage'),
+      setLanguage: (locale) => ipcRenderer.invoke('v1:settings:setLanguage', locale)
+    },
     recurring: {
       getAll: () => ipcRenderer.invoke('v1:recurring:getAll'),
       create: (data) => ipcRenderer.invoke('v1:recurring:create', data),

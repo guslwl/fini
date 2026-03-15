@@ -1,5 +1,6 @@
 import { Plus } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
 import AddHolidayModal from '@/components/holidays/AddHolidayModal'
@@ -11,6 +12,7 @@ const currentYear = new Date().getFullYear()
 const yearOptions = Array.from({ length: 11 }, (_, index) => currentYear - 5 + index)
 
 function HolidaysPage() {
+  const { t } = useTranslation('holidays')
   const [selectedYear, setSelectedYear] = useState(currentYear)
   const [descriptionFilter, setDescriptionFilter] = useState('')
   const [hidePast, setHidePast] = useState(false)
@@ -28,7 +30,7 @@ function HolidaysPage() {
       const rows = await window.api.v1.holidays.getByYear(year)
       setHolidays(Array.isArray(rows) ? rows : [])
     } catch (loadError) {
-      toast.error(loadError?.message || 'Failed to load holidays.')
+      toast.error(t('errors.loadFailed'))
       setHolidays([])
       throw loadError
     } finally {
@@ -81,11 +83,11 @@ function HolidaysPage() {
       await window.api.v1.holidays.create(payload)
       hasCreated = true
       await loadHolidays(selectedYear)
-      toast.success('Holiday created successfully')
+      toast.success(t('toasts.created'))
       return true
-    } catch (createError) {
+    } catch {
       if (!hasCreated) {
-        toast.error(createError?.message || 'Failed to create holiday.')
+        toast.error(t('errors.createFailed'))
       }
       return false
     }
@@ -104,11 +106,11 @@ function HolidaysPage() {
       hasUpdated = true
       await loadHolidays(selectedYear)
       setEditingHoliday(null)
-      toast.success('Holiday updated successfully')
+      toast.success(t('toasts.updated'))
       return true
-    } catch (updateError) {
+    } catch {
       if (!hasUpdated) {
-        toast.error(updateError?.message || 'Failed to update holiday.')
+        toast.error(t('errors.updateFailed'))
       }
       return false
     }
@@ -126,10 +128,10 @@ function HolidaysPage() {
       hasDeleted = true
       setDeletingHolidayId(null)
       await loadHolidays(selectedYear)
-      toast.success('Holiday deleted successfully')
-    } catch (deleteError) {
+      toast.success(t('toasts.deleted'))
+    } catch {
       if (!hasDeleted) {
-        toast.error(deleteError?.message || 'Failed to delete holiday.')
+        toast.error(t('errors.deleteFailed'))
       }
     }
   }
@@ -142,10 +144,8 @@ function HolidaysPage() {
     <section className="space-y-4">
       <div className="flex items-center justify-between gap-3">
         <div>
-          <h2 className="text-2xl font-semibold">Holidays</h2>
-          <p className="text-sm text-muted-foreground">
-            Manage holidays registered in the database.
-          </p>
+          <h2 className="text-2xl font-semibold">{t('page.title')}</h2>
+          <p className="text-sm text-muted-foreground">{t('page.description')}</p>
         </div>
 
         <button
@@ -154,7 +154,7 @@ function HolidaysPage() {
           className="inline-flex h-9 items-center gap-2 rounded-md bg-primary px-3 text-sm font-medium text-primary-foreground"
         >
           <Plus className="h-4 w-4" />
-          Add
+          {t('buttons.add', { ns: 'common' })}
         </button>
       </div>
 

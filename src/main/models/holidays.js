@@ -123,5 +123,4 @@ export default class Holidays {
 
     return true
   }
-
 }

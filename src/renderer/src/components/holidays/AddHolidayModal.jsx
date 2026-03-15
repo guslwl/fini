@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
 import { validateHoliday, validateHolidayUpdate } from 'shared/validators/holidays.js'
@@ -12,6 +13,7 @@ const initialForm = {
 }
 
 function AddHolidayModal({ open, onClose, onCreate, onUpdate, mode = 'create', initialData }) {
+  const { t } = useTranslation(['holidays', 'common'])
   const [form, setForm] = useState(initialForm)
   const [isSaving, setIsSaving] = useState(false)
 
@@ -121,16 +123,16 @@ function AddHolidayModal({ open, onClose, onCreate, onUpdate, mode = 'create', i
       <div className="w-full max-w-lg rounded-lg border border-border bg-background p-5 shadow-lg">
         <div className="mb-4">
           <h3 className="text-lg font-semibold">
-            {mode === 'edit' ? 'Edit holiday' : 'Add holiday'}
+            {mode === 'edit' ? t('modal.edit.title') : t('modal.add.title')}
           </h3>
           <p className="text-sm text-muted-foreground">
-            {mode === 'edit' ? 'Update the holiday details.' : 'Create a holiday record.'}
+            {mode === 'edit' ? t('modal.edit.description') : t('modal.add.description')}
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-3">
           <label className="flex flex-col gap-1 text-sm">
-            <span>Description</span>
+            <span>{t('common:labels.description')}</span>
             <input
               value={form.description}
               onChange={(event) =>
@@ -142,7 +144,7 @@ function AddHolidayModal({ open, onClose, onCreate, onUpdate, mode = 'create', i
 
           <div className="grid gap-3 sm:grid-cols-2">
             <label className="flex flex-col gap-1 text-sm">
-              <span>Date</span>
+              <span>{t('table.headers.date')}</span>
               <input
                 type="date"
                 value={form.date}
@@ -152,7 +154,7 @@ function AddHolidayModal({ open, onClose, onCreate, onUpdate, mode = 'create', i
             </label>
 
             <label className="flex flex-col gap-1 text-sm">
-              <span>Type</span>
+              <span>{t('modal.fields.type')}</span>
               <input
                 value={form.type}
                 onChange={(event) => setForm((prev) => ({ ...prev, type: event.target.value }))}
@@ -171,7 +173,7 @@ function AddHolidayModal({ open, onClose, onCreate, onUpdate, mode = 'create', i
                 }
                 className="h-4 w-4 rounded border border-input"
               />
-              <span>Is business day</span>
+              <span>{t('modal.fields.isBusinessDay')}</span>
             </label>
 
             <label className="flex items-center gap-2 text-sm">
@@ -186,7 +188,7 @@ function AddHolidayModal({ open, onClose, onCreate, onUpdate, mode = 'create', i
                 }
                 className="h-4 w-4 rounded border border-input"
               />
-              <span>Count as business day</span>
+              <span>{t('modal.fields.countAsBusinessDay')}</span>
             </label>
           </div>
 
@@ -197,14 +199,14 @@ function AddHolidayModal({ open, onClose, onCreate, onUpdate, mode = 'create', i
               className="h-9 rounded-md border border-border px-3 text-sm"
               disabled={isSaving}
             >
-              Cancel
+              {t('common:buttons.cancel')}
             </button>
             <button
               type="submit"
               className="h-9 rounded-md bg-primary px-3 text-sm text-primary-foreground"
               disabled={isSaving}
             >
-              {isSaving ? 'Saving...' : mode === 'edit' ? 'Update' : 'Save'}
+              {isSaving ? t('common:states.saving') : t('common:buttons.save')}
             </button>
           </div>
         </form>

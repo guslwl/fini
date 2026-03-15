@@ -1,0 +1,58 @@
+{
+  "page": {
+    "title": "Feriados",
+    "description": "Gerencie os feriados registrados no banco de dados."
+  },
+  "table": {
+    "loading": "Carregando feriados...",
+    "empty": "Nenhum feriado encontrado para os filtros atuais.",
+    "headers": {
+      "date": "Data",
+      "type": "Tipo",
+      "isBusinessDay": "Dia útil",
+      "countAsBusinessDay": "Conta como dia útil"
+    },
+    "editTitle": "Editar feriado",
+    "deleteTitle": "Excluir feriado"
+  },
+  "modal": {
+    "add": {
+      "title": "Adicionar feriado",
+      "description": "Criar um registro de feriado."
+    },
+    "edit": {
+      "title": "Editar feriado",
+      "description": "Atualizar os detalhes do feriado."
+    },
+    "fields": {
+      "type": "Tipo",
+      "isBusinessDay": "É dia útil",
+      "countAsBusinessDay": "Contar como dia útil"
+    }
+  },
+  "filters": {
+    "searchDescription": "Buscar descrição",
+    "hidePast": "Não mostrar feriados passados",
+    "sorting": {
+      "dateAsc": "Data (mais antigas primeiro)",
+      "dateDesc": "Data (mais recentes primeiro)",
+      "descriptionAsc": "Descrição (A-Z)",
+      "descriptionDesc": "Descrição (Z-A)"
+    }
+  },
+  "deleteDialog": {
+    "title": "Excluir feriado",
+    "message": "Tem certeza que deseja excluir \"{{description}}\"?"
+  },
+  "toasts": {
+    "created": "Feriado criado com sucesso",
+    "updated": "Feriado atualizado com sucesso",
+    "deleted": "Feriado excluído com sucesso"
+  },
+  "errors": {
+    "loadFailed": "Falha ao carregar feriados.",
+    "createFailed": "Falha ao criar feriado.",
+    "updateFailed": "Falha ao atualizar feriado.",
+    "deleteFailed": "Falha ao excluir feriado."
+  }
+}

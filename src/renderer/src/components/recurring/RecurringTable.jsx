@@ -1,14 +1,6 @@
-import { centsToDecimalString } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
-function formatValue(value) {
-  const formatted = centsToDecimalString(value)
-
-  if (!formatted) {
-    return '-'
-  }
-
-  return `$ ${formatted}`
-}
+import { formatCentsLocale } from '@/lib/utils'
 
 function formatDueDay(dueDay) {
   if (!Number.isInteger(dueDay)) {
@@ -19,10 +11,12 @@ function formatDueDay(dueDay) {
 }
 
 function RecurringTable({ rows, isLoading, onEdit, onDelete }) {
+  const { t, i18n } = useTranslation(['recurring', 'common'])
+
   if (isLoading) {
     return (
       <div className="rounded-lg border border-border bg-background p-6 text-sm text-muted-foreground">
-        Loading recurring payables...
+        {t('table.loading')}
       </div>
     )
   }
@@ -33,18 +27,18 @@ function RecurringTable({ rows, isLoading, onEdit, onDelete }) {
         <table className="w-full border-collapse text-sm">
           <thead className="bg-muted/40 text-left">
             <tr>
-              <th className="px-4 py-3 font-medium">Description</th>
-              <th className="px-4 py-3 font-medium">Due day</th>
-              <th className="px-4 py-3 font-medium">Should postpone</th>
-              <th className="px-4 py-3 font-medium">Value</th>
-              <th className="px-4 py-3 font-medium">Actions</th>
+              <th className="px-4 py-3 font-medium">{t('common:labels.description')}</th>
+              <th className="px-4 py-3 font-medium">{t('table.headers.dueDay')}</th>
+              <th className="px-4 py-3 font-medium">{t('table.headers.shouldPostpone')}</th>
+              <th className="px-4 py-3 font-medium">{t('common:labels.value')}</th>
+              <th className="px-4 py-3 font-medium">{t('common:labels.actions')}</th>
             </tr>
           </thead>
           <tbody>
             {rows.length === 0 ? (
               <tr>
                 <td colSpan={5} className="px-4 py-8 text-center text-muted-foreground">
-                  No recurring payables found.
+                  {t('table.empty')}
                 </td>
               </tr>
             ) : (
@@ -52,8 +46,10 @@ function RecurringTable({ rows, isLoading, onEdit, onDelete }) {
                 <tr key={recurring.id} className="border-t border-border">
                   <td className="px-4 py-3">{recurring.history}</td>
                   <td className="px-4 py-3">{formatDueDay(recurring.due_day)}</td>
-                  <td className="px-4 py-3">{recurring.should_postpone ? 'Yes' : 'No'}</td>
-                  <td className="px-4 py-3">{formatValue(recurring.value)}</td>
+                  <td className="px-4 py-3">
+                    {recurring.should_postpone ? t('common:boolean.yes') : t('common:boolean.no')}
+                  </td>
+                  <td className="px-4 py-3">{formatCentsLocale(recurring.value, i18n.language)}</td>
                   <td className="px-4 py-3">
                     <div className="flex flex-wrap gap-2">
                       <button
@@ -61,14 +57,14 @@ function RecurringTable({ rows, isLoading, onEdit, onDelete }) {
                         onClick={() => onEdit(recurring)}
                         className="h-8 rounded-md border border-border px-2 text-xs"
                       >
-                        Edit
+                        {t('common:buttons.edit')}
                       </button>
                       <button
                         type="button"
                         onClick={() => onDelete(recurring)}
                         className="h-8 rounded-md border border-border px-2 text-xs"
                       >
-                        Delete
+                        {t('common:buttons.delete')}
                       </button>
                     </div>
                   </td>

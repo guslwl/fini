@@ -1,0 +1,58 @@
+{
+  "page": {
+    "title": "Holidays",
+    "description": "Manage holidays registered in the database."
+  },
+  "table": {
+    "loading": "Loading holidays...",
+    "empty": "No holidays found for the current filters.",
+    "headers": {
+      "date": "Date",
+      "type": "Type",
+      "isBusinessDay": "Business Day",
+      "countAsBusinessDay": "Count As Business Day"
+    },
+    "editTitle": "Edit holiday",
+    "deleteTitle": "Delete holiday"
+  },
+  "modal": {
+    "add": {
+      "title": "Add holiday",
+      "description": "Create a holiday record."
+    },
+    "edit": {
+      "title": "Edit holiday",
+      "description": "Update the holiday details."
+    },
+    "fields": {
+      "type": "Type",
+      "isBusinessDay": "Is business day",
+      "countAsBusinessDay": "Count as business day"
+    }
+  },
+  "filters": {
+    "searchDescription": "Search description",
+    "hidePast": "Do not show past holidays",
+    "sorting": {
+      "dateAsc": "Date (oldest first)",
+      "dateDesc": "Date (newest first)",
+      "descriptionAsc": "Description (A-Z)",
+      "descriptionDesc": "Description (Z-A)"
+    }
+  },
+  "deleteDialog": {
+    "title": "Delete holiday",
+    "message": "Are you sure you want to delete \"{{description}}\"?"
+  },
+  "toasts": {
+    "created": "Holiday created successfully",
+    "updated": "Holiday updated successfully",
+    "deleted": "Holiday deleted successfully"
+  },
+  "errors": {
+    "loadFailed": "Failed to load holidays.",
+    "createFailed": "Failed to create holiday.",
+    "updateFailed": "Failed to update holiday.",
+    "deleteFailed": "Failed to delete holiday."
+  }
+}

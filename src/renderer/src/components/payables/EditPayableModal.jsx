@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
 import { centsToDecimalString, decimalToCents } from '@/lib/utils'
@@ -14,6 +15,7 @@ const emptyForm = {
 }
 
 function EditPayableModal({ open, payable, onClose, onSave }) {
+  const { t } = useTranslation(['payables', 'common'])
   const [form, setForm] = useState(emptyForm)
   const [isSaving, setIsSaving] = useState(false)
 
@@ -77,7 +79,7 @@ function EditPayableModal({ open, payable, onClose, onSave }) {
 
     const centsValue = decimalToCents(form.value)
     if (centsValue === null) {
-      toast.error('Value must be a valid amount with up to 2 decimal places.')
+      toast.error(t('modal.validation.invalidValue'))
       return
     }
 
@@ -121,13 +123,13 @@ function EditPayableModal({ open, payable, onClose, onSave }) {
     >
       <div className="w-full max-w-lg rounded-lg border border-border bg-background p-5 shadow-lg">
         <div className="mb-4">
-          <h3 className="text-lg font-semibold">Edit payable</h3>
-          <p className="text-sm text-muted-foreground">Update the payable details.</p>
+          <h3 className="text-lg font-semibold">{t('modal.edit.title')}</h3>
+          <p className="text-sm text-muted-foreground">{t('modal.edit.description')}</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-3">
           <label className="flex flex-col gap-1 text-sm">
-            <span>History</span>
+            <span>{t('common:labels.history')}</span>
             <input
               value={form.history}
               onChange={(event) => setForm((prev) => ({ ...prev, history: event.target.value }))}
@@ -136,7 +138,7 @@ function EditPayableModal({ open, payable, onClose, onSave }) {
           </label>
 
           <label className="flex flex-col gap-1 text-sm">
-            <span>Value</span>
+            <span>{t('common:labels.value')}</span>
             <input
               type="number"
               step="0.01"
@@ -148,7 +150,7 @@ function EditPayableModal({ open, payable, onClose, onSave }) {
 
           <div className="grid gap-3 sm:grid-cols-2">
             <label className="flex flex-col gap-1 text-sm">
-              <span>Due date</span>
+              <span>{t('common:labels.dueDate')}</span>
               <input
                 type="date"
                 value={form.due_date}
@@ -158,7 +160,7 @@ function EditPayableModal({ open, payable, onClose, onSave }) {
             </label>
 
             <label className="flex flex-col gap-1 text-sm">
-              <span>Preferred date</span>
+              <span>{t('common:labels.preferredDate')}</span>
               <input
                 type="date"
                 value={form.preferred_date}
@@ -172,7 +174,7 @@ function EditPayableModal({ open, payable, onClose, onSave }) {
 
           <div className="grid gap-3 sm:grid-cols-2">
             <label className="flex flex-col gap-1 text-sm">
-              <span>Invoice ID</span>
+              <span>{t('common:labels.invoiceId')}</span>
               <input
                 value={form.invoice_id}
                 onChange={(event) =>
@@ -183,7 +185,7 @@ function EditPayableModal({ open, payable, onClose, onSave }) {
             </label>
 
             <label className="flex flex-col gap-1 text-sm">
-              <span>Account ID</span>
+              <span>{t('common:labels.accountId')}</span>
               <input
                 value={form.account_id}
                 onChange={(event) =>
@@ -201,14 +203,14 @@ function EditPayableModal({ open, payable, onClose, onSave }) {
               className="h-9 rounded-md border border-border px-3 text-sm"
               disabled={isSaving}
             >
-              Cancel
+              {t('common:buttons.cancel')}
             </button>
             <button
               type="submit"
               className="h-9 rounded-md bg-primary px-3 text-sm text-primary-foreground"
               disabled={isSaving}
             >
-              {isSaving ? 'Saving...' : 'Save'}
+              {isSaving ? t('common:states.saving') : t('common:buttons.save')}
             </button>
           </div>
         </form>
