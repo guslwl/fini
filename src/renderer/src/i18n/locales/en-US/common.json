@@ -1,0 +1,56 @@
+{
+  "buttons": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "close": "Close"
+  },
+  "states": {
+    "saving": "Saving...",
+    "deleting": "Deleting...",
+    "marking": "Marking...",
+    "generating": "Generating...",
+    "loading": "Loading..."
+  },
+  "boolean": {
+    "yes": "Yes",
+    "no": "No"
+  },
+  "nav": {
+    "home": "Home",
+    "payables": "Payables",
+    "recurring": "Recurring",
+    "calendar": "Calendar",
+    "holidays": "Holidays"
+  },
+  "home": {
+    "title": "Home",
+    "welcome": "Welcome to Fini."
+  },
+  "sidebar": {
+    "expand": "Expand sidebar",
+    "collapse": "Collapse sidebar"
+  },
+  "language": {
+    "label": "Language",
+    "confirmTitle": "Change language",
+    "confirmMessage": "Changing the language will reload the app. Continue?"
+  },
+  "labels": {
+    "filters": "Filters",
+    "sorting": "Sorting",
+    "month": "Month",
+    "year": "Year",
+    "actions": "Actions",
+    "description": "Description",
+    "value": "Value",
+    "history": "History",
+    "dueDate": "Due date",
+    "preferredDate": "Preferred date",
+    "effectiveDate": "Effective date",
+    "accountId": "Account ID",
+    "invoiceId": "Invoice ID"
+  }
+}

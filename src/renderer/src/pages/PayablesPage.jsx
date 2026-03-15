@@ -1,5 +1,6 @@
 import { Plus } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
 import AddPayableModal from '@/components/payables/AddPayableModal'
@@ -12,6 +13,7 @@ function effectiveDate(payable) {
 }
 
 function PayablesPage() {
+  const { t } = useTranslation('payables')
   const [payables, setPayables] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [statusFilter, setStatusFilter] = useState('unpaid')
@@ -28,7 +30,7 @@ function PayablesPage() {
       const rows = await window.api.v1.payables.getAll()
       setPayables(Array.isArray(rows) ? rows : [])
     } catch (loadError) {
-      toast.error(loadError?.message || 'Failed to load payables.')
+      toast.error(t('errors.loadFailed'))
       setPayables([])
       throw loadError
     } finally {
@@ -88,11 +90,11 @@ function PayablesPage() {
       await window.api.v1.payables.create(payload)
       hasCreated = true
       await loadPayables()
-      toast.success('Payable created successfully')
+      toast.success(t('toasts.created'))
       return true
-    } catch (createError) {
+    } catch {
       if (!hasCreated) {
-        toast.error(createError?.message || 'Failed to create payable.')
+        toast.error(t('errors.createFailed'))
       }
       return false
     }
@@ -105,18 +107,18 @@ function PayablesPage() {
       await window.api.v1.payables.update(id, payload)
       hasUpdated = true
       await loadPayables()
-      toast.success('Payable updated successfully')
+      toast.success(t('toasts.updated'))
       return true
-    } catch (updateError) {
+    } catch {
       if (!hasUpdated) {
-        toast.error(updateError?.message || 'Failed to update payable.')
+        toast.error(t('errors.updateFailed'))
       }
       return false
     }
   }
 
   async function handleDeletePayable(payable) {
-    const confirmed = window.confirm('Delete this payable?')
+    const confirmed = window.confirm(t('deleteConfirm'))
     if (!confirmed) {
       return
     }
@@ -127,10 +129,10 @@ function PayablesPage() {
       await window.api.v1.payables.delete(payable.id)
       hasDeleted = true
       await loadPayables()
-      toast.success('Payable deleted successfully')
-    } catch (deleteError) {
+      toast.success(t('toasts.deleted'))
+    } catch {
       if (!hasDeleted) {
-        toast.error(deleteError?.message || 'Failed to delete payable.')
+        toast.error(t('errors.deleteFailed'))
       }
     }
   }
@@ -146,10 +148,10 @@ function PayablesPage() {
       await window.api.v1.payables.markAsPaid(payable.id)
       hasMarkedPaid = true
       await loadPayables()
-      toast.success('Payable marked as paid')
-    } catch (markPaidError) {
+      toast.success(t('toasts.markedPaid'))
+    } catch {
       if (!hasMarkedPaid) {
-        toast.error(markPaidError?.message || 'Failed to mark payable as paid.')
+        toast.error(t('errors.markPaidFailed'))
       }
     }
   }
@@ -165,10 +167,10 @@ function PayablesPage() {
       await window.api.v1.payables.markAsUnpaid(payable.id)
       hasMarkedUnpaid = true
       await loadPayables()
-      toast.success('Payable marked as unpaid')
-    } catch (markUnpaidError) {
+      toast.success(t('toasts.markedUnpaid'))
+    } catch {
       if (!hasMarkedUnpaid) {
-        toast.error(markUnpaidError?.message || 'Failed to mark payable as unpaid.')
+        toast.error(t('errors.markUnpaidFailed'))
       }
     }
   }
@@ -177,10 +179,8 @@ function PayablesPage() {
     <section className="space-y-4">
       <div className="flex items-center justify-between gap-3">
         <div>
-          <h2 className="text-2xl font-semibold">Payables</h2>
-          <p className="text-sm text-muted-foreground">
-            Manage payables registered in the database.
-          </p>
+          <h2 className="text-2xl font-semibold">{t('page.title')}</h2>
+          <p className="text-sm text-muted-foreground">{t('page.description')}</p>
         </div>
 
         <button
@@ -189,7 +189,7 @@ function PayablesPage() {
           className="inline-flex h-9 items-center gap-2 rounded-md bg-primary px-3 text-sm font-medium text-primary-foreground"
         >
           <Plus className="h-4 w-4" />
-          Add
+          {t('buttons.add', { ns: 'common' })}
         </button>
       </div>
 

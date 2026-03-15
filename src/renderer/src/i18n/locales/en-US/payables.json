@@ -1,0 +1,89 @@
+{
+  "page": {
+    "title": "Payables",
+    "description": "Manage payables registered in the database."
+  },
+  "table": {
+    "loading": "Loading payables...",
+    "empty": "No payables found for the current filters.",
+    "headers": {
+      "paid": "Paid"
+    },
+    "actions": {
+      "markPaid": "Mark paid",
+      "unpay": "Unpay"
+    }
+  },
+  "modal": {
+    "add": {
+      "title": "Add payable",
+      "description": "Create a payable record."
+    },
+    "edit": {
+      "title": "Edit payable",
+      "description": "Update the payable details."
+    },
+    "validation": {
+      "invalidValue": "Value must be a valid amount with up to 2 decimal places."
+    }
+  },
+  "filters": {
+    "status": {
+      "label": "Status",
+      "unpaidOnly": "Unpaid only",
+      "paidOnly": "Paid only",
+      "all": "All"
+    },
+    "searchHistory": "Search history",
+    "sorting": {
+      "effectiveDateAsc": "Effective date (oldest first)",
+      "effectiveDateDesc": "Effective date (newest first)",
+      "valueAsc": "Value (lowest first)",
+      "valueDesc": "Value (highest first)",
+      "historyAsc": "History (A-Z)",
+      "historyDesc": "History (Z-A)"
+    }
+  },
+  "toasts": {
+    "created": "Payable created successfully",
+    "updated": "Payable updated successfully",
+    "deleted": "Payable deleted successfully",
+    "markedPaid": "Payable marked as paid",
+    "markedUnpaid": "Payable marked as unpaid"
+  },
+  "errors": {
+    "loadFailed": "Failed to load payables.",
+    "createFailed": "Failed to create payable.",
+    "updateFailed": "Failed to update payable.",
+    "deleteFailed": "Failed to delete payable.",
+    "markPaidFailed": "Failed to mark payable as paid.",
+    "markUnpaidFailed": "Failed to mark payable as unpaid."
+  },
+  "deleteConfirm": "Delete this payable?",
+  "calendar": {
+    "title": "Calendar",
+    "description": "Track payables by day and view holiday details.",
+    "loading": "Loading calendar...",
+    "holiday": "Holiday",
+    "invalidMonth": "Invalid month selected.",
+    "loadFailed": "Failed to load calendar data.",
+    "markPaidFailed": "Failed to mark payable as paid.",
+    "markedPaid": "Payable marked as paid"
+  },
+  "dateDetails": {
+    "unpaidSubtotal": "Unpaid subtotal",
+    "paidSubtotal": "Paid subtotal",
+    "globalTotal": "Global total",
+    "unpaidSection": "Unpaid payables ({{count}})",
+    "paidSection": "Paid payables ({{count}})",
+    "noUnpaid": "No unpaid payables for this date.",
+    "noPaid": "No paid payables for this date.",
+    "headers": {
+      "account": "Account",
+      "paidAt": "Paid at",
+      "action": "Action"
+    },
+    "markPaid": "Mark paid",
+    "marking": "Marking..."
+  }
+}

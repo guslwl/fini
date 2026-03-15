@@ -1,0 +1,11 @@
+{
+  "APP_ERROR": "An unexpected error occurred.",
+  "FATAL_ERROR": "A fatal error occurred.",
+  "VALIDATION_ERROR": "Invalid data provided.",
+  "NOT_FOUND": "Record not found.",
+  "INVALID_DATE_FORMAT": "Invalid date format. Use YYYY-MM-DD.",
+  "INVALID_DATE_VALUE": "Invalid date value.",
+  "MISSING_DUE_DAY": "Due day is required.",
+  "MISSING_SHOULD_POSTPONE": "Should postpone field is required.",
+  "INVALID_BOOLEAN_VALUE": "Expected a boolean value."
+}

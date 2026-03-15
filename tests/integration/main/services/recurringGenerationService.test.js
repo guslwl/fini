@@ -140,9 +140,9 @@ describe('recurringGenerationService', () => {
       return originalCreate.apply(this, args)
     })
 
-    expect(() =>
-      generateRecurringForMonth({ dbClient: db, year: 2024, month: 5 })
-    ).toThrow('simulated insert failure')
+    expect(() => generateRecurringForMonth({ dbClient: db, year: 2024, month: 5 })).toThrow(
+      'simulated insert failure'
+    )
 
     expect(payables.getAll()).toHaveLength(0)
 

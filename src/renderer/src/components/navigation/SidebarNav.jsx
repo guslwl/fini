@@ -1,40 +1,43 @@
 import { Calendar, CalendarDays, HandCoins, House, Repeat } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 import { cn } from '@/lib/utils'
 
 const navItems = [
   {
     to: '/',
-    label: 'Home',
+    labelKey: 'nav.home',
     icon: House,
     end: true
   },
   {
     to: '/payables',
-    label: 'Payables',
+    labelKey: 'nav.payables',
     icon: HandCoins,
     children: [
       {
         to: '/payables/recurring',
-        label: 'Recurring',
+        labelKey: 'nav.recurring',
         icon: Repeat
       },
       {
         to: '/payables/calendar',
-        label: 'Calendar',
+        labelKey: 'nav.calendar',
         icon: Calendar
       }
     ]
   },
   {
     to: '/holidays',
-    label: 'Holidays',
+    labelKey: 'nav.holidays',
     icon: CalendarDays
   }
 ]
 
 function SidebarNav({ collapsed = false }) {
+  const { t } = useTranslation()
+
   const linkClassName = ({ isActive }) =>
     cn(
       'flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors',
@@ -56,11 +59,11 @@ function SidebarNav({ collapsed = false }) {
                 to={item.to}
                 end={item.end}
                 className={linkClassName}
-                title={collapsed ? item.label : undefined}
-                aria-label={collapsed ? item.label : undefined}
+                title={collapsed ? t(item.labelKey) : undefined}
+                aria-label={collapsed ? t(item.labelKey) : undefined}
               >
                 <Icon className="h-4 w-4 shrink-0" />
-                {!collapsed ? <span>{item.label}</span> : null}
+                {!collapsed ? <span>{t(item.labelKey)}</span> : null}
               </NavLink>
 
               {item.children?.length ? (
@@ -73,11 +76,11 @@ function SidebarNav({ collapsed = false }) {
                         <NavLink
                           to={child.to}
                           className={linkClassName}
-                          title={collapsed ? child.label : undefined}
-                          aria-label={collapsed ? child.label : undefined}
+                          title={collapsed ? t(child.labelKey) : undefined}
+                          aria-label={collapsed ? t(child.labelKey) : undefined}
                         >
                           <ChildIcon className="h-4 w-4 shrink-0" />
-                          {!collapsed ? <span>{child.label}</span> : null}
+                          {!collapsed ? <span>{t(child.labelKey)}</span> : null}
                         </NavLink>
                       </li>
                     )

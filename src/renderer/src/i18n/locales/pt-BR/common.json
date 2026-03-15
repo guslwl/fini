@@ -1,0 +1,56 @@
+{
+  "buttons": {
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "add": "Adicionar",
+    "close": "Fechar"
+  },
+  "states": {
+    "saving": "Salvando...",
+    "deleting": "Excluindo...",
+    "marking": "Marcando...",
+    "generating": "Gerando...",
+    "loading": "Carregando..."
+  },
+  "boolean": {
+    "yes": "Sim",
+    "no": "Não"
+  },
+  "nav": {
+    "home": "Início",
+    "payables": "Contas a pagar",
+    "recurring": "Recorrentes",
+    "calendar": "Calendário",
+    "holidays": "Feriados"
+  },
+  "home": {
+    "title": "Início",
+    "welcome": "Bem-vindo ao Fini."
+  },
+  "sidebar": {
+    "expand": "Expandir barra lateral",
+    "collapse": "Recolher barra lateral"
+  },
+  "language": {
+    "label": "Idioma",
+    "confirmTitle": "Alterar idioma",
+    "confirmMessage": "Alterar o idioma irá recarregar o aplicativo. Continuar?"
+  },
+  "labels": {
+    "filters": "Filtros",
+    "sorting": "Ordenação",
+    "month": "Mês",
+    "year": "Ano",
+    "actions": "Ações",
+    "description": "Descrição",
+    "value": "Valor",
+    "history": "Histórico",
+    "dueDate": "Data de vencimento",
+    "preferredDate": "Data preferida",
+    "effectiveDate": "Data efetiva",
+    "accountId": "ID da conta",
+    "invoiceId": "ID da fatura"
+  }
+}

@@ -1,14 +1,13 @@
 import { Edit, Trash2 } from 'lucide-react'
-
-function boolText(value) {
-  return value ? 'Yes' : 'No'
-}
+import { useTranslation } from 'react-i18next'
 
 function HolidaysTable({ rows, isLoading, onEdit, onDelete }) {
+  const { t } = useTranslation(['holidays', 'common'])
+
   if (isLoading) {
     return (
       <div className="rounded-lg border border-border bg-background p-6 text-sm text-muted-foreground">
-        Loading holidays...
+        {t('table.loading')}
       </div>
     )
   }
@@ -19,19 +18,19 @@ function HolidaysTable({ rows, isLoading, onEdit, onDelete }) {
         <table className="w-full border-collapse text-sm">
           <thead className="bg-muted/40 text-left">
             <tr>
-              <th className="px-4 py-3 font-medium">Description</th>
-              <th className="px-4 py-3 font-medium">Date</th>
-              <th className="px-4 py-3 font-medium">Type</th>
-              <th className="px-4 py-3 font-medium">Business Day</th>
-              <th className="px-4 py-3 font-medium">Count As Business Day</th>
-              <th className="px-4 py-3 font-medium text-right">Actions</th>
+              <th className="px-4 py-3 font-medium">{t('common:labels.description')}</th>
+              <th className="px-4 py-3 font-medium">{t('table.headers.date')}</th>
+              <th className="px-4 py-3 font-medium">{t('table.headers.type')}</th>
+              <th className="px-4 py-3 font-medium">{t('table.headers.isBusinessDay')}</th>
+              <th className="px-4 py-3 font-medium">{t('table.headers.countAsBusinessDay')}</th>
+              <th className="px-4 py-3 font-medium text-right">{t('common:labels.actions')}</th>
             </tr>
           </thead>
           <tbody>
             {rows.length === 0 ? (
               <tr>
                 <td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">
-                  No holidays found for the current filters.
+                  {t('table.empty')}
                 </td>
               </tr>
             ) : (
@@ -40,15 +39,21 @@ function HolidaysTable({ rows, isLoading, onEdit, onDelete }) {
                   <td className="px-4 py-3">{holiday.description}</td>
                   <td className="px-4 py-3">{holiday.date || '-'}</td>
                   <td className="px-4 py-3">{holiday.type || '-'}</td>
-                  <td className="px-4 py-3">{boolText(holiday.is_business_day)}</td>
-                  <td className="px-4 py-3">{boolText(holiday.should_count_as_business_day)}</td>
+                  <td className="px-4 py-3">
+                    {holiday.is_business_day ? t('common:boolean.yes') : t('common:boolean.no')}
+                  </td>
+                  <td className="px-4 py-3">
+                    {holiday.should_count_as_business_day
+                      ? t('common:boolean.yes')
+                      : t('common:boolean.no')}
+                  </td>
                   <td className="px-4 py-3 text-right">
                     <div className="flex justify-end gap-2">
                       <button
                         type="button"
                         onClick={() => onEdit(holiday)}
                         className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border hover:bg-muted"
-                        title="Edit holiday"
+                        title={t('table.editTitle')}
                       >
                         <Edit className="h-4 w-4" />
                       </button>
@@ -56,7 +61,7 @@ function HolidaysTable({ rows, isLoading, onEdit, onDelete }) {
                         type="button"
                         onClick={() => onDelete(holiday)}
                         className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border hover:bg-destructive/10 hover:text-destructive"
-                        title="Delete holiday"
+                        title={t('table.deleteTitle')}
                       >
                         <Trash2 className="h-4 w-4" />
                       </button>

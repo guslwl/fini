@@ -1,0 +1,60 @@
+{
+  "page": {
+    "title": "Recurring Payables",
+    "description": "Manage recurring payable templates.",
+    "generate": {
+      "title": "Generate for Month",
+      "description": "Create payables from recurring templates for the selected month.",
+      "invalidMonth": "Select a valid month to generate payables.",
+      "failed": "Failed to generate payables for month.",
+      "result": "Generation complete: {{generated}} generated, {{skipped}} skipped.",
+      "skippedDetails": "Skipped details: {{details}}",
+      "skippedUnavailable": "Skipped details unavailable.",
+      "button": "Generate"
+    }
+  },
+  "table": {
+    "loading": "Loading recurring payables...",
+    "empty": "No recurring payables found.",
+    "headers": {
+      "dueDay": "Due day",
+      "shouldPostpone": "Should postpone"
+    }
+  },
+  "modal": {
+    "add": {
+      "title": "Add recurring payable",
+      "description": "Create a recurring payable template."
+    },
+    "edit": {
+      "title": "Edit recurring payable",
+      "description": "Update recurring payable details."
+    },
+    "fields": {
+      "dueDay": "Due day",
+      "shouldPostpone": "Should postpone to next business day"
+    },
+    "validation": {
+      "invalidValue": "Value must be a valid amount with up to 2 decimal places."
+    }
+  },
+  "skipped": {
+    "alreadyExists": "already exists (due date: {{dueDate}})",
+    "invalidDueDay": "invalid due day ({{dueDay}})",
+    "withReason": "skipped (reason: {{reason}})",
+    "itemLabel": "Recurring #{{id}}",
+    "itemFallback": "Item {{index}}"
+  },
+  "toasts": {
+    "created": "Recurring payable created successfully",
+    "updated": "Recurring payable updated successfully",
+    "deleted": "Recurring payable deleted successfully"
+  },
+  "errors": {
+    "loadFailed": "Failed to load recurring payables.",
+    "createFailed": "Failed to create recurring payable.",
+    "updateFailed": "Failed to update recurring payable.",
+    "deleteFailed": "Failed to delete recurring payable."
+  },
+  "deleteConfirm": "Delete this recurring payable?"
+}

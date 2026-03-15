@@ -1,5 +1,6 @@
 import { Plus } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
 import AddRecurringModal from '@/components/recurring/AddRecurringModal'
@@ -25,7 +26,7 @@ function parseMonthValue(value) {
   return { year, month }
 }
 
-function getSkippedReasonText(detail) {
+function getSkippedReasonText(detail, t) {
   const reason = typeof detail?.reason === 'string' ? detail.reason : 'unknown'
 
   if (reason === 'already_exists') {
@@ -33,19 +34,19 @@ function getSkippedReasonText(detail) {
       typeof detail?.due_date === 'string' && detail.due_date.trim()
         ? detail.due_date
         : 'unknown date'
-    return `already exists (due date: ${dueDate})`
+    return t('skipped.alreadyExists', { dueDate })
   }
 
   if (reason === 'invalid_due_day') {
     const dueDay = detail?.due_day
     const dueDayValue = dueDay === null || dueDay === undefined ? 'null' : String(dueDay)
-    return `invalid due day (${dueDayValue})`
+    return t('skipped.invalidDueDay', { dueDay: dueDayValue })
   }
 
-  return `skipped (reason: ${reason})`
+  return t('skipped.withReason', { reason })
 }
 
-function getSkippedItemLabel(detail, index) {
+function getSkippedItemLabel(detail, index, t) {
   const history = typeof detail?.history === 'string' ? detail.history.trim() : ''
 
   if (history) {
@@ -53,27 +54,28 @@ function getSkippedItemLabel(detail, index) {
   }
 
   if (Number.isInteger(detail?.recurring_id)) {
-    return `Recurring #${detail.recurring_id}`
+    return t('skipped.itemLabel', { id: detail.recurring_id })
   }
 
-  return `Item ${index + 1}`
+  return t('skipped.itemFallback', { index: index + 1 })
 }
 
-function formatSkippedDetailsForToast(skippedDetails) {
+function formatSkippedDetailsForToast(skippedDetails, t) {
   if (!Array.isArray(skippedDetails) || skippedDetails.length === 0) {
     return ''
   }
 
   return skippedDetails
     .map((detail, index) => {
-      const label = getSkippedItemLabel(detail, index)
-      const reasonText = getSkippedReasonText(detail)
+      const label = getSkippedItemLabel(detail, index, t)
+      const reasonText = getSkippedReasonText(detail, t)
       return `${index + 1}. ${label}: ${reasonText}`
     })
     .join(' | ')
 }
 
 function RecurringPayablesPage() {
+  const { t } = useTranslation('recurring')
   const [rows, setRows] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
@@ -88,8 +90,8 @@ function RecurringPayablesPage() {
       const data = await window.api.v1.recurring.getAll()
       setRows(Array.isArray(data) ? data : [])
       return true
-    } catch (loadError) {
-      toast.error(loadError?.message || 'Failed to load recurring payables.')
+    } catch {
+      toast.error(t('errors.loadFailed'))
       setRows([])
       return false
     } finally {
@@ -108,11 +110,11 @@ function RecurringPayablesPage() {
       await window.api.v1.recurring.create(payload)
       hasCreated = true
       await loadRecurring()
-      toast.success('Recurring payable created successfully')
+      toast.success(t('toasts.created'))
       return true
-    } catch (createError) {
+    } catch {
       if (!hasCreated) {
-        toast.error(createError?.message || 'Failed to create recurring payable.')
+        toast.error(t('errors.createFailed'))
       }
 
       return false
@@ -126,11 +128,11 @@ function RecurringPayablesPage() {
       await window.api.v1.recurring.update(id, payload)
       hasUpdated = true
       await loadRecurring()
-      toast.success('Recurring payable updated successfully')
+      toast.success(t('toasts.updated'))
       return true
-    } catch (updateError) {
+    } catch {
       if (!hasUpdated) {
-        toast.error(updateError?.message || 'Failed to update recurring payable.')
+        toast.error(t('errors.updateFailed'))
       }
 
       return false
@@ -138,7 +140,7 @@ function RecurringPayablesPage() {
   }
 
   async function handleDelete(recurring) {
-    const confirmed = window.confirm('Delete this recurring payable?')
+    const confirmed = window.confirm(t('deleteConfirm'))
     if (!confirmed) {
       return
     }
@@ -149,10 +151,10 @@ function RecurringPayablesPage() {
       await window.api.v1.recurring.delete(recurring.id)
       hasDeleted = true
       await loadRecurring()
-      toast.success('Recurring payable deleted successfully')
-    } catch (deleteError) {
+      toast.success(t('toasts.deleted'))
+    } catch {
       if (!hasDeleted) {
-        toast.error(deleteError?.message || 'Failed to delete recurring payable.')
+        toast.error(t('errors.deleteFailed'))
       }
     }
   }
@@ -160,7 +162,7 @@ function RecurringPayablesPage() {
   async function handleGenerateForMonth() {
     const parsed = parseMonthValue(generateMonthValue)
     if (!parsed) {
-      toast.error('Select a valid month to generate payables.')
+      toast.error(t('page.generate.invalidMonth'))
       return
     }
 
@@ -172,18 +174,18 @@ function RecurringPayablesPage() {
       const skipped = Number(result?.skipped) || 0
       const skippedDetails = Array.isArray(result?.skippedDetails) ? result.skippedDetails : []
 
-      let successMessage = `Generation complete: ${generated} generated, ${skipped} skipped.`
+      let successMessage = t('page.generate.result', { generated, skipped })
 
       if (skipped > 0) {
-        const skippedDetailsMessage = formatSkippedDetailsForToast(skippedDetails)
+        const skippedDetailsMessage = formatSkippedDetailsForToast(skippedDetails, t)
         successMessage += skippedDetailsMessage
-          ? ` Skipped details: ${skippedDetailsMessage}`
-          : ' Skipped details unavailable.'
+          ? ` ${t('page.generate.skippedDetails', { details: skippedDetailsMessage })}`
+          : ` ${t('page.generate.skippedUnavailable')}`
       }
 
       toast.success(successMessage)
-    } catch (generateError) {
-      toast.error(generateError?.message || 'Failed to generate payables for month.')
+    } catch {
+      toast.error(t('page.generate.failed'))
     } finally {
       setIsGenerating(false)
     }
@@ -193,8 +195,8 @@ function RecurringPayablesPage() {
     <section className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="text-2xl font-semibold">Recurring Payables</h2>
-          <p className="text-sm text-muted-foreground">Manage recurring payable templates.</p>
+          <h2 className="text-2xl font-semibold">{t('page.title')}</h2>
+          <p className="text-sm text-muted-foreground">{t('page.description')}</p>
         </div>
 
         <button
@@ -203,21 +205,19 @@ function RecurringPayablesPage() {
           className="inline-flex h-9 items-center gap-2 rounded-md bg-primary px-3 text-sm font-medium text-primary-foreground"
         >
           <Plus className="h-4 w-4" />
-          Add
+          {t('buttons.add', { ns: 'common' })}
         </button>
       </div>
 
       <div className="rounded-lg border border-border bg-background p-4">
         <div className="mb-3">
-          <h3 className="text-sm font-medium">Generate for Month</h3>
-          <p className="text-xs text-muted-foreground">
-            Create payables from recurring templates for the selected month.
-          </p>
+          <h3 className="text-sm font-medium">{t('page.generate.title')}</h3>
+          <p className="text-xs text-muted-foreground">{t('page.generate.description')}</p>
         </div>
 
         <div className="flex flex-wrap items-end gap-3">
           <label className="flex flex-col gap-1 text-sm">
-            <span className="text-muted-foreground">Month</span>
+            <span className="text-muted-foreground">{t('labels.month', { ns: 'common' })}</span>
             <input
               type="month"
               value={generateMonthValue}
@@ -232,7 +232,7 @@ function RecurringPayablesPage() {
             className="h-9 rounded-md bg-primary px-3 text-sm text-primary-foreground"
             disabled={isGenerating}
           >
-            {isGenerating ? 'Generating...' : 'Generate'}
+            {isGenerating ? t('states.generating', { ns: 'common' }) : t('page.generate.button')}
           </button>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
 import { centsToDecimalString, decimalToCents } from '@/lib/utils'
@@ -12,6 +13,7 @@ const emptyForm = {
 }
 
 function EditRecurringModal({ open, recurring, onClose, onSave }) {
+  const { t } = useTranslation(['recurring', 'common'])
   const [form, setForm] = useState(emptyForm)
   const [isSaving, setIsSaving] = useState(false)
 
@@ -73,7 +75,7 @@ function EditRecurringModal({ open, recurring, onClose, onSave }) {
 
     const centsValue = decimalToCents(form.value)
     if (centsValue === null) {
-      toast.error('Value must be a valid amount with up to 2 decimal places.')
+      toast.error(t('modal.validation.invalidValue'))
       return
     }
 
@@ -115,25 +117,23 @@ function EditRecurringModal({ open, recurring, onClose, onSave }) {
     >
       <div className="w-full max-w-lg rounded-lg border border-border bg-background p-5 shadow-lg">
         <div className="mb-4">
-          <h3 className="text-lg font-semibold">Edit recurring payable</h3>
-          <p className="text-sm text-muted-foreground">Update recurring payable details.</p>
+          <h3 className="text-lg font-semibold">{t('modal.edit.title')}</h3>
+          <p className="text-sm text-muted-foreground">{t('modal.edit.description')}</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-3">
           <label className="flex flex-col gap-1 text-sm">
-            <span>Description</span>
+            <span>{t('common:labels.description')}</span>
             <input
               value={form.history}
-              onChange={(event) =>
-                setForm((prev) => ({ ...prev, history: event.target.value }))
-              }
+              onChange={(event) => setForm((prev) => ({ ...prev, history: event.target.value }))}
               className="h-9 rounded-md border border-input bg-background px-3"
             />
           </label>
 
           <div className="grid gap-3 sm:grid-cols-2">
             <label className="flex flex-col gap-1 text-sm">
-              <span>Value</span>
+              <span>{t('common:labels.value')}</span>
               <input
                 type="number"
                 step="0.01"
@@ -144,7 +144,7 @@ function EditRecurringModal({ open, recurring, onClose, onSave }) {
             </label>
 
             <label className="flex flex-col gap-1 text-sm">
-              <span>Due day</span>
+              <span>{t('modal.fields.dueDay')}</span>
               <input
                 type="number"
                 min="1"
@@ -165,7 +165,7 @@ function EditRecurringModal({ open, recurring, onClose, onSave }) {
               }
               className="h-4 w-4 rounded border border-input"
             />
-            <span>Should postpone to next business day</span>
+            <span>{t('modal.fields.shouldPostpone')}</span>
           </label>
 
           <div className="flex justify-end gap-2 pt-2">
@@ -175,14 +175,14 @@ function EditRecurringModal({ open, recurring, onClose, onSave }) {
               className="h-9 rounded-md border border-border px-3 text-sm"
               disabled={isSaving}
             >
-              Cancel
+              {t('common:buttons.cancel')}
             </button>
             <button
               type="submit"
               className="h-9 rounded-md bg-primary px-3 text-sm text-primary-foreground"
               disabled={isSaving}
             >
-              {isSaving ? 'Saving...' : 'Save'}
+              {isSaving ? t('common:states.saving') : t('common:buttons.save')}
             </button>
           </div>
         </form>

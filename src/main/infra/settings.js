@@ -33,6 +33,22 @@ export function clearDatabasePath() {
 }
 
 /**
+ * Get the stored UI language
+ * @returns {string|null} Locale code (e.g. 'pt-BR') or null if not set
+ */
+export function getLanguage() {
+  return conf.get('language') || null
+}
+
+/**
+ * Persist the UI language
+ * @param {string} locale - Locale code (e.g. 'pt-BR', 'en-US')
+ */
+export function setLanguage(locale) {
+  conf.set('language', locale)
+}
+
+/**
  * Get all stored settings (for debugging/testing)
  * @returns {Object} All stored settings
  */

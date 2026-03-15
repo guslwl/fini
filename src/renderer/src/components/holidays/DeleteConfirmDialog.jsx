@@ -1,7 +1,9 @@
 import { Trash2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 function DeleteConfirmDialog({ open, onCancel, onConfirm, holidayDescription }) {
+  const { t } = useTranslation(['holidays', 'common'])
   const [isDeleting, setIsDeleting] = useState(false)
 
   useEffect(() => {
@@ -64,9 +66,9 @@ function DeleteConfirmDialog({ open, onCancel, onConfirm, holidayDescription }) 
             <Trash2 className="h-5 w-5 text-destructive" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold">Delete holiday</h3>
+            <h3 className="text-lg font-semibold">{t('deleteDialog.title')}</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Are you sure you want to delete &quot;{holidayDescription}&quot;?
+              {t('deleteDialog.message', { description: holidayDescription })}
             </p>
           </div>
         </div>
@@ -78,7 +80,7 @@ function DeleteConfirmDialog({ open, onCancel, onConfirm, holidayDescription }) 
             className="h-9 rounded-md border border-border px-3 text-sm"
             disabled={isDeleting}
           >
-            Cancel
+            {t('common:buttons.cancel')}
           </button>
           <button
             type="button"
@@ -86,7 +88,7 @@ function DeleteConfirmDialog({ open, onCancel, onConfirm, holidayDescription }) 
             className="h-9 rounded-md bg-destructive px-3 text-sm text-primary-foreground"
             disabled={isDeleting}
           >
-            {isDeleting ? 'Deleting...' : 'Delete'}
+            {isDeleting ? t('common:states.deleting') : t('common:buttons.delete')}
           </button>
         </div>
       </div>
