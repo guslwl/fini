@@ -13,6 +13,7 @@ import databaseHandler from 'handlers/database.js'
 import holidaysHandler from 'handlers/holidays.js'
 import payablesRecurringHandler from 'handlers/payables_recurring.js'
 import payablesHandler from 'handlers/payables.js'
+import settingsHandler from 'handlers/settings.js'
 
 import * as errorHandler from 'infra/error-handler.js'
 
@@ -20,6 +21,11 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 errorHandler.registerGlobalErrorHandlers()
+
+const storedLanguage = settings.getLanguage()
+if (storedLanguage) {
+  app.commandLine.appendSwitch('lang', storedLanguage)
+}
 
 const createIpcMain = (baseIpcMain) => ({
   handle: (channel, handler) => {
@@ -111,6 +117,7 @@ app.whenReady().then(async () => {
   // Set up IPC handlers
   const ipc = createIpcMain(ipcMain)
   databaseHandler(ipc)
+  settingsHandler(ipc)
   holidaysHandler(ipc, db)
   payablesHandler(ipc, db)
   payablesRecurringHandler(ipc, db)
