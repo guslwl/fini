@@ -60,6 +60,7 @@ function CalendarPage() {
   const [monthValue, setMonthValue] = useState(() => getCurrentMonthValue())
   const [payables, setPayables] = useState([])
   const [holidays, setHolidays] = useState([])
+  const [scheduledItems, setScheduledItems] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [selectedDate, setSelectedDate] = useState(null)
   const [markingPayableId, setMarkingPayableId] = useState(null)
@@ -81,18 +82,21 @@ function CalendarPage() {
     setIsLoading(true)
 
     try {
-      const [payableRows, holidayRows] = await Promise.all([
+      const [payableRows, holidayRows, scheduledRows] = await Promise.all([
         window.api.v1.payables.getByMonth(target.year, target.month),
-        window.api.v1.holidays.getByYear(target.year)
+        window.api.v1.holidays.getByYear(target.year),
+        window.api.v1.scheduledTransactions.getAll()
       ])
 
       setPayables(Array.isArray(payableRows) ? payableRows : [])
       setHolidays(Array.isArray(holidayRows) ? holidayRows : [])
+      setScheduledItems(Array.isArray(scheduledRows) ? scheduledRows : [])
       return true
     } catch {
       toast.error(t('calendar.loadFailed'))
       setPayables([])
       setHolidays([])
+      setScheduledItems([])
       return false
     } finally {
       setIsLoading(false)
@@ -146,6 +150,22 @@ function CalendarPage() {
     return map
   }, [payables])
 
+  const scheduledByDate = useMemo(() => {
+    const map = new Map()
+    const prefix = `${String(year).padStart(4, '0')}-${String(month).padStart(2, '0')}`
+
+    for (const tx of scheduledItems) {
+      if (tx.status !== 'active') continue
+      if (!tx.next_date?.startsWith(prefix)) continue
+
+      const existing = map.get(tx.next_date) || []
+      existing.push(tx)
+      map.set(tx.next_date, existing)
+    }
+
+    return map
+  }, [scheduledItems, year, month])
+
   const selectedDateDetails = useMemo(() => {
     if (!selectedDate) {
       return {
@@ -163,9 +183,10 @@ function CalendarPage() {
 
     return {
       ...payableGroup,
-      holidayNames
+      holidayNames,
+      scheduledItems: scheduledByDate.get(selectedDate) || []
     }
-  }, [holidaysByDate, payablesByDate, selectedDate])
+  }, [holidaysByDate, payablesByDate, scheduledByDate, selectedDate])
 
   const calendarCells = useMemo(() => {
     const firstDayOfMonth = new Date(year, month - 1, 1)
@@ -183,6 +204,8 @@ function CalendarPage() {
       const dateKey = toDateKey(year, month, day)
       const payableGroup = payablesByDate.get(dateKey) || createEmptyPayableGroup()
       const holidayNames = holidaysByDate.get(dateKey) || []
+      const txItems = scheduledByDate.get(dateKey) || []
+      const scheduledSumCents = txItems.reduce((sum, tx) => sum + (tx.amount ?? 0), 0)
 
       cells.push({
         type: 'day',
@@ -191,7 +214,9 @@ function CalendarPage() {
         dateKey,
         unpaidSumCents: payableGroup.unpaidSumCents,
         holidayName: holidayNames[0] || null,
-        isToday: dateKey === currentDateKey
+        isToday: dateKey === currentDateKey,
+        scheduledItems: txItems,
+        scheduledSumCents
       })
     }
 
@@ -290,8 +315,20 @@ function CalendarPage() {
                     </div>
                   ) : null}
                   <div className="mt-2 text-center text-sm font-medium text-foreground">
-                    {formatCentsLocale(cell.unpaidSumCents, i18n.language)}
+                    {formatCentsLocale(cell.scheduledSumCents + cell.unpaidSumCents, i18n.language)}
                   </div>
+                  {cell.scheduledItems.length > 0 && (
+                    <>
+                      <div className="mt-1 text-center text-xs text-muted-foreground">
+                        {t('calendar.unpaid')}{' '}
+                        {formatCentsLocale(cell.unpaidSumCents, i18n.language)}
+                      </div>
+                      <div className="mt-1 text-center text-xs text-muted-foreground">
+                        {t('calendar.scheduled')}{' '}
+                        {formatCentsLocale(cell.scheduledSumCents, i18n.language)}
+                      </div>
+                    </>
+                  )}
                 </button>
               )
             })}
@@ -308,6 +345,7 @@ function CalendarPage() {
         unpaidSumCents={selectedDateDetails.unpaidSumCents}
         paidSumCents={selectedDateDetails.paidSumCents}
         totalSumCents={selectedDateDetails.totalSumCents}
+        scheduledItems={selectedDateDetails.scheduledItems}
         onClose={() => setSelectedDate(null)}
         onMarkPaid={handleMarkPaid}
         markingPayableId={markingPayableId}
