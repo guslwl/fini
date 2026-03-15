@@ -1,5 +1,5 @@
 import { app, dialog } from 'electron'
-import { FatalError } from 'infra/errors.js'
+import { FatalError } from 'shared/errors.js'
 
 export const normalizeError = (error) => {
   const baseError = error instanceof Error ? error : new Error(String(error))

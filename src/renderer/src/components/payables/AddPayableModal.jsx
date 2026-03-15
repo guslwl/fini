@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
 import { decimalToCents } from '@/lib/utils'
+import { validatePayableCreatePayload } from 'shared/validators/payables.js'
 
 const initialForm = {
   history: '',
@@ -62,33 +63,32 @@ function AddPayableModal({ open, onClose, onCreate }) {
   async function handleSubmit(event) {
     event.preventDefault()
 
-    if (!form.history.trim()) {
-      toast.error('History is required.')
-      return
-    }
-
-    if (!form.due_date) {
-      toast.error('Due date is required.')
-      return
-    }
-
     const centsValue = decimalToCents(form.value)
     if (centsValue === null) {
       toast.error('Value must be a valid amount with up to 2 decimal places.')
       return
     }
 
+    const payload = {
+      history: form.history.trim(),
+      value: centsValue,
+      due_date: form.due_date,
+      preferred_date: form.preferred_date || null,
+      invoice_id: form.invoice_id.trim() || null,
+      account_id: form.account_id.trim() || null
+    }
+
+    try {
+      validatePayableCreatePayload(payload)
+    } catch (error) {
+      toast.error(Array.isArray(error.cause) ? error.cause[0] : error.message)
+      return
+    }
+
     setIsSaving(true)
 
     try {
-      const hasCreated = await onCreate({
-        history: form.history.trim(),
-        value: centsValue,
-        due_date: form.due_date,
-        preferred_date: form.preferred_date || null,
-        invoice_id: form.invoice_id.trim() || null,
-        account_id: form.account_id.trim() || null
-      })
+      const hasCreated = await onCreate(payload)
 
       if (hasCreated) {
         onClose()

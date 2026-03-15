@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
+import { validateHoliday, validateHolidayUpdate } from 'shared/validators/holidays.js'
+
 const initialForm = {
   description: '',
   type: '',
@@ -69,27 +71,28 @@ function AddHolidayModal({ open, onClose, onCreate, onUpdate, mode = 'create', i
   async function handleSubmit(event) {
     event.preventDefault()
 
-    if (!form.description.trim()) {
-      toast.error('Description is required.')
-      return
+    const payload = {
+      description: form.description.trim(),
+      type: form.type.trim(),
+      date: form.date,
+      is_business_day: form.is_business_day,
+      should_count_as_business_day: form.should_count_as_business_day
     }
 
-    if (!form.date) {
-      toast.error('Date is required.')
+    try {
+      if (mode === 'edit') {
+        validateHolidayUpdate(payload)
+      } else {
+        validateHoliday(payload)
+      }
+    } catch (error) {
+      toast.error(Array.isArray(error.cause) ? error.cause[0] : error.message)
       return
     }
 
     setIsSaving(true)
 
     try {
-      const payload = {
-        description: form.description.trim(),
-        type: form.type.trim(),
-        date: form.date,
-        is_business_day: form.is_business_day,
-        should_count_as_business_day: form.should_count_as_business_day
-      }
-
       let hasSaved = false
 
       if (mode === 'edit') {

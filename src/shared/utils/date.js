@@ -1,4 +1,4 @@
-import { ValidationError } from 'infra/errors.js'
+import { ValidationError } from 'shared/errors.js'
 import { parseISO } from 'date-fns'
 
 const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/
