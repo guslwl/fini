@@ -56,10 +56,10 @@ export function generateRecurringForMonth({ dbClient, year, month }) {
   const payablesModel = new PayablesModel(dbClient)
   const holidaysModel = new Holidays(dbClient)
 
-  const allRecurring = recurringPayables.getAll()
-  const allHolidays = holidaysModel.getByYear(year)
-
   return dbClient.transaction(() => {
+    const allRecurring = recurringPayables.getAll()
+    const allHolidays = holidaysModel.getByYear(year)
+
     let generatedCount = 0
     let skippedCount = 0
     const skippedDetails = []
@@ -80,7 +80,7 @@ export function generateRecurringForMonth({ dbClient, year, month }) {
 
       const adjustedDateString = adjustForBusinessDay(
         nominalDateString,
-        recurring.should_postpone ? true : false,
+        recurring.should_postpone,
         allHolidays
       )
 

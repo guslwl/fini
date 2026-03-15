@@ -2,6 +2,15 @@ import { assertValidCalendarDate } from 'utils/dateHelper.js'
 import { NotFoundError, ValidationError } from 'infra/errors.js'
 import booleanHelper from 'utils/booleanHelper.js'
 
+function normalizeHoliday(row) {
+  if (!row) return row
+  return {
+    ...row,
+    is_business_day: Boolean(row.is_business_day),
+    should_count_as_business_day: Boolean(row.should_count_as_business_day)
+  }
+}
+
 export default class Holidays {
   constructor(dbClient) {
     this.dbClient = dbClient
@@ -25,7 +34,10 @@ export default class Holidays {
   }
 
   getAll() {
-    return this.dbClient.prepare('SELECT * FROM holidays ORDER BY description ASC').all()
+    return this.dbClient
+      .prepare('SELECT * FROM holidays ORDER BY description ASC')
+      .all()
+      .map(normalizeHoliday)
   }
 
   getById(id) {
@@ -34,23 +46,25 @@ export default class Holidays {
     if (!result) {
       throw new NotFoundError({
         message: `Holiday with id (${id}) was not found`,
-        details: { id, entity: 'holiday' }
+        cause: { id, entity: 'holiday' }
       })
     }
 
-    return result
+    return normalizeHoliday(result)
   }
 
   getByDate(date) {
     return this.dbClient
       .prepare('SELECT * FROM holidays WHERE date = ? ORDER BY description ASC')
       .all(date)
+      .map(normalizeHoliday)
   }
 
   getByYear(year) {
     return this.dbClient
       .prepare("SELECT * FROM holidays WHERE strftime('%Y', date) = ? ORDER BY description ASC")
       .all(year.toString())
+      .map(normalizeHoliday)
   }
 
   update(id, data) {
@@ -75,7 +89,7 @@ export default class Holidays {
 
     const updatedHoliday = updateHoliday(holidayWithNewValues)
 
-    return updatedHoliday
+    return normalizeHoliday(updatedHoliday)
 
     function updateHoliday(holiday) {
       return dbClient
@@ -102,7 +116,7 @@ export default class Holidays {
     if (result.changes === 0) {
       throw new NotFoundError({
         message: `Holiday with id ${id} was not found`,
-        details: { id, entity: 'holiday' }
+        cause: { id, entity: 'holiday' }
       })
     }
 
