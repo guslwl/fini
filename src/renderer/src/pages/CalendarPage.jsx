@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
 import DateDetailsModal from '@/components/calendar/DateDetailsModal'
-import { centsToDecimalString } from '@/lib/utils'
-
-const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+import { formatCentsLocale } from '@/lib/utils'
 
 function getCurrentMonthValue() {
   const now = new Date()
@@ -49,6 +48,15 @@ function createEmptyPayableGroup() {
 }
 
 function CalendarPage() {
+  const { t, i18n } = useTranslation('payables')
+
+  const weekDays = useMemo(() => {
+    // 2021-01-03 is a known Sunday; iterate 7 days to get Sun–Sat
+    return Array.from({ length: 7 }, (_, i) => {
+      const date = new Date(2021, 0, 3 + i)
+      return new Intl.DateTimeFormat(i18n.language, { weekday: 'short' }).format(date)
+    })
+  }, [i18n.language])
   const [monthValue, setMonthValue] = useState(() => getCurrentMonthValue())
   const [payables, setPayables] = useState([])
   const [holidays, setHolidays] = useState([])
@@ -66,7 +74,7 @@ function CalendarPage() {
     const target = parseMonthValue(targetMonthValue)
 
     if (!target) {
-      toast.error('Invalid month selected.')
+      toast.error(t('calendar.invalidMonth'))
       return false
     }
 
@@ -81,8 +89,8 @@ function CalendarPage() {
       setPayables(Array.isArray(payableRows) ? payableRows : [])
       setHolidays(Array.isArray(holidayRows) ? holidayRows : [])
       return true
-    } catch (loadError) {
-      toast.error(loadError?.message || 'Failed to load calendar data.')
+    } catch {
+      toast.error(t('calendar.loadFailed'))
       setPayables([])
       setHolidays([])
       return false
@@ -104,7 +112,7 @@ function CalendarPage() {
       }
 
       const existing = map.get(holiday.date) || []
-      existing.push(holiday.description || 'Holiday')
+      existing.push(holiday.description || t('calendar.holiday'))
       map.set(holiday.date, existing)
     }
 
@@ -200,9 +208,9 @@ function CalendarPage() {
     try {
       await window.api.v1.payables.markAsPaid(payable.id)
       await loadCalendarData(monthValue)
-      toast.success('Payable marked as paid')
-    } catch (markPaidError) {
-      toast.error(markPaidError?.message || 'Failed to mark payable as paid.')
+      toast.success(t('calendar.markedPaid'))
+    } catch {
+      toast.error(t('calendar.markPaidFailed'))
     } finally {
       setMarkingPayableId(null)
     }
@@ -223,14 +231,12 @@ function CalendarPage() {
     <section className="space-y-4">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 className="text-2xl font-semibold">Calendar</h2>
-          <p className="text-sm text-muted-foreground">
-            Track payables by day and view holiday details.
-          </p>
+          <h2 className="text-2xl font-semibold">{t('calendar.title')}</h2>
+          <p className="text-sm text-muted-foreground">{t('calendar.description')}</p>
         </div>
 
         <label className="flex flex-col gap-1 text-sm">
-          <span className="text-muted-foreground">Month</span>
+          <span className="text-muted-foreground">{t('labels.month', { ns: 'common' })}</span>
           <input
             type="month"
             value={monthValue}
@@ -242,7 +248,7 @@ function CalendarPage() {
 
       {isLoading ? (
         <div className="rounded-lg border border-border bg-background p-6 text-sm text-muted-foreground">
-          Loading calendar...
+          {t('calendar.loading')}
         </div>
       ) : (
         <div className="rounded-lg border border-border bg-background p-3">
@@ -284,7 +290,7 @@ function CalendarPage() {
                     </div>
                   ) : null}
                   <div className="mt-2 text-center text-sm font-medium text-foreground">
-                    $ {centsToDecimalString(cell.unpaidSumCents) || '0.00'}
+                    {formatCentsLocale(cell.unpaidSumCents, i18n.language)}
                   </div>
                 </button>
               )

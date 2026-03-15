@@ -1,10 +1,7 @@
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { centsToDecimalString } from '@/lib/utils'
-
-function formatValue(value) {
-  return centsToDecimalString(value) || '0.00'
-}
+import { formatCentsLocale, formatDateLocale } from '@/lib/utils'
 
 function DateDetailsModal({
   open,
@@ -19,6 +16,8 @@ function DateDetailsModal({
   onMarkPaid,
   markingPayableId
 }) {
+  const { t, i18n } = useTranslation(['payables', 'common'])
+
   useEffect(() => {
     if (!open) {
       return
@@ -65,7 +64,7 @@ function DateDetailsModal({
             onClick={handleClose}
             className="h-9 rounded-md border border-border px-3 text-sm"
           >
-            Close
+            {t('common:buttons.close')}
           </button>
         </div>
 
@@ -75,37 +74,41 @@ function DateDetailsModal({
 
         <div className="mb-4 grid gap-2 sm:grid-cols-3">
           <div className="rounded-md border border-border p-3">
-            <p className="text-xs text-muted-foreground">Unpaid subtotal</p>
-            <p className="text-sm font-medium">{formatValue(unpaidSumCents)}</p>
+            <p className="text-xs text-muted-foreground">{t('dateDetails.unpaidSubtotal')}</p>
+            <p className="text-sm font-medium">
+              {formatCentsLocale(unpaidSumCents, i18n.language)}
+            </p>
           </div>
           <div className="rounded-md border border-border p-3">
-            <p className="text-xs text-muted-foreground">Paid subtotal</p>
-            <p className="text-sm font-medium">{formatValue(paidSumCents)}</p>
+            <p className="text-xs text-muted-foreground">{t('dateDetails.paidSubtotal')}</p>
+            <p className="text-sm font-medium">{formatCentsLocale(paidSumCents, i18n.language)}</p>
           </div>
           <div className="rounded-md border border-border p-3">
-            <p className="text-xs text-muted-foreground">Global total</p>
-            <p className="text-sm font-medium">{formatValue(totalSumCents)}</p>
+            <p className="text-xs text-muted-foreground">{t('dateDetails.globalTotal')}</p>
+            <p className="text-sm font-medium">{formatCentsLocale(totalSumCents, i18n.language)}</p>
           </div>
         </div>
 
         <div className="space-y-4">
           <div>
-            <h4 className="mb-2 text-sm font-medium">Unpaid payables ({unpaidItems.length})</h4>
+            <h4 className="mb-2 text-sm font-medium">
+              {t('dateDetails.unpaidSection', { count: unpaidItems.length })}
+            </h4>
             {unpaidItems.length === 0 ? (
               <div className="rounded-md border border-border p-3 text-sm text-muted-foreground">
-                No unpaid payables for this date.
+                {t('dateDetails.noUnpaid')}
               </div>
             ) : (
               <div className="overflow-x-auto rounded-md border border-border">
                 <table className="w-full border-collapse text-sm">
                   <thead className="bg-muted/40 text-left">
                     <tr>
-                      <th className="px-3 py-2 font-medium">History</th>
-                      <th className="px-3 py-2 font-medium">Account</th>
-                      <th className="px-3 py-2 font-medium">Due date</th>
-                      <th className="px-3 py-2 font-medium">Preferred date</th>
-                      <th className="px-3 py-2 font-medium">Value</th>
-                      <th className="px-3 py-2 font-medium">Action</th>
+                      <th className="px-3 py-2 font-medium">{t('common:labels.history')}</th>
+                      <th className="px-3 py-2 font-medium">{t('dateDetails.headers.account')}</th>
+                      <th className="px-3 py-2 font-medium">{t('common:labels.dueDate')}</th>
+                      <th className="px-3 py-2 font-medium">{t('common:labels.preferredDate')}</th>
+                      <th className="px-3 py-2 font-medium">{t('common:labels.value')}</th>
+                      <th className="px-3 py-2 font-medium">{t('dateDetails.headers.action')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -113,9 +116,15 @@ function DateDetailsModal({
                       <tr key={payable.id} className="border-t border-border">
                         <td className="px-3 py-2">{payable.history || '-'}</td>
                         <td className="px-3 py-2">{payable.account_id || '-'}</td>
-                        <td className="px-3 py-2">{payable.due_date || '-'}</td>
-                        <td className="px-3 py-2">{payable.preferred_date || '-'}</td>
-                        <td className="px-3 py-2">{formatValue(payable.value)}</td>
+                        <td className="px-3 py-2">
+                          {formatDateLocale(payable.due_date, i18n.language)}
+                        </td>
+                        <td className="px-3 py-2">
+                          {formatDateLocale(payable.preferred_date, i18n.language)}
+                        </td>
+                        <td className="px-3 py-2">
+                          {formatCentsLocale(payable.value, i18n.language)}
+                        </td>
                         <td className="px-3 py-2">
                           <button
                             type="button"
@@ -123,7 +132,9 @@ function DateDetailsModal({
                             className="h-8 rounded-md bg-primary px-2 text-xs text-primary-foreground"
                             disabled={markingPayableId === payable.id}
                           >
-                            {markingPayableId === payable.id ? 'Marking...' : 'Mark paid'}
+                            {markingPayableId === payable.id
+                              ? t('dateDetails.marking')
+                              : t('dateDetails.markPaid')}
                           </button>
                         </td>
                       </tr>
@@ -135,22 +146,24 @@ function DateDetailsModal({
           </div>
 
           <div>
-            <h4 className="mb-2 text-sm font-medium">Paid payables ({paidItems.length})</h4>
+            <h4 className="mb-2 text-sm font-medium">
+              {t('dateDetails.paidSection', { count: paidItems.length })}
+            </h4>
             {paidItems.length === 0 ? (
               <div className="rounded-md border border-border p-3 text-sm text-muted-foreground">
-                No paid payables for this date.
+                {t('dateDetails.noPaid')}
               </div>
             ) : (
               <div className="overflow-x-auto rounded-md border border-border">
                 <table className="w-full border-collapse text-sm">
                   <thead className="bg-muted/40 text-left">
                     <tr>
-                      <th className="px-3 py-2 font-medium">History</th>
-                      <th className="px-3 py-2 font-medium">Account</th>
-                      <th className="px-3 py-2 font-medium">Due date</th>
-                      <th className="px-3 py-2 font-medium">Preferred date</th>
-                      <th className="px-3 py-2 font-medium">Value</th>
-                      <th className="px-3 py-2 font-medium">Paid at</th>
+                      <th className="px-3 py-2 font-medium">{t('common:labels.history')}</th>
+                      <th className="px-3 py-2 font-medium">{t('dateDetails.headers.account')}</th>
+                      <th className="px-3 py-2 font-medium">{t('common:labels.dueDate')}</th>
+                      <th className="px-3 py-2 font-medium">{t('common:labels.preferredDate')}</th>
+                      <th className="px-3 py-2 font-medium">{t('common:labels.value')}</th>
+                      <th className="px-3 py-2 font-medium">{t('dateDetails.headers.paidAt')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -158,10 +171,18 @@ function DateDetailsModal({
                       <tr key={payable.id} className="border-t border-border">
                         <td className="px-3 py-2">{payable.history || '-'}</td>
                         <td className="px-3 py-2">{payable.account_id || '-'}</td>
-                        <td className="px-3 py-2">{payable.due_date || '-'}</td>
-                        <td className="px-3 py-2">{payable.preferred_date || '-'}</td>
-                        <td className="px-3 py-2">{formatValue(payable.value)}</td>
-                        <td className="px-3 py-2">{payable.paid_at || '-'}</td>
+                        <td className="px-3 py-2">
+                          {formatDateLocale(payable.due_date, i18n.language)}
+                        </td>
+                        <td className="px-3 py-2">
+                          {formatDateLocale(payable.preferred_date, i18n.language)}
+                        </td>
+                        <td className="px-3 py-2">
+                          {formatCentsLocale(payable.value, i18n.language)}
+                        </td>
+                        <td className="px-3 py-2">
+                          {formatDateLocale(payable.paid_at, i18n.language)}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
