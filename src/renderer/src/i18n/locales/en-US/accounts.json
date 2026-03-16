@@ -1,0 +1,86 @@
+{
+  "page": {
+    "title": "Accounts",
+    "description": "Manage your chart of accounts."
+  },
+  "table": {
+    "loading": "Loading accounts...",
+    "empty": "No accounts found.",
+    "columnsButton": "Columns",
+    "headers": {
+      "name": "Name",
+      "code": "Code",
+      "category": "Category",
+      "type": "Type",
+      "currency": "Currency",
+      "parent": "Parent",
+      "actions": "Actions"
+    }
+  },
+  "modal": {
+    "add": {
+      "title": "Add account"
+    },
+    "edit": {
+      "title": "Edit account"
+    },
+    "fields": {
+      "name": "Name",
+      "code": "Code",
+      "category": "Category",
+      "type": "Type",
+      "currency": "Currency",
+      "notes": "Notes",
+      "parent": "Parent account"
+    },
+    "placeholders": {
+      "code": "Optional unique code",
+      "notes": "Optional notes",
+      "noParent": "No parent"
+    }
+  },
+  "categories": {
+    "asset": "Asset",
+    "liability": "Liability",
+    "income": "Income",
+    "expense": "Expense",
+    "equity": "Equity"
+  },
+  "types": {
+    "checking": "Checking",
+    "savings": "Savings",
+    "brokerage": "Brokerage",
+    "asset": "Asset",
+    "credit_card": "Credit Card",
+    "income": "Income",
+    "expense": "Expense",
+    "equity": "Equity",
+    "group": "Group"
+  },
+  "filters": {
+    "allCategories": "All categories",
+    "showArchived": "Show archived"
+  },
+  "badges": {
+    "archived": "Archived"
+  },
+  "deleteDialog": {
+    "title": "Delete account",
+    "message": "Are you sure you want to delete \"{{name}}\"? This cannot be undone."
+  },
+  "toasts": {
+    "created": "Account created successfully.",
+    "updated": "Account updated successfully.",
+    "archived": "Account archived.",
+    "unarchived": "Account unarchived.",
+    "deleted": "Account deleted successfully."
+  },
+  "errors": {
+    "loadFailed": "Failed to load accounts.",
+    "createFailed": "Failed to create account.",
+    "updateFailed": "Failed to update account.",
+    "archiveFailed": "Failed to archive account.",
+    "unarchiveFailed": "Failed to unarchive account.",
+    "deleteFailed": "Failed to delete account. It may have child accounts or associated transactions."
+  }
+}

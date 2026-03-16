@@ -26,6 +26,15 @@ const api = {
       getLanguage: () => ipcRenderer.invoke('v1:settings:getLanguage'),
       setLanguage: (locale) => ipcRenderer.invoke('v1:settings:setLanguage', locale)
     },
+    accounts: {
+      getAll: () => ipcRenderer.invoke('v1:accounts:getAll'),
+      getById: (id) => ipcRenderer.invoke('v1:accounts:getById', id),
+      create: (data) => ipcRenderer.invoke('v1:accounts:create', data),
+      update: (id, data) => ipcRenderer.invoke('v1:accounts:update', id, data),
+      archive: (id) => ipcRenderer.invoke('v1:accounts:archive', id),
+      unarchive: (id) => ipcRenderer.invoke('v1:accounts:unarchive', id),
+      delete: (id) => ipcRenderer.invoke('v1:accounts:delete', id)
+    },
     scheduledTransactions: {
       getAll: () => ipcRenderer.invoke('v1:scheduledTransactions:getAll'),
       create: (data) => ipcRenderer.invoke('v1:scheduledTransactions:create', data),

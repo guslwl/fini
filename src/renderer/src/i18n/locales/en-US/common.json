@@ -23,7 +23,8 @@
     "payables": "Payables",
     "scheduled": "Scheduled",
     "calendar": "Calendar",
-    "holidays": "Holidays"
+    "holidays": "Holidays",
+    "accounts": "Accounts"
   },
   "home": {
     "title": "Home",

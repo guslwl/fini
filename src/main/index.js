@@ -14,6 +14,7 @@ import holidaysHandler from 'handlers/holidays.js'
 import scheduledTransactionsHandler from 'handlers/scheduled_transactions.js'
 import payablesHandler from 'handlers/payables.js'
 import settingsHandler from 'handlers/settings.js'
+import accountsHandler from 'handlers/accounts.js'
 
 import * as errorHandler from 'infra/error-handler.js'
 
@@ -121,6 +122,7 @@ app.whenReady().then(async () => {
   holidaysHandler(ipc, db)
   payablesHandler(ipc, db)
   scheduledTransactionsHandler(ipc, db)
+  accountsHandler(ipc, db)
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {

@@ -1,4 +1,4 @@
-import { Calendar, CalendarDays, HandCoins, House, Repeat } from 'lucide-react'
+import { Calendar, CalendarDays, HandCoins, House, Repeat, Wallet } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
@@ -32,6 +32,11 @@ const navItems = [
     to: '/holidays',
     labelKey: 'nav.holidays',
     icon: CalendarDays
+  },
+  {
+    to: '/accounts',
+    labelKey: 'nav.accounts',
+    icon: Wallet
   }
 ]
 

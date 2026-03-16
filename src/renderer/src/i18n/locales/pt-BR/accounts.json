@@ -1,0 +1,86 @@
+{
+  "page": {
+    "title": "Contas",
+    "description": "Gerencie seu plano de contas."
+  },
+  "table": {
+    "loading": "Carregando contas...",
+    "empty": "Nenhuma conta encontrada.",
+    "columnsButton": "Colunas",
+    "headers": {
+      "name": "Nome",
+      "code": "Código",
+      "category": "Categoria",
+      "type": "Tipo",
+      "currency": "Moeda",
+      "parent": "Conta pai",
+      "actions": "Ações"
+    }
+  },
+  "modal": {
+    "add": {
+      "title": "Adicionar conta"
+    },
+    "edit": {
+      "title": "Editar conta"
+    },
+    "fields": {
+      "name": "Nome",
+      "code": "Código",
+      "category": "Categoria",
+      "type": "Tipo",
+      "currency": "Moeda",
+      "notes": "Observações",
+      "parent": "Conta pai"
+    },
+    "placeholders": {
+      "code": "Código único (opcional)",
+      "notes": "Observações (opcional)",
+      "noParent": "Sem conta pai"
+    }
+  },
+  "categories": {
+    "asset": "Ativo",
+    "liability": "Passivo",
+    "income": "Receita",
+    "expense": "Despesa",
+    "equity": "Patrimônio"
+  },
+  "types": {
+    "checking": "Conta corrente",
+    "savings": "Poupança",
+    "brokerage": "Corretora",
+    "asset": "Ativo",
+    "credit_card": "Cartão de crédito",
+    "income": "Receita",
+    "expense": "Despesa",
+    "equity": "Patrimônio",
+    "group": "Grupo"
+  },
+  "filters": {
+    "allCategories": "Todas as categorias",
+    "showArchived": "Mostrar arquivadas"
+  },
+  "badges": {
+    "archived": "Arquivada"
+  },
+  "deleteDialog": {
+    "title": "Excluir conta",
+    "message": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita."
+  },
+  "toasts": {
+    "created": "Conta criada com sucesso.",
+    "updated": "Conta atualizada com sucesso.",
+    "archived": "Conta arquivada.",
+    "unarchived": "Conta desarquivada.",
+    "deleted": "Conta excluída com sucesso."
+  },
+  "errors": {
+    "loadFailed": "Falha ao carregar contas.",
+    "createFailed": "Falha ao criar conta.",
+    "updateFailed": "Falha ao atualizar conta.",
+    "archiveFailed": "Falha ao arquivar conta.",
+    "unarchiveFailed": "Falha ao desarquivar conta.",
+    "deleteFailed": "Falha ao excluir conta. Pode haver subcontas ou transações associadas."
+  }
+}

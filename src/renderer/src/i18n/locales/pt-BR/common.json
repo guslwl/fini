@@ -23,7 +23,8 @@
     "payables": "Contas a pagar",
     "scheduled": "Agendadas",
     "calendar": "Calendário",
-    "holidays": "Feriados"
+    "holidays": "Feriados",
+    "accounts": "Contas"
   },
   "home": {
     "title": "Início",
