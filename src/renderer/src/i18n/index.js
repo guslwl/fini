@@ -6,12 +6,14 @@ import enPayables from './locales/en-US/payables.json'
 import enHolidays from './locales/en-US/holidays.json'
 import enRecurring from './locales/en-US/recurring.json'
 import enErrors from './locales/en-US/errors.json'
+import enAccounts from './locales/en-US/accounts.json'
 
 import ptCommon from './locales/pt-BR/common.json'
 import ptPayables from './locales/pt-BR/payables.json'
 import ptHolidays from './locales/pt-BR/holidays.json'
 import ptRecurring from './locales/pt-BR/recurring.json'
 import ptErrors from './locales/pt-BR/errors.json'
+import ptAccounts from './locales/pt-BR/accounts.json'
 
 export const SUPPORTED_LOCALES = {
   'en-US': 'English',
@@ -45,14 +47,16 @@ export async function initI18n() {
         payables: enPayables,
         holidays: enHolidays,
         recurring: enRecurring,
-        errors: enErrors
+        errors: enErrors,
+        accounts: enAccounts
       },
       'pt-BR': {
         common: ptCommon,
         payables: ptPayables,
         holidays: ptHolidays,
         recurring: ptRecurring,
-        errors: ptErrors
+        errors: ptErrors,
+        accounts: ptAccounts
       }
     },
     interpolation: { escapeValue: false }

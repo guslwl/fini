@@ -45,7 +45,7 @@ describe('Migrator', () => {
 
       // Verify core tables from 001-initial.sql exist
       expect(tables).toContain('holidays')
-      expect(tables).toContain('payables_recurring')
+      expect(tables).toContain('scheduled_transactions')
     })
 
     it('should track migrations in schema_migrations table', () => {
@@ -72,7 +72,7 @@ describe('Migrator', () => {
       // Tables should still exist
       const tables = getTables(db)
       expect(tables).toContain('holidays')
-      expect(tables).toContain('payables_recurring')
+      expect(tables).toContain('scheduled_transactions')
     })
 
     it('should record timestamp for each migration', () => {
@@ -103,7 +103,7 @@ describe('Migrator', () => {
 
       // If transaction works properly, all tables should exist or none
       const tables = getTables(db)
-      const requiredTables = ['holidays', 'payables_recurring', 'schema_migrations']
+      const requiredTables = ['holidays', 'scheduled_transactions', 'schema_migrations']
 
       requiredTables.forEach((table) => {
         expect(tables).toContain(table)

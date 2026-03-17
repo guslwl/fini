@@ -36,6 +36,10 @@ export function validatePayableCreatePayload(data) {
     errors.push('account_id must be a string')
   }
 
+  if (data.currency !== undefined && data.currency !== null && typeof data.currency !== 'string') {
+    errors.push('currency must be a string')
+  }
+
   if (
     data.parent_id !== undefined &&
     data.parent_id !== null &&
@@ -64,6 +68,7 @@ export function validatePayableUpdatePayload(data) {
     'history',
     'invoice_id',
     'account_id',
+    'currency',
     'due_date',
     'preferred_date',
     'value',
@@ -107,6 +112,10 @@ export function validatePayableUpdatePayload(data) {
     typeof data.account_id !== 'string'
   ) {
     errors.push('account_id must be a string')
+  }
+
+  if (data.currency !== undefined && data.currency !== null && typeof data.currency !== 'string') {
+    errors.push('currency must be a string')
   }
 
   if (

@@ -13,15 +13,34 @@ export default class Payables {
   create(payable) {
     validatePayableCreatePayload(payable)
 
-    const { history, invoice_id, account_id, due_date, preferred_date, value, parent_id, paid_at } =
-      payable
+    const {
+      history,
+      invoice_id,
+      account_id,
+      currency,
+      due_date,
+      preferred_date,
+      value,
+      parent_id,
+      paid_at
+    } = payable
 
     const result = this.dbClient
       .prepare(
-        `INSERT INTO payables (history, invoice_id, account_id, due_date, preferred_date, value, parent_id, paid_at)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+        `INSERT INTO payables (history, invoice_id, account_id, currency, due_date, preferred_date, value, parent_id, paid_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
       )
-      .run(history, invoice_id, account_id, due_date, preferred_date, value, parent_id, paid_at)
+      .run(
+        history,
+        invoice_id,
+        account_id,
+        currency ?? 'BRL',
+        due_date,
+        preferred_date,
+        value,
+        parent_id,
+        paid_at
+      )
     return result.lastInsertRowid
   }
 
@@ -29,8 +48,8 @@ export default class Payables {
     validatePayableBulkPayload(payables)
 
     const insert = this.dbClient.prepare(
-      `INSERT INTO payables (history, invoice_id, account_id, due_date, preferred_date, value, parent_id, paid_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+      `INSERT INTO payables (history, invoice_id, account_id, currency, due_date, preferred_date, value, parent_id, paid_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
 
     const insertMany = this.dbClient.transaction((items) => {
@@ -42,6 +61,7 @@ export default class Payables {
           history,
           invoice_id,
           account_id,
+          currency,
           due_date,
           preferred_date,
           value,
@@ -53,6 +73,7 @@ export default class Payables {
           history,
           invoice_id,
           account_id,
+          currency ?? 'BRL',
           due_date,
           preferred_date,
           value,
@@ -115,7 +136,7 @@ export default class Payables {
       return dbClient
         .prepare(
           `UPDATE payables
-           SET history = ?, invoice_id = ?, account_id = ?, due_date = ?, preferred_date = ?, value = ?, parent_id = ?, paid_at = ?, updated_at = CURRENT_TIMESTAMP
+           SET history = ?, invoice_id = ?, account_id = ?, currency = ?, due_date = ?, preferred_date = ?, value = ?, parent_id = ?, paid_at = ?, updated_at = CURRENT_TIMESTAMP
            WHERE id = ?
            RETURNING *`
         )
@@ -123,6 +144,7 @@ export default class Payables {
           payable.history,
           payable.invoice_id,
           payable.account_id,
+          payable.currency ?? 'BRL',
           payable.due_date,
           payable.preferred_date,
           payable.value,
@@ -170,6 +192,14 @@ export default class Payables {
     const result = this.dbClient
       .prepare('SELECT 1 FROM payables WHERE history = ? AND due_date = ? LIMIT 1')
       .get(history, dueDate)
+
+    return Boolean(result)
+  }
+
+  existsByParentIdAndDueDate(parentId, dueDate) {
+    const result = this.dbClient
+      .prepare('SELECT 1 FROM payables WHERE parent_id = ? AND due_date = ? LIMIT 1')
+      .get(parentId, dueDate)
 
     return Boolean(result)
   }

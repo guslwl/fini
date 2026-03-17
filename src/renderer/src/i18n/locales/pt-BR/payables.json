@@ -68,7 +68,9 @@
     "invalidMonth": "Mês inválido selecionado.",
     "loadFailed": "Falha ao carregar dados do calendário.",
     "markPaidFailed": "Falha ao marcar conta como paga.",
-    "markedPaid": "Conta a pagar marcada como paga"
+    "markedPaid": "Conta a pagar marcada como paga",
+    "scheduled": "agendado",
+    "unpaid": "em aberto"
   },
   "dateDetails": {
     "unpaidSubtotal": "Subtotal não pago",
@@ -76,8 +78,10 @@
     "globalTotal": "Total geral",
     "unpaidSection": "Contas não pagas ({{count}})",
     "paidSection": "Contas pagas ({{count}})",
+    "scheduledSection": "Agendadas ({{count}})",
     "noUnpaid": "Nenhuma conta não paga para esta data.",
     "noPaid": "Nenhuma conta paga para esta data.",
+    "noScheduled": "Nenhuma transação agendada para esta data.",
     "headers": {
       "account": "Conta",
       "paidAt": "Pago em",

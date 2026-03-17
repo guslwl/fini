@@ -68,7 +68,9 @@
     "invalidMonth": "Invalid month selected.",
     "loadFailed": "Failed to load calendar data.",
     "markPaidFailed": "Failed to mark payable as paid.",
-    "markedPaid": "Payable marked as paid"
+    "markedPaid": "Payable marked as paid",
+    "scheduled": "scheduled",
+    "unpaid": "unpaid"
   },
   "dateDetails": {
     "unpaidSubtotal": "Unpaid subtotal",
@@ -76,8 +78,10 @@
     "globalTotal": "Global total",
     "unpaidSection": "Unpaid payables ({{count}})",
     "paidSection": "Paid payables ({{count}})",
+    "scheduledSection": "Scheduled ({{count}})",
     "noUnpaid": "No unpaid payables for this date.",
     "noPaid": "No paid payables for this date.",
+    "noScheduled": "No scheduled transactions for this date.",
     "headers": {
       "account": "Account",
       "paidAt": "Paid at",

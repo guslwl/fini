@@ -12,11 +12,12 @@ function DateDetailsModal({
   unpaidSumCents,
   paidSumCents,
   totalSumCents,
+  scheduledItems = [],
   onClose,
   onMarkPaid,
   markingPayableId
 }) {
-  const { t, i18n } = useTranslation(['payables', 'common'])
+  const { t, i18n } = useTranslation(['payables', 'common', 'recurring'])
 
   useEffect(() => {
     if (!open) {
@@ -182,6 +183,46 @@ function DateDetailsModal({
                         </td>
                         <td className="px-3 py-2">
                           {formatDateLocale(payable.paid_at, i18n.language)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+
+          <div>
+            <h4 className="mb-2 text-sm font-medium">
+              {t('dateDetails.scheduledSection', { count: scheduledItems.length })}
+            </h4>
+            {scheduledItems.length === 0 ? (
+              <div className="rounded-md border border-border p-3 text-sm text-muted-foreground">
+                {t('dateDetails.noScheduled')}
+              </div>
+            ) : (
+              <div className="overflow-x-auto rounded-md border border-dashed border-border">
+                <table className="w-full border-collapse text-sm">
+                  <thead className="bg-muted/40 text-left">
+                    <tr>
+                      <th className="px-3 py-2 font-medium">{t('common:labels.description')}</th>
+                      <th className="px-3 py-2 font-medium">{t('recurring:table.headers.type')}</th>
+                      <th className="px-3 py-2 font-medium">{t('recurring:table.headers.certainty')}</th>
+                      <th className="px-3 py-2 font-medium">{t('common:labels.value')}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {scheduledItems.map((tx) => (
+                      <tr key={tx.id} className="border-t border-border">
+                        <td className="px-3 py-2">{tx.description}</td>
+                        <td className="px-3 py-2">
+                          {t(`recurring:modal.type.${tx.type}`, { defaultValue: tx.type })}
+                        </td>
+                        <td className="px-3 py-2">
+                          {t(`recurring:modal.certainty.${tx.certainty}`, { defaultValue: tx.certainty })}
+                        </td>
+                        <td className="px-3 py-2">
+                          {tx.amount !== null ? formatCentsLocale(tx.amount, i18n.language) : '?'}
                         </td>
                       </tr>
                     ))}
