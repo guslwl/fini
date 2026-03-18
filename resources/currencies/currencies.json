@@ -1,0 +1,1574 @@
+{
+  "file_version": "1.0",
+  "fiat": {
+    "AED": {
+      "name": "United Arab Emirates Dirham",
+      "major_single": "Dirham",
+      "major_plural": "Dirhams",
+      "symbol": "د.إ.",
+      "minor_single": "Fils",
+      "minor_plural": "Fils",
+      "decimals": 2
+    },
+    "AFN": {
+      "name": "Afghan Afghani",
+      "major_single": "Afghani",
+      "major_plural": "Afghani",
+      "symbol": "Af",
+      "minor_single": "Pul",
+      "minor_plural": "Pul",
+      "decimals": 2
+    },
+    "ALL": {
+      "name": "Albanian Lek",
+      "major_single": "Lek",
+      "major_plural": "Lekë",
+      "symbol": "L",
+      "minor_single": "Qindarka",
+      "minor_plural": "Qindarka",
+      "decimals": 2
+    },
+    "AMD": {
+      "name": "Armenian Dram",
+      "major_single": "Dram",
+      "major_plural": "Dram",
+      "symbol": "֏",
+      "minor_single": "Luma",
+      "minor_plural": "Luma",
+      "decimals": 2
+    },
+    "ANG": {
+      "name": "Netherlands Antillean Guilder",
+      "major_single": "Guilder",
+      "major_plural": "Guilders",
+      "symbol": "ƒ",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "AOA": {
+      "name": "Angolan Kwanza",
+      "major_single": "Kwanza",
+      "major_plural": "Kwanza",
+      "symbol": "Kz",
+      "minor_single": "Centimo",
+      "minor_plural": "Centimos",
+      "decimals": 2
+    },
+    "ARS": {
+      "name": "Argentine Peso",
+      "major_single": "Peso",
+      "major_plural": "Pesos",
+      "symbol": "AR$",
+      "minor_single": "Centavo",
+      "minor_plural": "Centavos",
+      "decimals": 2
+    },
+    "AUD": {
+      "name": "Australian Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "AU$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "AWG": {
+      "name": "Aruban Florin",
+      "major_single": "Florin",
+      "major_plural": "Florin",
+      "symbol": "ƒ",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "AZN": {
+      "name": "Azerbaijani Manat",
+      "major_single": "Manat",
+      "major_plural": "Manat",
+      "symbol": "ман",
+      "minor_single": "Qapik",
+      "minor_plural": "Qapik",
+      "decimals": 2
+    },
+    "BAM": {
+      "name": "Bosnia and Herzegovina Convertible Mark",
+      "major_single": "Convertible Mark",
+      "major_plural": "Marks",
+      "symbol": "KM",
+      "minor_single": "Fening",
+      "minor_plural": "Fening",
+      "decimals": 2
+    },
+    "BBD": {
+      "name": "Barbadian Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "BBD$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "BDT": {
+      "name": "Bangladeshi Taka",
+      "major_single": "Taka",
+      "major_plural": "Taka",
+      "symbol": "৳",
+      "minor_single": "Poisha",
+      "minor_plural": "Poisha",
+      "decimals": 2
+    },
+    "BGN": {
+      "name": "Bulgarian Lev",
+      "major_single": "Lev",
+      "major_plural": "Leva",
+      "symbol": "лв.",
+      "minor_single": "Stotinka",
+      "minor_plural": "Stotinki",
+      "decimals": 2
+    },
+    "BHD": {
+      "name": "Bahraini Dinar",
+      "major_single": "Dinar",
+      "major_plural": "Dinars",
+      "symbol": "BD",
+      "minor_single": "Fils",
+      "minor_plural": "Fils",
+      "decimals": 3
+    },
+    "BIF": {
+      "name": "Burundian Franc",
+      "major_single": "Franc",
+      "major_plural": "Francs",
+      "symbol": "FBu",
+      "minor_single": "Centime",
+      "minor_plural": "Centimes",
+      "decimals": 2
+    },
+    "BMD": {
+      "name": "Bermudian Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "BND": {
+      "name": "Brunei Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "B$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "BOB": {
+      "name": "Bolivian Boliviano",
+      "major_single": "Boliviano",
+      "major_plural": "Bolivianos",
+      "symbol": "Bs.",
+      "minor_single": "Centavo",
+      "minor_plural": "Centavos",
+      "decimals": 2
+    },
+    "BRL": {
+      "name": "Brazilian Real",
+      "major_single": "Real",
+      "major_plural": "Reais",
+      "symbol": "R$",
+      "minor_single": "Centavo",
+      "minor_plural": "Centavos",
+      "decimals": 2
+    },
+    "BSD": {
+      "name": "Bahamian Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "BTN": {
+      "name": "Bhutanese Ngultrum",
+      "major_single": "Ngultrum",
+      "major_plural": "Ngultrums",
+      "symbol": "Nu.",
+      "minor_single": "Chetrum",
+      "minor_plural": "Chetrums",
+      "decimals": 2
+    },
+    "BWP": {
+      "name": "Botswana Pula",
+      "major_single": "Pula",
+      "major_plural": "Pula",
+      "symbol": "P",
+      "minor_single": "Thebe",
+      "minor_plural": "Thebe",
+      "decimals": 2
+    },
+    "BYN": {
+      "name": "Belarusian Ruble",
+      "major_single": "Ruble",
+      "major_plural": "Rubles",
+      "symbol": "Br",
+      "minor_single": "Kapiejka",
+      "minor_plural": "Kapiejka",
+      "decimals": 2
+    },
+    "BZD": {
+      "name": "Belize Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "BZ$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "CAD": {
+      "name": "Canadian Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "CA$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "CDF": {
+      "name": "Congolese Franc",
+      "major_single": "Franc",
+      "major_plural": "Francs",
+      "symbol": "FC",
+      "minor_single": "Centime",
+      "minor_plural": "Centimes",
+      "decimals": 2
+    },
+    "CHF": {
+      "name": "Swiss Franc",
+      "major_single": "Franc",
+      "major_plural": "Francs",
+      "symbol": "Fr.",
+      "minor_single": "Centime",
+      "minor_plural": "Centimes",
+      "decimals": 2
+    },
+    "CKD": {
+      "name": "Cook Islands Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "CLP": {
+      "name": "Chilean Peso",
+      "major_single": "Peso",
+      "major_plural": "Pesos",
+      "symbol": "CL$",
+      "minor_single": "Centavo",
+      "minor_plural": "Centavos",
+      "decimals": 0
+    },
+    "CNY": {
+      "name": "Chinese Yuan",
+      "major_single": "Yuan",
+      "major_plural": "Yuan",
+      "symbol": "CN¥",
+      "minor_single": "Fen",
+      "minor_plural": "Fen",
+      "decimals": 2
+    },
+    "COP": {
+      "name": "Colombian Peso",
+      "major_single": "Peso",
+      "major_plural": "Pesos",
+      "symbol": "CO$",
+      "minor_single": "Centavo",
+      "minor_plural": "Centavos",
+      "decimals": 2
+    },
+    "CRC": {
+      "name": "Costa Rican Colon",
+      "major_single": "Colón",
+      "major_plural": "Colones",
+      "symbol": "₡",
+      "minor_single": "Centimo",
+      "minor_plural": "Centimos",
+      "decimals": 2
+    },
+    "CUC": {
+      "name": "Cuban convertible Peso",
+      "major_single": "Peso",
+      "major_plural": "Pesos",
+      "symbol": "CUC$",
+      "minor_single": "Centavo",
+      "minor_plural": "Centavos",
+      "decimals": 2
+    },
+    "CUP": {
+      "name": "Cuban Peso",
+      "major_single": "Peso",
+      "major_plural": "Pesos",
+      "symbol": "$MN",
+      "minor_single": "Centavo",
+      "minor_plural": "Centavos",
+      "decimals": 2
+    },
+    "CVE": {
+      "name": "Cabo Verdean Escudo",
+      "major_single": "Escudo",
+      "major_plural": "Escudo",
+      "symbol": "CV$",
+      "minor_single": "Centavo",
+      "minor_plural": "Centavos",
+      "decimals": 2
+    },
+    "CZK": {
+      "name": "Czech Koruna",
+      "major_single": "Koruna",
+      "major_plural": "Koruny",
+      "symbol": "Kč",
+      "minor_single": "Haléř",
+      "minor_plural": "Haléř",
+      "decimals": 2
+    },
+    "DJF": {
+      "name": "Djiboutian Franc",
+      "major_single": "Franc",
+      "major_plural": "Francs",
+      "symbol": "Fdj",
+      "minor_single": "Centime",
+      "minor_plural": "Centimes",
+      "decimals": 2
+    },
+    "DKK": {
+      "name": "Danish Krone",
+      "major_single": "Krone",
+      "major_plural": "Kroner",
+      "symbol": "kr.",
+      "minor_single": "Øre",
+      "minor_plural": "Øre",
+      "decimals": 2
+    },
+    "DOP": {
+      "name": "Dominican Peso",
+      "major_single": "Peso",
+      "major_plural": "Pesos",
+      "symbol": "RD$",
+      "minor_single": "Centavo",
+      "minor_plural": "Centavos",
+      "decimals": 2
+    },
+    "DZD": {
+      "name": "Algerian Dinar",
+      "major_single": "Dinar",
+      "major_plural": "Dinars",
+      "symbol": "DA",
+      "minor_single": "Santeem",
+      "minor_plural": "Santeems",
+      "decimals": 2
+    },
+    "EGP": {
+      "name": "Egyptian Pound",
+      "major_single": "Pound",
+      "major_plural": "Pounds",
+      "symbol": "E£",
+      "minor_single": "Qirsh",
+      "minor_plural": "Qirsh",
+      "decimals": 2
+    },
+    "EHP": {
+      "name": "Sahrawi Peseta",
+      "major_single": "Peseta",
+      "major_plural": "Pesetas",
+      "symbol": "Ptas.",
+      "minor_single": "Céntimo",
+      "minor_plural": "Céntimos",
+      "decimals": 2
+    },
+    "ERN": {
+      "name": "Eritrean Nakfa",
+      "major_single": "Nakfa",
+      "major_plural": "Nakfa",
+      "symbol": "Nkf",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "ETB": {
+      "name": "Ethiopian Birr",
+      "major_single": "Birr",
+      "major_plural": "Birr",
+      "symbol": "Br",
+      "minor_single": "Santim",
+      "minor_plural": "Santim",
+      "decimals": 2
+    },
+    "EUR": {
+      "name": "Euro",
+      "major_single": "Euro",
+      "major_plural": "Euros",
+      "symbol": "€",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "FJD": {
+      "name": "Fijian Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "FJ$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "FKP": {
+      "name": "Falkland Islands Pound",
+      "major_single": "Pound",
+      "major_plural": "Pounds",
+      "symbol": "FK£",
+      "minor_single": "Penny",
+      "minor_plural": "Pence",
+      "decimals": 2
+    },
+    "FOK": {
+      "name": "Faroese Króna",
+      "major_single": "Króna",
+      "major_plural": "Krónas",
+      "symbol": "kr",
+      "minor_single": "Oyra",
+      "minor_plural": "Oyra",
+      "decimals": 2
+    },
+    "GBP": {
+      "name": "Pound Sterling",
+      "major_single": "Pound",
+      "major_plural": "Pounds",
+      "symbol": "£",
+      "minor_single": "Penny",
+      "minor_plural": "Pence",
+      "decimals": 2
+    },
+    "GEL": {
+      "name": "Georgian Lari",
+      "major_single": "Lari",
+      "major_plural": "Lari",
+      "symbol": "₾",
+      "minor_single": "Tetri",
+      "minor_plural": "Tetri",
+      "decimals": 2
+    },
+    "GGP": {
+      "name": "Guernsey Pound",
+      "major_single": "Pound",
+      "major_plural": "Pounds",
+      "symbol": "£",
+      "minor_single": "Penny",
+      "minor_plural": "Pence",
+      "decimals": 2
+    },
+    "GHS": {
+      "name": "Ghanaian Cedi",
+      "major_single": "Cedi",
+      "major_plural": "Cedis",
+      "symbol": "GH₵",
+      "minor_single": "Pesewa",
+      "minor_plural": "Pesewas",
+      "decimals": 2
+    },
+    "GIP": {
+      "name": "Gibraltar Pound",
+      "major_single": "Pound",
+      "major_plural": "Pounds",
+      "symbol": "£",
+      "minor_single": "Penny",
+      "minor_plural": "Pence",
+      "decimals": 2
+    },
+    "GMD": {
+      "name": "Gambian Dalasi",
+      "major_single": "Dalasi",
+      "major_plural": "Dalasis",
+      "symbol": "D",
+      "minor_single": "Butut",
+      "minor_plural": "Bututs",
+      "decimals": 2
+    },
+    "GNF": {
+      "name": "Guinean Franc",
+      "major_single": "Franc",
+      "major_plural": "Francs",
+      "symbol": "FG",
+      "minor_single": "Centime",
+      "minor_plural": "Centimes",
+      "decimals": 2
+    },
+    "GTQ": {
+      "name": "Guatemalan Quetzal",
+      "major_single": "Quetzal",
+      "major_plural": "Quetzales",
+      "symbol": "Q",
+      "minor_single": "Centavo",
+      "minor_plural": "Centavos",
+      "decimals": 2
+    },
+    "GYD": {
+      "name": "Guyanese Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "G$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "HKD": {
+      "name": "Hong Kong Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "HK$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "HNL": {
+      "name": "Honduran Lempira",
+      "major_single": "Lempira",
+      "major_plural": "Lempiras",
+      "symbol": "L",
+      "minor_single": "Centavo",
+      "minor_plural": "Centavos",
+      "decimals": 2
+    },
+    "HRK": {
+      "name": "Croatian Kuna",
+      "major_single": "Kuna",
+      "major_plural": "Kuna",
+      "symbol": "kn",
+      "minor_single": "Lipa",
+      "minor_plural": "Lipa",
+      "decimals": 2
+    },
+    "HTG": {
+      "name": "Haitian Gourde",
+      "major_single": "Gourde",
+      "major_plural": "Gourdes",
+      "symbol": "G",
+      "minor_single": "Centime",
+      "minor_plural": "Centimes",
+      "decimals": 2
+    },
+    "HUF": {
+      "name": "Hungarian Forint",
+      "major_single": "Forint",
+      "major_plural": "Forint",
+      "symbol": "Ft",
+      "minor_single": "fillér",
+      "minor_plural": "fillér",
+      "decimals": 2
+    },
+    "IDR": {
+      "name": "Indonesian Rupiah",
+      "major_single": "Rupiah",
+      "major_plural": "Rupiah",
+      "symbol": "Rp",
+      "minor_single": "Sen",
+      "minor_plural": "Sen",
+      "decimals": 2
+    },
+    "ILS": {
+      "name": "Israeli new Shekel",
+      "major_single": "Shekel",
+      "major_plural": "Shekels",
+      "symbol": "₪",
+      "minor_single": "Agora",
+      "minor_plural": "Agoras",
+      "decimals": 2
+    },
+    "IMP": {
+      "name": "Manx Pound",
+      "major_single": "Pound",
+      "major_plural": "Pounds",
+      "symbol": "£",
+      "minor_single": "Penny",
+      "minor_plural": "Pence",
+      "decimals": 2
+    },
+    "INR": {
+      "name": "Indian Rupee",
+      "major_single": "Rupee",
+      "major_plural": "Rupees",
+      "symbol": "Rs.",
+      "minor_single": "Paisa",
+      "minor_plural": "Paise",
+      "decimals": 2
+    },
+    "IQD": {
+      "name": "Iraqi Dinar",
+      "major_single": "Dinar",
+      "major_plural": "Dinars",
+      "symbol": "د.ع.",
+      "minor_single": "Fils",
+      "minor_plural": "Fils",
+      "decimals": 3
+    },
+    "IRR": {
+      "name": "Iranian Rial",
+      "major_single": "Rial",
+      "major_plural": "Rials",
+      "symbol": "﷼",
+      "minor_single": "Dinar",
+      "minor_plural": "Dinars",
+      "decimals": 2
+    },
+    "ISK": {
+      "name": "Icelandic Krona",
+      "major_single": "Krona",
+      "major_plural": "Krónur",
+      "symbol": "kr",
+      "minor_single": "Aurar",
+      "minor_plural": "Aurar",
+      "decimals": 2
+    },
+    "JEP": {
+      "name": "Jersey Pound",
+      "major_single": "Pound",
+      "major_plural": "Pounds",
+      "symbol": "£",
+      "minor_single": "Penny",
+      "minor_plural": "Pence",
+      "decimals": 2
+    },
+    "JMD": {
+      "name": "Jamaican Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "J$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "JOD": {
+      "name": "Jordanian Dinar",
+      "major_single": "Dinar",
+      "major_plural": "Dinars",
+      "symbol": "JD",
+      "minor_single": "Fils",
+      "minor_plural": "Fils",
+      "decimals": 3
+    },
+    "JPY": {
+      "name": "Japanese Yen",
+      "major_single": "Yen",
+      "major_plural": "Yen",
+      "symbol": "¥",
+      "minor_single": "Sen",
+      "minor_plural": "Sen",
+      "decimals": 2
+    },
+    "KES": {
+      "name": "Kenyan Shilling",
+      "major_single": "Shilling",
+      "major_plural": "Shillings",
+      "symbol": "KSh",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "KGS": {
+      "name": "Kyrgyzstani Som",
+      "major_single": "Som",
+      "major_plural": "Som",
+      "symbol": "с",
+      "minor_single": "Tyiyn",
+      "minor_plural": "Tyiyn",
+      "decimals": 2
+    },
+    "KHR": {
+      "name": "Cambodian Riel",
+      "major_single": "Riel",
+      "major_plural": "Riels",
+      "symbol": "៛",
+      "minor_single": "Sen",
+      "minor_plural": "Sen",
+      "decimals": 2
+    },
+    "KID": {
+      "name": "Kiribati Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "KMF": {
+      "name": "Comorian Franc",
+      "major_single": "Franc",
+      "major_plural": "Francs",
+      "symbol": "CF",
+      "minor_single": "Centime",
+      "minor_plural": "Centimes",
+      "decimals": 2
+    },
+    "KPW": {
+      "name": "North Korean Won",
+      "major_single": "Won",
+      "major_plural": "Won",
+      "symbol": "₩",
+      "minor_single": "Chon",
+      "minor_plural": "Chon",
+      "decimals": 2
+    },
+    "KRW": {
+      "name": "South Korean Won",
+      "major_single": "Won",
+      "major_plural": "Won",
+      "symbol": "₩",
+      "minor_single": "Jeon",
+      "minor_plural": "Jeon",
+      "decimals": 2
+    },
+    "KWD": {
+      "name": "Kuwaiti Dinar",
+      "major_single": "Dinar",
+      "major_plural": "Dinars",
+      "symbol": "KD",
+      "minor_single": "Fils",
+      "minor_plural": "Fils",
+      "decimals": 3
+    },
+    "KYD": {
+      "name": "Cayman Islands Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "CI$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "KZT": {
+      "name": "Kazakhstani Tenge",
+      "major_single": "Tenge",
+      "major_plural": "Tenge",
+      "symbol": "₸",
+      "minor_single": "Tıyn",
+      "minor_plural": "Tıyn",
+      "decimals": 2
+    },
+    "LAK": {
+      "name": "Lao Kip",
+      "major_single": "Kip",
+      "major_plural": "Kip",
+      "symbol": "₭N",
+      "minor_single": "Att",
+      "minor_plural": "Att",
+      "decimals": 2
+    },
+    "LBP": {
+      "name": "Lebanese Pound",
+      "major_single": "Pound",
+      "major_plural": "Pounds",
+      "symbol": "LL.",
+      "minor_single": "Qirsh",
+      "minor_plural": "Qirsh",
+      "decimals": 2
+    },
+    "LKR": {
+      "name": "Sri Lankan Rupee",
+      "major_single": "Rupee",
+      "major_plural": "Rupees",
+      "symbol": "Rs.",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "LRD": {
+      "name": "Liberian Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "L$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "LSL": {
+      "name": "Lesotho Loti",
+      "major_single": "Loti",
+      "major_plural": "maLoti",
+      "symbol": "L",
+      "minor_single": "Sente",
+      "minor_plural": "Lisente",
+      "decimals": 2
+    },
+    "LYD": {
+      "name": "Libyan Dinar",
+      "major_single": "Dinar",
+      "major_plural": "Dinars",
+      "symbol": "LD",
+      "minor_single": "Dirham",
+      "minor_plural": "Dirhams",
+      "decimals": 3
+    },
+    "MAD": {
+      "name": "Moroccan Dirham",
+      "major_single": "Dirham",
+      "major_plural": "Dirhams",
+      "symbol": "DH",
+      "minor_single": "Centime",
+      "minor_plural": "Centimes",
+      "decimals": 2
+    },
+    "MDL": {
+      "name": "Moldovan Leu",
+      "major_single": "Leu",
+      "major_plural": "Lei",
+      "symbol": "L",
+      "minor_single": "Ban",
+      "minor_plural": "Bani",
+      "decimals": 2
+    },
+    "MGA": {
+      "name": "Malagasy Ariary",
+      "major_single": "Ariary",
+      "major_plural": "Ariary",
+      "symbol": "Ar",
+      "minor_single": "Iraimbilanja",
+      "minor_plural": "Iraimbilanja",
+      "decimals": 0
+    },
+    "MKD": {
+      "name": "Macedonian Denar",
+      "major_single": "Denar",
+      "major_plural": "Denars",
+      "symbol": "den",
+      "minor_single": "Deni",
+      "minor_plural": "Deni",
+      "decimals": 2
+    },
+    "MMK": {
+      "name": "Myanmar Kyat",
+      "major_single": "Kyat",
+      "major_plural": "Kyat",
+      "symbol": "Ks",
+      "minor_single": "Pya",
+      "minor_plural": "Pya",
+      "decimals": 2
+    },
+    "MNT": {
+      "name": "Mongolian Tögrög",
+      "major_single": "Tögrög",
+      "major_plural": "Tögrög",
+      "symbol": "₮",
+      "minor_single": "möngö",
+      "minor_plural": "möngö",
+      "decimals": 2
+    },
+    "MOP": {
+      "name": "Macanese Pataca",
+      "major_single": "Pataca",
+      "major_plural": "Patacas",
+      "symbol": "MOP$",
+      "minor_single": "Avo",
+      "minor_plural": "Avos",
+      "decimals": 2
+    },
+    "MRU": {
+      "name": "Mauritanian Ouguiya",
+      "major_single": "Ouguiya",
+      "major_plural": "Ouguiya",
+      "symbol": "UM",
+      "minor_single": "Khoums",
+      "minor_plural": "Khoums",
+      "decimals": 0
+    },
+    "MUR": {
+      "name": "Mauritian Rupee",
+      "major_single": "Rupee",
+      "major_plural": "Rupees",
+      "symbol": "Rs.",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "MVR": {
+      "name": "Maldivian Rufiyaa",
+      "major_single": "Rufiyaa",
+      "major_plural": "Rufiyaa",
+      "symbol": "MRf",
+      "minor_single": "laari",
+      "minor_plural": "laari",
+      "decimals": 2
+    },
+    "MWK": {
+      "name": "Malawian Kwacha",
+      "major_single": "Kwacha",
+      "major_plural": "Kwacha",
+      "symbol": "MK",
+      "minor_single": "Tambala",
+      "minor_plural": "Tambala",
+      "decimals": 2
+    },
+    "MXN": {
+      "name": "Mexican Peso",
+      "major_single": "Peso",
+      "major_plural": "Pesos",
+      "symbol": "MX$",
+      "minor_single": "Centavo",
+      "minor_plural": "Centavos",
+      "decimals": 2
+    },
+    "MYR": {
+      "name": "Malaysian Ringgit",
+      "major_single": "Ringgit",
+      "major_plural": "Ringgit",
+      "symbol": "RM",
+      "minor_single": "Sen",
+      "minor_plural": "Sen",
+      "decimals": 2
+    },
+    "MZN": {
+      "name": "Mozambican Metical",
+      "major_single": "Metical",
+      "major_plural": "Meticais",
+      "symbol": "MTn",
+      "minor_single": "Centavo",
+      "minor_plural": "Centavos",
+      "decimals": 2
+    },
+    "NAD": {
+      "name": "Namibian Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "N$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "NGN": {
+      "name": "Nigerian Naira",
+      "major_single": "Naira",
+      "major_plural": "Naira",
+      "symbol": "₦",
+      "minor_single": "Kobo",
+      "minor_plural": "Kobo",
+      "decimals": 2
+    },
+    "NIO": {
+      "name": "Nicaraguan Córdoba",
+      "major_single": "Córdoba Oro",
+      "major_plural": "Córdoba Oro",
+      "symbol": "C$",
+      "minor_single": "Centavo",
+      "minor_plural": "Centavos",
+      "decimals": 2
+    },
+    "NOK": {
+      "name": "Norwegian Krone",
+      "major_single": "Krone",
+      "major_plural": "Kroner",
+      "symbol": "kr",
+      "minor_single": "øre",
+      "minor_plural": "øre",
+      "decimals": 2
+    },
+    "NPR": {
+      "name": "Nepalese Rupee",
+      "major_single": "Rupee",
+      "major_plural": "Rupees",
+      "symbol": "Rs.",
+      "minor_single": "Paisa",
+      "minor_plural": "Paise",
+      "decimals": 2
+    },
+    "NZD": {
+      "name": "New Zealand Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "NZ$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "OMR": {
+      "name": "Omani Rial",
+      "major_single": "Rial",
+      "major_plural": "Rials",
+      "symbol": "OR",
+      "minor_single": "Baisa",
+      "minor_plural": "Baisa",
+      "decimals": 3
+    },
+    "PAB": {
+      "name": "Panamanian Balboa",
+      "major_single": "Balboa",
+      "major_plural": "Balboa",
+      "symbol": "B/.",
+      "minor_single": "Centésimo",
+      "minor_plural": "Centésimos",
+      "decimals": 2
+    },
+    "PEN": {
+      "name": "Peruvian Sol",
+      "major_single": "Sol",
+      "major_plural": "Soles",
+      "symbol": "S/.",
+      "minor_single": "Céntimo",
+      "minor_plural": "Céntimos",
+      "decimals": 2
+    },
+    "PGK": {
+      "name": "Papua New Guinean Kina",
+      "major_single": "Kina",
+      "major_plural": "Kina",
+      "symbol": "K",
+      "minor_single": "Toea",
+      "minor_plural": "Toea",
+      "decimals": 2
+    },
+    "PHP": {
+      "name": "Philippine Peso",
+      "major_single": "Peso",
+      "major_plural": "Pesos",
+      "symbol": "₱",
+      "minor_single": "Sentimo",
+      "minor_plural": "Sentimo",
+      "decimals": 2
+    },
+    "PKR": {
+      "name": "Pakistani Rupee",
+      "major_single": "Rupee",
+      "major_plural": "Rupees",
+      "symbol": "Rs.",
+      "minor_single": "Paisa",
+      "minor_plural": "Paise",
+      "decimals": 2
+    },
+    "PLN": {
+      "name": "Polish Zloty",
+      "major_single": "Zloty",
+      "major_plural": "Zlotys",
+      "symbol": "zł",
+      "minor_single": "Grosz",
+      "minor_plural": "Groszy",
+      "decimals": 2
+    },
+    "PND": {
+      "name": "Pitcairn Islands Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "PRB": {
+      "name": "Transnistrian Ruble",
+      "major_single": "Ruble",
+      "major_plural": "Rubles",
+      "symbol": "р.",
+      "minor_single": "Kopek",
+      "minor_plural": "Kopeks",
+      "decimals": 2
+    },
+    "PYG": {
+      "name": "Paraguayan Guaraní",
+      "major_single": "Guaraní",
+      "major_plural": "Guaraníes",
+      "symbol": "₲",
+      "minor_single": "Centimo",
+      "minor_plural": "Centimos",
+      "decimals": 2
+    },
+    "QAR": {
+      "name": "Qatari Riyal",
+      "major_single": "Riyal",
+      "major_plural": "Riyals",
+      "symbol": "QR",
+      "minor_single": "Dirham",
+      "minor_plural": "Dirhams",
+      "decimals": 2
+    },
+    "RON": {
+      "name": "Romanian Leu",
+      "major_single": "Leu",
+      "major_plural": "Lei",
+      "symbol": "L",
+      "minor_single": "Ban",
+      "minor_plural": "Bani",
+      "decimals": 2
+    },
+    "RSD": {
+      "name": "Serbian Dinar",
+      "major_single": "Dinar",
+      "major_plural": "Dinars",
+      "symbol": "din",
+      "minor_single": "Para",
+      "minor_plural": "Para",
+      "decimals": 2
+    },
+    "RUB": {
+      "name": "Russian Ruble",
+      "major_single": "Ruble",
+      "major_plural": "Rubles",
+      "symbol": "₽",
+      "minor_single": "Kopek",
+      "minor_plural": "Kopeks",
+      "decimals": 2
+    },
+    "RWF": {
+      "name": "Rwandan Franc",
+      "major_single": "Franc",
+      "major_plural": "Francs",
+      "symbol": "FRw",
+      "minor_single": "Centime",
+      "minor_plural": "Centimes",
+      "decimals": 2
+    },
+    "SAR": {
+      "name": "Saudi Riyal",
+      "major_single": "Riyal",
+      "major_plural": "Riyals",
+      "symbol": "SR",
+      "minor_single": "Halalah",
+      "minor_plural": "Halalahs",
+      "decimals": 2
+    },
+    "SBD": {
+      "name": "Solomon Islands Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "SI$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "SCR": {
+      "name": "Seychellois Rupee",
+      "major_single": "Rupee",
+      "major_plural": "Rupees",
+      "symbol": "Rs.",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "SDG": {
+      "name": "Sudanese Pound",
+      "major_single": "Pound",
+      "major_plural": "Pounds",
+      "symbol": "£SD",
+      "minor_single": "Qirsh",
+      "minor_plural": "Qirsh",
+      "decimals": 2
+    },
+    "SEK": {
+      "name": "Swedish Krona",
+      "major_single": "Krona",
+      "major_plural": "Kronor",
+      "symbol": "kr",
+      "minor_single": "Öre",
+      "minor_plural": "Öre",
+      "decimals": 2
+    },
+    "SGD": {
+      "name": "Singapore Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "S$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "SHP": {
+      "name": "Saint Helena Pound",
+      "major_single": "Pound",
+      "major_plural": "Pounds",
+      "symbol": "£",
+      "minor_single": "Penny",
+      "minor_plural": "Pence",
+      "decimals": 2
+    },
+    "SLL": {
+      "name": "Sierra Leonean Leone",
+      "major_single": "Leone",
+      "major_plural": "Leones",
+      "symbol": "Le",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "SLS": {
+      "name": "Somaliland Shilling",
+      "major_single": "Shilling",
+      "major_plural": "Shillings",
+      "symbol": "Sl",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "SOS": {
+      "name": "Somali Shilling",
+      "major_single": "Shilling",
+      "major_plural": "Shillings",
+      "symbol": "Sh.So.",
+      "minor_single": "Senti",
+      "minor_plural": "Senti",
+      "decimals": 2
+    },
+    "SRD": {
+      "name": "Surinamese Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "Sr$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "SSP": {
+      "name": "South Sudanese Pound",
+      "major_single": "Pound",
+      "major_plural": "Pounds",
+      "symbol": "SS£",
+      "minor_single": "Qirsh",
+      "minor_plural": "Qirsh",
+      "decimals": 2
+    },
+    "STN": {
+      "name": "Sao Tome and Príncipe Dobra",
+      "major_single": "Dobra",
+      "major_plural": "Dobras",
+      "symbol": "Db",
+      "minor_single": "Centimo",
+      "minor_plural": "Centimos",
+      "decimals": 2
+    },
+    "SVC": {
+      "name": "Salvadoran Colón",
+      "major_single": "Colón",
+      "major_plural": "Colones",
+      "symbol": "₡",
+      "minor_single": "Centavo",
+      "minor_plural": "Centavos",
+      "decimals": 2
+    },
+    "SYP": {
+      "name": "Syrian Pound",
+      "major_single": "Pound",
+      "major_plural": "Pounds",
+      "symbol": "LS",
+      "minor_single": "Qirsh",
+      "minor_plural": "Qirsh",
+      "decimals": 2
+    },
+    "SZL": {
+      "name": "Swazi Lilangeni",
+      "major_single": "Lilangeni",
+      "major_plural": "Emalangeni",
+      "symbol": "L",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "THB": {
+      "name": "Thai Baht",
+      "major_single": "Baht",
+      "major_plural": "Baht",
+      "symbol": "฿",
+      "minor_single": "Satang",
+      "minor_plural": "Satang",
+      "decimals": 2
+    },
+    "TJS": {
+      "name": "Tajikistani Somoni",
+      "major_single": "Somoni",
+      "major_plural": "Somoni",
+      "symbol": "SM",
+      "minor_single": "Diram",
+      "minor_plural": "Diram",
+      "decimals": 2
+    },
+    "TMT": {
+      "name": "Turkmenistan Manat",
+      "major_single": "Manat",
+      "major_plural": "Manat",
+      "symbol": "m.",
+      "minor_single": "Tenge",
+      "minor_plural": "Tenge",
+      "decimals": 2
+    },
+    "TND": {
+      "name": "Tunisian Dinar",
+      "major_single": "Dinar",
+      "major_plural": "Dinars",
+      "symbol": "DT",
+      "minor_single": "Millime",
+      "minor_plural": "Millime",
+      "decimals": 3
+    },
+    "TOP": {
+      "name": "Tongan Paʻanga",
+      "major_single": "Pa'anga",
+      "major_plural": "Pa'anga",
+      "symbol": "T$",
+      "minor_single": "Seniti",
+      "minor_plural": "Seniti",
+      "decimals": 2
+    },
+    "TRY": {
+      "name": "Turkish Lira",
+      "major_single": "Lira",
+      "major_plural": "Lira",
+      "symbol": "TL",
+      "minor_single": "Kuruş",
+      "minor_plural": "Kuruş",
+      "decimals": 2
+    },
+    "TTD": {
+      "name": "Trinidad and Tobago Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "TT$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "TVD": {
+      "name": "Tuvaluan Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "TWD": {
+      "name": "New Taiwan Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "NT$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "TZS": {
+      "name": "Tanzanian Shilling",
+      "major_single": "Shilling",
+      "major_plural": "Shillings",
+      "symbol": "TSh",
+      "minor_single": "Senti",
+      "minor_plural": "Senti",
+      "decimals": 2
+    },
+    "UAH": {
+      "name": "Ukrainian Hryvnia",
+      "major_single": "Hryvnia",
+      "major_plural": "Hryvnias",
+      "symbol": "₴",
+      "minor_single": "Kopiyka",
+      "minor_plural": "kopiyky",
+      "decimals": 2
+    },
+    "UGX": {
+      "name": "Ugandan Shilling",
+      "major_single": "Shilling",
+      "major_plural": "Shillings",
+      "symbol": "USh",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "USD": {
+      "name": "United States Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "UYU": {
+      "name": "Uruguayan Peso",
+      "major_single": "Peso",
+      "major_plural": "Pesos",
+      "symbol": "$U",
+      "minor_single": "Centésimo",
+      "minor_plural": "Centésimos",
+      "decimals": 2
+    },
+    "UZS": {
+      "name": "Uzbekistani Som",
+      "major_single": "Som",
+      "major_plural": "Som",
+      "symbol": "сум",
+      "minor_single": "Tiyin",
+      "minor_plural": "Tiyin",
+      "decimals": 2
+    },
+    "VED": {
+      "name": "Venezuelan bolívar digital",
+      "major_single": "Bolívar Digital",
+      "major_plural": "Bolívars Digital",
+      "symbol": "Bs.",
+      "minor_single": "Céntimo",
+      "minor_plural": "Céntimos",
+      "decimals": 2
+    },
+    "VES": {
+      "name": "Venezuelan Bolívar Soberano",
+      "major_single": "Bolívar",
+      "major_plural": "Bolívares",
+      "symbol": "Bs.F",
+      "minor_single": "Centimo",
+      "minor_plural": "Centimos",
+      "decimals": 2
+    },
+    "VND": {
+      "name": "Vietnamese Dong",
+      "major_single": "Dong",
+      "major_plural": "Dong",
+      "symbol": "₫",
+      "minor_single": "Hào",
+      "minor_plural": "Hào",
+      "decimals": 2
+    },
+    "VUV": {
+      "name": "Vanuatu Vatu",
+      "major_single": "Vatu",
+      "major_plural": "Vatu",
+      "symbol": "VT",
+      "minor_single": "",
+      "minor_plural": "",
+      "decimals": 0
+    },
+    "WST": {
+      "name": "Samoan Tala",
+      "major_single": "Tala",
+      "major_plural": "Tala",
+      "symbol": "T",
+      "minor_single": "Sene",
+      "minor_plural": "Sene",
+      "decimals": 2
+    },
+    "XAF": {
+      "name": "Central African CFA Franc BEAC",
+      "major_single": "Franc",
+      "major_plural": "Francs",
+      "symbol": "Fr",
+      "minor_single": "Centime",
+      "minor_plural": "Centimes",
+      "decimals": 2
+    },
+    "XCD": {
+      "name": "East Caribbean Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "XOF": {
+      "name": "West African CFA Franc BCEAO",
+      "major_single": "Franc",
+      "major_plural": "Francs",
+      "symbol": "₣",
+      "minor_single": "Centime",
+      "minor_plural": "Centimes",
+      "decimals": 2
+    },
+    "XPF": {
+      "name": "CFP Franc (Franc Pacifique)",
+      "major_single": "Franc",
+      "major_plural": "Francs",
+      "symbol": "₣",
+      "minor_single": "Centime",
+      "minor_plural": "Centimes",
+      "decimals": 0
+    },
+    "YER": {
+      "name": "Yemeni Rial",
+      "major_single": "Rial",
+      "major_plural": "Rials",
+      "symbol": "YR",
+      "minor_single": "Fils",
+      "minor_plural": "Fils",
+      "decimals": 2
+    },
+    "ZAR": {
+      "name": "South African Rand",
+      "major_single": "Rand",
+      "major_plural": "Rand",
+      "symbol": "R",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "ZMW": {
+      "name": "Zambian Kwacha",
+      "major_single": "Kwacha",
+      "major_plural": "Kwacha",
+      "symbol": "ZK",
+      "minor_single": "Ngwee",
+      "minor_plural": "Ngwee",
+      "decimals": 2
+    },
+    "ZWB": {
+      "name": "RTGS Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "",
+      "minor_single": "",
+      "minor_plural": "",
+      "decimals": 0
+    },
+    "ZWL": {
+      "name": "Zimbabwean Dollar",
+      "major_single": "Dollar",
+      "major_plural": "Dollars",
+      "symbol": "Z$",
+      "minor_single": "Cent",
+      "minor_plural": "Cents",
+      "decimals": 2
+    },
+    "Abkhazia": {
+      "name": "Abkhazian Apsar",
+      "major_single": "Apsar",
+      "major_plural": "Apsark",
+      "symbol": "",
+      "minor_single": "",
+      "minor_plural": "",
+      "decimals": 0
+    },
+    "Artsakh": {
+      "name": "Artsakh Dram",
+      "major_single": "Dram",
+      "major_plural": "Dram",
+      "symbol": "դր.",
+      "minor_single": "Luma",
+      "minor_plural": "Luma",
+      "decimals": 2
+    }
+  },
+
+  "crypto": {
+    "BTC": {
+      "name": "Bitcoin",
+      "major_single": "Bitcoin",
+      "major_plural": "Bitcoin",
+      "symbol": "₿",
+      "minor_single": "Satoshi",
+      "minor_plural": "Satoshi",
+      "decimals": 8
+    },
+    "ETH": {
+      "name": "Ethereum",
+      "major_single": "Ether",
+      "major_plural": "Ether",
+      "symbol": "Ξ",
+      "minor_single": "Gwei",
+      "minor_plural": "Gwei",
+      "decimals": 9
+    }
+  }
+}
